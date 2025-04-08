@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		57520FC62D8E9E0500195133 /* Mark-In.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mark-In.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		57BFD8C32DA4E19600648AD4 /* Mark-In.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mark-In.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		57520FC82D8E9E0500195133 /* Mark-In */ = {
+		57BFD8C52DA4E19600648AD4 /* Mark-In */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Mark-In";
 			sourceTree = "<group>";
@@ -19,7 +19,7 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		57520FC32D8E9E0500195133 /* Frameworks */ = {
+		57BFD8C02DA4E19600648AD4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -29,18 +29,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		57520FBD2D8E9E0500195133 = {
+		57BFD8BA2DA4E19600648AD4 = {
 			isa = PBXGroup;
 			children = (
-				57520FC82D8E9E0500195133 /* Mark-In */,
-				57520FC72D8E9E0500195133 /* Products */,
+				57BFD8C52DA4E19600648AD4 /* Mark-In */,
+				57BFD8C42DA4E19600648AD4 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
-		57520FC72D8E9E0500195133 /* Products */ = {
+		57BFD8C42DA4E19600648AD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				57520FC62D8E9E0500195133 /* Mark-In.app */,
+				57BFD8C32DA4E19600648AD4 /* Mark-In.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,64 +50,64 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		57520FC52D8E9E0500195133 /* Mark-In */ = {
+		57BFD8C22DA4E19600648AD4 /* Mark-In */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 57520FD52D8E9E0700195133 /* Build configuration list for PBXNativeTarget "Mark-In" */;
+			buildConfigurationList = 57BFD8CF2DA4E19700648AD4 /* Build configuration list for PBXNativeTarget "Mark-In" */;
 			buildPhases = (
-				57520FC22D8E9E0500195133 /* Sources */,
-				57520FC32D8E9E0500195133 /* Frameworks */,
-				57520FC42D8E9E0500195133 /* Resources */,
+				57BFD8BF2DA4E19600648AD4 /* Sources */,
+				57BFD8C02DA4E19600648AD4 /* Frameworks */,
+				57BFD8C12DA4E19600648AD4 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				57520FC82D8E9E0500195133 /* Mark-In */,
+				57BFD8C52DA4E19600648AD4 /* Mark-In */,
 			);
 			name = "Mark-In";
 			packageProductDependencies = (
 			);
 			productName = "Mark-In";
-			productReference = 57520FC62D8E9E0500195133 /* Mark-In.app */;
+			productReference = 57BFD8C32DA4E19600648AD4 /* Mark-In.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		57520FBE2D8E9E0500195133 /* Project object */ = {
+		57BFD8BB2DA4E19600648AD4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
-					57520FC52D8E9E0500195133 = {
-						CreatedOnToolsVersion = 16.2;
+					57BFD8C22DA4E19600648AD4 = {
+						CreatedOnToolsVersion = 16.3;
 					};
 				};
 			};
-			buildConfigurationList = 57520FC12D8E9E0500195133 /* Build configuration list for PBXProject "Mark-In" */;
+			buildConfigurationList = 57BFD8BE2DA4E19600648AD4 /* Build configuration list for PBXProject "Mark-In" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 57520FBD2D8E9E0500195133;
+			mainGroup = 57BFD8BA2DA4E19600648AD4;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 57520FC72D8E9E0500195133 /* Products */;
+			productRefGroup = 57BFD8C42DA4E19600648AD4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				57520FC52D8E9E0500195133 /* Mark-In */,
+				57BFD8C22DA4E19600648AD4 /* Mark-In */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		57520FC42D8E9E0500195133 /* Resources */ = {
+		57BFD8C12DA4E19600648AD4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -115,7 +117,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		57520FC22D8E9E0500195133 /* Sources */ = {
+		57BFD8BF2DA4E19600648AD4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -125,7 +127,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		57520FD32D8E9E0700195133 /* Debug */ = {
+		57BFD8CD2DA4E19700648AD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -160,6 +162,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -178,17 +181,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		57520FD42D8E9E0700195133 /* Release */ = {
+		57BFD8CE2DA4E19700648AD4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -223,6 +224,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -235,94 +237,112 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};
-		57520FD62D8E9E0700195133 /* Debug */ = {
+		57BFD8D02DA4E19700648AD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Mark-In/Mark_In.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_ENTITLEMENTS = "Mark-In/Resources/Mark_In.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Mark-In/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.ios.swift.apple.Mark-In";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
-		57520FD72D8E9E0700195133 /* Release */ = {
+		57BFD8D12DA4E19700648AD4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Mark-In/Mark_In.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_ENTITLEMENTS = "Mark-In/Resources/Mark_In.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Mark-In/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.ios.swift.apple.Mark-In";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		57520FC12D8E9E0500195133 /* Build configuration list for PBXProject "Mark-In" */ = {
+		57BFD8BE2DA4E19600648AD4 /* Build configuration list for PBXProject "Mark-In" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				57520FD32D8E9E0700195133 /* Debug */,
-				57520FD42D8E9E0700195133 /* Release */,
+				57BFD8CD2DA4E19700648AD4 /* Debug */,
+				57BFD8CE2DA4E19700648AD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		57520FD52D8E9E0700195133 /* Build configuration list for PBXNativeTarget "Mark-In" */ = {
+		57BFD8CF2DA4E19700648AD4 /* Build configuration list for PBXNativeTarget "Mark-In" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				57520FD62D8E9E0700195133 /* Debug */,
-				57520FD72D8E9E0700195133 /* Release */,
+				57BFD8D02DA4E19700648AD4 /* Debug */,
+				57BFD8D12DA4E19700648AD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 57520FBE2D8E9E0500195133 /* Project object */;
+	rootObject = 57BFD8BB2DA4E19600648AD4 /* Project object */;
 }
