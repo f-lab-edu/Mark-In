@@ -11,9 +11,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		57AC52E72DA4FBC800BA84BD /* DesignSystem */ = {
+		57AC52E72DA4FBC800BA84BD /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = DesignSystem;
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		57AC54AD2DA5051E00BA84BD /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +37,8 @@
 		57AC52DB2DA4FBC800BA84BD = {
 			isa = PBXGroup;
 			children = (
-				57AC52E72DA4FBC800BA84BD /* DesignSystem */,
+				57AC54AD2DA5051E00BA84BD /* Resources */,
+				57AC52E72DA4FBC800BA84BD /* Sources */,
 				57AC52E62DA4FBC800BA84BD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,7 +78,8 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				57AC52E72DA4FBC800BA84BD /* DesignSystem */,
+				57AC52E72DA4FBC800BA84BD /* Sources */,
+				57AC54AD2DA5051E00BA84BD /* Resources */,
 			);
 			name = DesignSystem;
 			packageProductDependencies = (
