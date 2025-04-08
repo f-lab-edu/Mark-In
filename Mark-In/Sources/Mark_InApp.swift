@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 @main
 struct Mark_InApp: App {
+  
+  init() {
+    FontLoader.registerFont()
+  }
+  
   var body: some Scene {
     WindowGroup {
       ContentView()
