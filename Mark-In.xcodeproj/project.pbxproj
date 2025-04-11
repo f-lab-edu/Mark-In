@@ -72,7 +72,7 @@
 		57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DesignSystem.xcodeproj; path = DesignSystem/DesignSystem.xcodeproj; sourceTree = "<group>"; };
 		57AC53092DA4FC1800BA84BD /* Util.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Util.xcodeproj; path = Util/Util.xcodeproj; sourceTree = "<group>"; };
 		57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkMetadataKit.xcodeproj; path = LinkMetadataKit/LinkMetadataKit.xcodeproj; sourceTree = "<group>"; };
-		57BFD8C32DA4E19600648AD4 /* [Dev] Mark-In.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "[Dev] Mark-In.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		57BFD8C32DA4E19600648AD4 /* Mark-In.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mark-In.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -166,7 +166,7 @@
 		57BFD8C42DA4E19600648AD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				57BFD8C32DA4E19600648AD4 /* [Dev] Mark-In.app */,
+				57BFD8C32DA4E19600648AD4 /* Mark-In.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -197,7 +197,7 @@
 				57E1F9882DA8F9B40033F30C /* FirebaseFirestore */,
 			);
 			productName = "Mark-In";
-			productReference = 57BFD8C32DA4E19600648AD4 /* [Dev] Mark-In.app */;
+			productReference = 57BFD8C32DA4E19600648AD4 /* Mark-In.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -431,6 +431,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "[Dev] Mark-In";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -447,7 +448,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.ios.swift.apple.Mark-In.dev";
-				PRODUCT_NAME = "[Dev] $(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
@@ -470,6 +471,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Mark-In";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
