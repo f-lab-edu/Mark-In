@@ -22,8 +22,9 @@ struct Mark_InApp: App {
   var body: some Scene {
     WindowGroup {
       MainView()
+//        .frame(width: 900, height: 600)
     }
-    
+//    .windowResizabilityContentSize()
   }
 }
 
@@ -43,5 +44,11 @@ extension Mark_InApp {
     }
     
     FirebaseApp.configure(options: options)
+  }
+}
+
+extension Scene {
+  func windowResizabilityContentSize() -> some Scene {
+    return windowResizability(.contentSize)
   }
 }

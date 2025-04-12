@@ -16,21 +16,10 @@ struct MainView: View {
       SideBar(selectedIndex: $selectedIndex)
         .navigationSplitViewColumnWidth(min: 200, ideal: 200, max: 300)
     } detail: {
-      VStack {
-        Image(.sampleImage)
-          .resizable()
-          .aspectRatio(contentMode: .fit)
-          .foregroundStyle(.tint)
+      LinkListView()
         
-        Text("Hello, world! \(selectedIndex)")
-          .font(.pretendard(size: 30, weight: .black))
-          .foregroundStyle(.sampleColor)
-        Text("Hello, world!")
-          .font(.system(size: 30, weight: .black))
-        
-      }
-      .padding()
     }
+    
   }
 }
 
@@ -40,17 +29,20 @@ private struct SideBar: View {
   var body: some View {
     VStack(alignment: .leading) {
       List(selection: $selectedIndex) {
-        NavigationLink(value: 1) {
-          Label("전체", systemImage: "clock")
+        Section("기본") {
+          NavigationLink(value: 1) {
+            Label("전체", systemImage: "clock")
+          }
+          
+          NavigationLink(value: 2) {
+            Label("즐겨찾기", systemImage: "star")
+          }
+          
+          NavigationLink(value: 3) {
+            Label("읽지 않음", systemImage: "xmark.circle")
+          }
         }
         
-        NavigationLink(value: 2) {
-          Label("즐겨찾기", systemImage: "star")
-        }
-        
-        NavigationLink(value: 3) {
-          Label("읽지 않음", systemImage: "xmark.circle")
-        }
         
         Section("저장된 폴더") {
           NavigationLink(value: 4) {
