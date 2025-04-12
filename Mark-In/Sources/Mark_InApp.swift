@@ -21,8 +21,9 @@ struct Mark_InApp: App {
   
   var body: some Scene {
     WindowGroup {
-      ContentView()
+      MainView()
     }
+    
   }
 }
 
