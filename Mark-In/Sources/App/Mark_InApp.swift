@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
-import DesignSystem
 
 import FirebaseCore
+
+import DesignSystem
 
 @main
 struct Mark_InApp: App {
