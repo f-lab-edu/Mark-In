@@ -33,18 +33,14 @@ public class FontLoader {
         let bundleIdentifier = "kr.co.ios.swift.apple.DesignSystem"
         
         guard let bundle = Bundle(identifier: bundleIdentifier) else {
-            print("Failed to find bundle with identifier: \(bundleIdentifier)")
             return
         }
         
         Font.Pretendard.allCases.forEach {
             guard let url = bundle.url(forResource: "\($0.rawValue)", withExtension: ".ttf"),
                   CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil) else {
-                print("fail register font")
                 return
             }
         }
-        
-        print("등록 성공")
     }
 }
