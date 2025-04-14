@@ -23,14 +23,14 @@ public struct LinkMetadataProviderImpl: LinkMetadataProvider {
     let metadata = try await metadataProvider.startFetchingMetadata(for: url)
     
     do {
-      let icon = try await metadata.iconProvider?.loadDataRepresentation(for: .image)
-      let image = try await metadata.imageProvider?.loadDataRepresentation(for: .image)
+      let favicon = try await metadata.iconProvider?.loadDataRepresentation(for: .image)
+      let thumbnail = try await metadata.imageProvider?.loadDataRepresentation(for: .image)
       
       return LinkMetadata(
         url: url.absoluteString,
         title: metadata.title,
-        icon: icon,
-        image: image
+        favicon: favicon,
+        thumbnail: thumbnail
       )
     } catch {
       throw LinkMetadataError.fetchFailed
