@@ -13,8 +13,7 @@ extension NSItemProvider {
     try await withCheckedThrowingContinuation { continuation in
       _ = loadDataRepresentation(for: type) { data, error in
         if let error { continuation.resume(throwing: error) }
-        
-        continuation.resume(returning: data)
+        else { continuation.resume(returning: data) }
       }
     }
   }

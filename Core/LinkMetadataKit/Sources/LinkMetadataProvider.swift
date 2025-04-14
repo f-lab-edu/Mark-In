@@ -15,27 +15,36 @@ public struct LinkMetadataProviderImpl: LinkMetadataProvider {
   
   public init() {}
   
-  public func fetchMetadata(urlString: String) async throws -> LinkMetadata {
+  public func fetchMetadata(urlString: String) async -> Result<LinkMetadata, LinkMetadataError> {
+    /// URL 인코딩
     guard let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
           let url = URL(string: encoded)
-    else { throw LinkMetadataError.urlEncodingFailed }
+    else { return .failure(.urlEncodingFailed) }
     
-    let metadata = try await metadataProvider.startFetchingMetadata(for: url)
+    /// 메타데이터 요청
+    let metadata: LPLinkMetadata
+    do {
+      metadata = try await metadataProvider.startFetchingMetadata(for: url)
+    } catch {
+      return .failure(.concurrentFetchNotAllowed)
+    }
     
+    /// 파비콘 및 썸네일 리소스 로딩
     do {
       let favicon = try await metadata.iconProvider?.loadDataRepresentation(for: .image)
       let thumbnail = try await metadata.imageProvider?.loadDataRepresentation(for: .image)
       
-      return LinkMetadata(
+      return .success(LinkMetadata(
         url: url.absoluteString,
         title: metadata.title,
         favicon: favicon,
         thumbnail: thumbnail
-      )
+      ))
     } catch {
-      throw LinkMetadataError.fetchFailed
+      return .failure(.resourceLoadFailed)
     }
   }
 }
+
 
 
