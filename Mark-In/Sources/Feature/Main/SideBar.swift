@@ -50,7 +50,7 @@ struct SideBar: View {
         .foregroundStyle(.blue)
       
       Button(action: {
-        
+        // TODO: 구현 예정
       }, label: {
         Label("새로운 폴더 만들기", systemImage: "plus")
           .lineLimit(1)

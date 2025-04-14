@@ -15,39 +15,47 @@ private struct ViewConstants {
 }
 
 struct LinkListView: View {
-  let cellWidth: CGFloat = ViewConstants.cellWidth
-  let cellHeight = ViewConstants.cellHeight
-  let spacing: CGFloat = ViewConstants.spacing
-  
+
   var body: some View {
     GeometryReader { geometry in
-      let width = geometry.size.width
-      let numberOfColumns = max(
-        Int((width + spacing) / (cellWidth + spacing)),
-        1
-      )
-      
-      let columns = Array(
-        repeating: GridItem(
-          .flexible(minimum: cellWidth, maximum: cellWidth),
-          spacing: spacing),
-        count: numberOfColumns
-      )
+      let columns = getColumns(from: geometry.size.width)
       
       ScrollView(.vertical) {
         LazyVGrid(
           columns: columns,
           alignment: .leading,
-          spacing: spacing
+          spacing: ViewConstants.spacing
         ) {
           ForEach((0...19), id: \.self) { _ in
             LinkCell()
-              .frame(width: cellWidth, height: cellHeight)
+              .frame(
+                width: ViewConstants.cellWidth,
+                height: ViewConstants.cellHeight
+              )
           }
         }
         .padding(20)
       }
     }
+  }
+  
+  private func getColumns(from width: Double) -> [GridItem] {
+    let cellWidth = ViewConstants.cellWidth
+    let cellHeight = ViewConstants.cellHeight
+    let spacing = ViewConstants.spacing
+    let numberOfColumns = max(
+      Int((width + spacing) / (cellWidth + spacing)), 1
+    )
+    
+    return Array(
+      repeating: GridItem(
+        .flexible(
+          minimum: cellWidth,
+          maximum: cellWidth
+        ),
+        spacing: spacing),
+      count: numberOfColumns
+    )
   }
 }
 

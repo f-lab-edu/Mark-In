@@ -15,7 +15,6 @@ struct MainView: View {
   
   var body: some View {
     VStack {
-
       NavigationSplitView {
         SideBar(selectedIndex: $selectedIndex)
           .navigationSplitViewColumnWidth(
@@ -37,13 +36,13 @@ struct MainView: View {
   private var toolBarButtons: some View {
     Group {
       Button {
-        
+        // TODO: 구현 예정
       } label: {
         Image(systemName: "rectangle.grid.2x2")
       }
       
       Button {
-        
+        // TODO: 구현 예정
       } label: {
         Image(systemName: "rectangle.grid.1x2")
       }
@@ -51,7 +50,7 @@ struct MainView: View {
       Spacer()
       
       Button {
-        
+        // TODO: 구현 예정
       } label: {
         HStack(spacing: 0) {
           Image(systemName: "arrow.up.arrow.down")
@@ -64,19 +63,19 @@ struct MainView: View {
 
       Spacer()
       Button {
-        
+        // TODO: 구현 예정
       } label: {
         Image(systemName: "plus")
       }
       Button {
-        
+        // TODO: 구현 예정
       } label: {
         Image(systemName: "checkmark")
       }
       
       Spacer()
       Button {
-        
+        // TODO: 구현 예정
       } label: {
         Image(systemName: "person.circle.fill")
           .resizable()
