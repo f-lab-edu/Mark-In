@@ -6,6 +6,35 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		57709AD62DACDD5200F0AC90 /* LinkMetadataKitInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC54A62DA503DE00BA84BD /* LinkMetadataKitInterface.framework */; };
+		57709AD72DACDD5200F0AC90 /* LinkMetadataKitInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC54A62DA503DE00BA84BD /* LinkMetadataKitInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		57709AD82DACDD5200F0AC90 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57AC53102DA4FC4800BA84BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 57AC54A52DA503DE00BA84BD;
+			remoteInfo = LinkMetadataKitInterface;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		57709ADA2DACDD5200F0AC90 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57709AD72DACDD5200F0AC90 /* LinkMetadataKitInterface.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		57AC53192DA4FC4800BA84BD /* LinkMetadataKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LinkMetadataKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57AC54A62DA503DE00BA84BD /* LinkMetadataKitInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LinkMetadataKitInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57709AD62DACDD5200F0AC90 /* LinkMetadataKitInterface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,14 +72,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57709AD52DACDD5200F0AC90 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		57AC530F2DA4FC4800BA84BD = {
 			isa = PBXGroup;
 			children = (
 				57AC531B2DA4FC4800BA84BD /* Sources */,
 				57AC54A72DA503DE00BA84BD /* Interface */,
+				57709AD52DACDD5200F0AC90 /* Frameworks */,
 				57AC531A2DA4FC4800BA84BD /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		57AC531A2DA4FC4800BA84BD /* Products */ = {
 			isa = PBXGroup;
@@ -88,10 +128,12 @@
 				57AC53152DA4FC4800BA84BD /* Sources */,
 				57AC53162DA4FC4800BA84BD /* Frameworks */,
 				57AC53172DA4FC4800BA84BD /* Resources */,
+				57709ADA2DACDD5200F0AC90 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				57709AD92DACDD5200F0AC90 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				57AC531B2DA4FC4800BA84BD /* Sources */,
@@ -197,6 +239,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		57709AD92DACDD5200F0AC90 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 57AC54A52DA503DE00BA84BD /* LinkMetadataKitInterface */;
+			targetProxy = 57709AD82DACDD5200F0AC90 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		57AC531E2DA4FC4800BA84BD /* Debug */ = {
