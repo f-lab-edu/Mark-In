@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import LinkMetadataKitInterface
-
 import LinkPresentation
+
+import LinkMetadataKitInterface
 
 public struct LinkMetadataProviderImpl: LinkMetadataProvider {
   private let metadataProvider = LPMetadataProvider()

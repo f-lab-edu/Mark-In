@@ -13,5 +13,8 @@ public enum LinkMetadataError: Error {
 }
 
 public protocol LinkMetadataProvider {
+  /// URL 주소를 기반으로 URL 메타데이터를 가져옵니다.
+  /// - Parameter urlString: url 문자열
+  /// - Returns: URL 메타데이터
   func fetchMetadata(urlString: String) async throws -> LinkMetadata
 }
