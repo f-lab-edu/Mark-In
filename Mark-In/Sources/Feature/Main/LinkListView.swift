@@ -8,7 +8,7 @@
 import SwiftUI
 import DesignSystem
 
-private struct ViewConstants {
+private enum ViewConstants {
   static let cellWidth: CGFloat = 210
   static let cellHeight: CGFloat = 160
   static let spacing: CGFloat = 14
