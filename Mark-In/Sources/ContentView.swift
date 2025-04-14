@@ -6,14 +6,22 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 struct ContentView: View {
   var body: some View {
     VStack {
-      Image(systemName: "globe")
-        .imageScale(.large)
+      Image(.sampleImage)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
         .foregroundStyle(.tint)
+      
       Text("Hello, world!")
+        .font(.pretendard(size: 30, weight: .black))
+        .foregroundStyle(.sampleColor)
+      Text("Hello, world!")
+        .font(.system(size: 30, weight: .black))
+      
     }
     .padding()
     

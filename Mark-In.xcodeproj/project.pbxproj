@@ -6,7 +6,72 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		57AC56A22DA5120600BA84BD /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56A12DA511F800BA84BD /* DesignSystem.framework */; };
+		57AC56A32DA5120600BA84BD /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56A12DA511F800BA84BD /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57AC56A42DA5120600BA84BD /* LinkMetadataKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC567D2DA511F200BA84BD /* LinkMetadataKit.framework */; };
+		57AC56A52DA5120600BA84BD /* LinkMetadataKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC567D2DA511F200BA84BD /* LinkMetadataKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57AC56A62DA5120600BA84BD /* LinkMetadataKitInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC567F2DA511F200BA84BD /* LinkMetadataKitInterface.framework */; };
+		57AC56A72DA5120600BA84BD /* LinkMetadataKitInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC567F2DA511F200BA84BD /* LinkMetadataKitInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57AC56A82DA5120600BA84BD /* Util.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56732DA511E900BA84BD /* Util.framework */; };
+		57AC56A92DA5120600BA84BD /* Util.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56732DA511E900BA84BD /* Util.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57E1F9852DA8F9B40033F30C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 57E1F9842DA8F9B40033F30C /* FirebaseAuth */; };
+		57E1F9872DA8F9B40033F30C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 57E1F9862DA8F9B40033F30C /* FirebaseCore */; };
+		57E1F9892DA8F9B40033F30C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 57E1F9882DA8F9B40033F30C /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		57AC56722DA511E900BA84BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57AC53092DA4FC1800BA84BD /* Util.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57AC52FF2DA4FC1800BA84BD;
+			remoteInfo = Util;
+		};
+		57AC567C2DA511F200BA84BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57AC53192DA4FC4800BA84BD;
+			remoteInfo = LinkMetadataKit;
+		};
+		57AC567E2DA511F200BA84BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57AC54A62DA503DE00BA84BD;
+			remoteInfo = LinkMetadataKitInterface;
+		};
+		57AC56A02DA511F800BA84BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57AC52E52DA4FBC800BA84BD;
+			remoteInfo = DesignSystem;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		57AC55452DA507EC00BA84BD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57AC56A92DA5120600BA84BD /* Util.framework in Embed Frameworks */,
+				57AC56A72DA5120600BA84BD /* LinkMetadataKitInterface.framework in Embed Frameworks */,
+				57AC56A52DA5120600BA84BD /* LinkMetadataKit.framework in Embed Frameworks */,
+				57AC56A32DA5120600BA84BD /* DesignSystem.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DesignSystem.xcodeproj; path = DesignSystem/DesignSystem.xcodeproj; sourceTree = "<group>"; };
+		57AC53092DA4FC1800BA84BD /* Util.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Util.xcodeproj; path = Util/Util.xcodeproj; sourceTree = "<group>"; };
+		57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkMetadataKit.xcodeproj; path = LinkMetadataKit/LinkMetadataKit.xcodeproj; sourceTree = "<group>"; };
 		57BFD8C32DA4E19600648AD4 /* Mark-In.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mark-In.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -23,16 +88,75 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57AC56A82DA5120600BA84BD /* Util.framework in Frameworks */,
+				57E1F9852DA8F9B40033F30C /* FirebaseAuth in Frameworks */,
+				57AC56A62DA5120600BA84BD /* LinkMetadataKitInterface.framework in Frameworks */,
+				57AC56A42DA5120600BA84BD /* LinkMetadataKit.framework in Frameworks */,
+				57E1F9872DA8F9B40033F30C /* FirebaseCore in Frameworks */,
+				57AC56A22DA5120600BA84BD /* DesignSystem.framework in Frameworks */,
+				57E1F9892DA8F9B40033F30C /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57AC55422DA507EC00BA84BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		57AC565F2DA511A900BA84BD /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */,
+				57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		57AC56602DA511AF00BA84BD /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				57AC53092DA4FC1800BA84BD /* Util.xcodeproj */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		57AC566F2DA511E900BA84BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57AC56732DA511E900BA84BD /* Util.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		57AC56782DA511F200BA84BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57AC567D2DA511F200BA84BD /* LinkMetadataKit.framework */,
+				57AC567F2DA511F200BA84BD /* LinkMetadataKitInterface.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		57AC569D2DA511F800BA84BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57AC56A12DA511F800BA84BD /* DesignSystem.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		57BFD8BA2DA4E19600648AD4 = {
 			isa = PBXGroup;
 			children = (
+				57AC56602DA511AF00BA84BD /* Shared */,
+				57AC565F2DA511A900BA84BD /* Core */,
 				57BFD8C52DA4E19600648AD4 /* Mark-In */,
+				57AC55422DA507EC00BA84BD /* Frameworks */,
 				57BFD8C42DA4E19600648AD4 /* Products */,
 			);
 			indentWidth = 2;
@@ -57,6 +181,7 @@
 				57BFD8BF2DA4E19600648AD4 /* Sources */,
 				57BFD8C02DA4E19600648AD4 /* Frameworks */,
 				57BFD8C12DA4E19600648AD4 /* Resources */,
+				57AC55452DA507EC00BA84BD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -67,6 +192,9 @@
 			);
 			name = "Mark-In";
 			packageProductDependencies = (
+				57E1F9842DA8F9B40033F30C /* FirebaseAuth */,
+				57E1F9862DA8F9B40033F30C /* FirebaseCore */,
+				57E1F9882DA8F9B40033F30C /* FirebaseFirestore */,
 			);
 			productName = "Mark-In";
 			productReference = 57BFD8C32DA4E19600648AD4 /* Mark-In.app */;
@@ -96,15 +224,63 @@
 			);
 			mainGroup = 57BFD8BA2DA4E19600648AD4;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				57E1F9832DA8F9B40033F30C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 57BFD8C42DA4E19600648AD4 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 57AC569D2DA511F800BA84BD /* Products */;
+					ProjectRef = 57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */;
+				},
+				{
+					ProductGroup = 57AC56782DA511F200BA84BD /* Products */;
+					ProjectRef = 57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */;
+				},
+				{
+					ProductGroup = 57AC566F2DA511E900BA84BD /* Products */;
+					ProjectRef = 57AC53092DA4FC1800BA84BD /* Util.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				57BFD8C22DA4E19600648AD4 /* Mark-In */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		57AC56732DA511E900BA84BD /* Util.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Util.framework;
+			remoteRef = 57AC56722DA511E900BA84BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		57AC567D2DA511F200BA84BD /* LinkMetadataKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LinkMetadataKit.framework;
+			remoteRef = 57AC567C2DA511F200BA84BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		57AC567F2DA511F200BA84BD /* LinkMetadataKitInterface.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LinkMetadataKitInterface.framework;
+			remoteRef = 57AC567E2DA511F200BA84BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		57AC56A12DA511F800BA84BD /* DesignSystem.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DesignSystem.framework;
+			remoteRef = 57AC56A02DA511F800BA84BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		57BFD8C12DA4E19600648AD4 /* Resources */ = {
@@ -246,7 +422,7 @@
 		57BFD8D02DA4E19700648AD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Mark-In/Resources/Mark_In.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -255,6 +431,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "[Dev] Mark-In";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -270,7 +447,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.ios.swift.apple.Mark-In";
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.ios.swift.apple.Mark-In.dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -294,6 +471,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Mark-In";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -310,7 +488,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.ios.swift.apple.Mark-In";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(BUNDLE_NAME_PREFIX)$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
@@ -343,6 +521,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		57E1F9832DA8F9B40033F30C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		57E1F9842DA8F9B40033F30C /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57E1F9832DA8F9B40033F30C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		57E1F9862DA8F9B40033F30C /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57E1F9832DA8F9B40033F30C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		57E1F9882DA8F9B40033F30C /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57E1F9832DA8F9B40033F30C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 57BFD8BB2DA4E19600648AD4 /* Project object */;
 }
