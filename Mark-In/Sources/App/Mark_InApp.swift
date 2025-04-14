@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
-import DesignSystem
 
 import FirebaseCore
+
+import DesignSystem
 
 @main
 struct Mark_InApp: App {
@@ -16,12 +17,13 @@ struct Mark_InApp: App {
   init() {
     FontLoader.registerFont()
     
-    Self.configureFirebase()
+//    Self.configureFirebase()
   }
   
   var body: some Scene {
     WindowGroup {
-      ContentView()
+      MainView()
+        .frame(minWidth: 500, minHeight: 500)
     }
   }
 }
