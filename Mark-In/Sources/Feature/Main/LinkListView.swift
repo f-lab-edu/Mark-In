@@ -47,7 +47,6 @@ struct LinkListView: View {
         }
         .padding(20)
       }
-      .scrollIndicators(.hidden, axes: .vertical)
     }
   }
 }

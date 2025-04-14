@@ -16,15 +16,14 @@ struct Mark_InApp: App {
   init() {
     FontLoader.registerFont()
     
-    Self.configureFirebase()
+//    Self.configureFirebase()
   }
   
   var body: some Scene {
     WindowGroup {
       MainView()
-//        .frame(width: 900, height: 600)
+        .frame(minWidth: 500, minHeight: 500)
     }
-//    .windowResizabilityContentSize()
   }
 }
 
@@ -44,11 +43,5 @@ extension Mark_InApp {
     }
     
     FirebaseApp.configure(options: options)
-  }
-}
-
-extension Scene {
-  func windowResizabilityContentSize() -> some Scene {
-    return windowResizability(.contentSize)
   }
 }

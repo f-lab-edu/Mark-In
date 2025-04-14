@@ -40,11 +40,9 @@ public class FontLoader {
         Font.Pretendard.allCases.forEach {
             guard let url = bundle.url(forResource: "\($0.rawValue)", withExtension: ".ttf"),
                   CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil) else {
-                print("fail register font")
+                print("[폰트 등록 실패]")
                 return
             }
         }
-        
-        print("등록 성공")
     }
 }
