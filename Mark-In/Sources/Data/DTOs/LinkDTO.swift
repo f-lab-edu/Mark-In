@@ -10,7 +10,7 @@ import Foundation
 struct LinkDTO: Codable {
   var id: String
   var url: String
-  var title: String
+  var title: String?
   var thumbnailUrl: String?
   var faviconUrl: String?
   var createdBy: Date
