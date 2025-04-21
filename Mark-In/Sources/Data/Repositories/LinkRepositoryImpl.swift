@@ -16,9 +16,7 @@ struct LinkRepositoryImpl: LinkRepository {
   func createLink(_ link: Link) throws -> Link {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let linkDocRef = db
-      .collection("users").document("testUser")
-      .collection("links").document()
+    let linkDocRef = db.collection("users/testUser/links").document()
     
     /// 2. Entity를 DTO로 변환 및 새로 생성된 문서 ID를 프로퍼티에 저장
     var linkDTO = LinkDTO(link)
@@ -34,9 +32,7 @@ struct LinkRepositoryImpl: LinkRepository {
   func fetchAllLinks() async throws -> [Link] {
     /// 1. Links 컬렉션 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let linkColRef = db
-      .collection("users").document("testUser")
-      .collection("links")
+    let linkColRef = db.collection("users/testUser/links")
     
     /// 2. 컬렉션의 모든 문서 가져오기
     let snapshot = try await linkColRef.getDocuments()
@@ -50,9 +46,7 @@ struct LinkRepositoryImpl: LinkRepository {
   func updateLink(_ link: Link) throws {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let linkDocRef = db
-      .collection("users").document("testUser")
-      .collection("links").document(link.id)
+    let linkDocRef = db.document("users/testUser/links/\(link.id)")
     
     /// 2. Entity를 DTO로 변환
     let linkDTO = LinkDTO(link)
@@ -64,9 +58,7 @@ struct LinkRepositoryImpl: LinkRepository {
   func deleteLink(_ link: Link) async throws {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let linkDocRef = db
-      .collection("users").document("testUser")
-      .collection("links").document(link.id)
+    let linkDocRef = db.document("users/testUser/links/\(link.id)")
     
     /// 2. Link 삭제
     try await linkDocRef.delete()
