@@ -8,12 +8,12 @@
 import Foundation
 
 struct Link {
-  var id: String
+  var id: String = ""
   var url: String
-  var title: String
+  var title: String?
   var thumbnailUrl: String?
   var faviconUrl: String?
-  var createdBy: Date
+  var createdBy: Date = .now
   var lastAccessedAt: Date?
   var folderId: String?
 }
