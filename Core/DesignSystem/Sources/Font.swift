@@ -10,37 +10,37 @@ import CoreText
 import SwiftUI
 
 public extension Font {
-    enum Pretendard: String, CaseIterable {
-        case black = "Pretendard-Black"
-        case extraBold = "Pretendard-ExtraBold"
-        case bold = "Pretendard-Bold"
-        case semiBold = "Pretendard-SemiBold"
-        case medium = "Pretendard-Medium"
-        case regular = "Pretendard-Regular"
-        case light = "Pretendard-Light"
-        case extraLight = "Pretendard-ExtraLight"
-        case thin = "Pretendard-Thin"
-    }
-    
-    static func pretendard(size: CGFloat, weight: Pretendard) -> Font {
-        return .custom(weight.rawValue, size: size)
-    }
+  enum PretendardWeight: String, CaseIterable {
+    case black = "Pretendard-Black"
+    case extraBold = "Pretendard-ExtraBold"
+    case bold = "Pretendard-Bold"
+    case semiBold = "Pretendard-SemiBold"
+    case medium = "Pretendard-Medium"
+    case regular = "Pretendard-Regular"
+    case light = "Pretendard-Light"
+    case extraLight = "Pretendard-ExtraLight"
+    case thin = "Pretendard-Thin"
+  }
+  
+  static func pretendard(size: CGFloat, weight: PretendardWeight) -> Font {
+    return .custom(weight.rawValue, size: size)
+  }
 }
 
 public class FontLoader {
+  
+  public static func registerFont() {
+    let bundleIdentifier = "kr.co.ios.swift.apple.DesignSystem"
     
-    public static func registerFont() {
-        let bundleIdentifier = "kr.co.ios.swift.apple.DesignSystem"
-        
-        guard let bundle = Bundle(identifier: bundleIdentifier) else {
-            return
-        }
-        
-        Font.Pretendard.allCases.forEach {
-            guard let url = bundle.url(forResource: "\($0.rawValue)", withExtension: ".ttf"),
-                  CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil) else {
-                return
-            }
-        }
+    guard let bundle = Bundle(identifier: bundleIdentifier) else {
+      return
     }
+    
+    Font.PretendardWeight.allCases.forEach {
+      guard let url = bundle.url(forResource: "\($0.rawValue)", withExtension: ".ttf"),
+            CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil) else {
+        return
+      }
+    }
+  }
 }
