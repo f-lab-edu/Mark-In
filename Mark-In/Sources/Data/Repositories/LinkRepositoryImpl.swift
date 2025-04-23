@@ -11,9 +11,11 @@ import FirebaseFirestore
 
 struct LinkRepositoryImpl: LinkRepository {
   
+  typealias VoidCheckedContinuation = CheckedContinuation<Void, any Error>
+  
   private let db = Firestore.firestore()
   
-  func createLink(_ link: Link) throws -> Link {
+  func createLink(_ link: Link) async throws -> Link {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let linkDocRef = db.collection("users/testUser/links").document()
@@ -23,7 +25,16 @@ struct LinkRepositoryImpl: LinkRepository {
     linkDTO.id = linkDocRef.documentID
     
     /// 3. Firestore에 추가
-    try linkDocRef.setData(from: linkDTO)
+    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
+      do {
+        try linkDocRef.setData(from: linkDTO) { error in
+          if let error { continuation.resume(throwing: error) }
+          else { continuation.resume(returning: ()) }
+        }
+      } catch {
+        continuation.resume(throwing: error)
+      }
+    }
     
     /// 4. DocumentID 업데이트 된 LinkEntity로 리턴
     return linkDTO.toEntity()
@@ -43,7 +54,7 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func updateLink(_ link: Link) throws {
+  func updateLink(_ link: Link) async throws {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let linkDocRef = db.document("users/testUser/links/\(link.id)")
@@ -52,7 +63,16 @@ struct LinkRepositoryImpl: LinkRepository {
     let linkDTO = LinkDTO(link)
     
     /// 3. 업데이트
-    try linkDocRef.setData(from: linkDTO)
+    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
+      do {
+        try linkDocRef.setData(from: linkDTO) { error in
+          if let error { continuation.resume(throwing: error) }
+          else { continuation.resume(returning: ()) }
+        }
+      } catch {
+        continuation.resume(throwing: error)
+      }
+    }
   }
   
   func deleteLink(_ link: Link) async throws {
