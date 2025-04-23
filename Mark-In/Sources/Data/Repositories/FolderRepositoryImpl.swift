@@ -11,9 +11,11 @@ import FirebaseFirestore
 
 struct FolderRepositoryImpl: FolderRepository {
   
+  typealias VoidCheckedContinuation = CheckedContinuation<Void, any Error>
+  
   private let db = Firestore.firestore()
   
-  func createFolder(_ folder: Folder) throws -> Folder {
+  func createFolder(_ folder: Folder) async throws -> Folder {
     /// 1. Folder 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let folderDocRef = db.collection("users/testUser/folders").document()
@@ -23,7 +25,16 @@ struct FolderRepositoryImpl: FolderRepository {
     folderDTO.id = folderDocRef.documentID
     
     /// 3. Firestore에 추가
-    try folderDocRef.setData(from: folderDTO)
+    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
+      do {
+        try folderDocRef.setData(from: folderDTO) { error in
+          if let error { continuation.resume(throwing: error) }
+          else { continuation.resume(returning: ()) }
+        }
+      } catch {
+        continuation.resume(throwing: error)
+      }
+    }
     
     /// 4. DocumentID가 업데이트 된 Folder Entity로 리턴
     return folderDTO.toEntity()
@@ -43,7 +54,7 @@ struct FolderRepositoryImpl: FolderRepository {
     }
   }
   
-  func updateFolder(_ folder: Folder) throws {
+  func updateFolder(_ folder: Folder) async throws {
     /// 1. Folder 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let folderDocRef = db.document("users/testUser/folders/\(folder.id)")
@@ -52,7 +63,16 @@ struct FolderRepositoryImpl: FolderRepository {
     let folderDTO = FolderDTO(folder)
     
     /// 3. 업데이트
-    try folderDocRef.setData(from: folderDTO)
+    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
+      do {
+        try folderDocRef.setData(from: folderDTO) { error in
+          if let error { continuation.resume(throwing: error) }
+          else { continuation.resume(returning: ()) }
+        }
+      } catch {
+        continuation.resume(throwing: error)
+      }
+    }
   }
   
   func deleteFolder(_ folder: Folder) async throws {

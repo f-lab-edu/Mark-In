@@ -8,8 +8,8 @@
 import Foundation
 
 protocol FolderRepository {
-  func createFolder(_ folder: Folder) throws -> Folder
+  func createFolder(_ folder: Folder) async throws -> Folder
   func fetchAllFolders() async throws -> [Folder]
-  func updateFolder(_ folder: Folder) throws
+  func updateFolder(_ folder: Folder) async throws
   func deleteFolder(_ folder: Folder) async throws
 }
