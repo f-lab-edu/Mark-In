@@ -40,7 +40,6 @@ final class MainViewModel: Reducer {
     case .refresh:
       (1...3).forEach { state.tabs.append(.folder(.init(id: "\($0)", name: "\($0)"))) }
       state.isLoading = false
-      print(state.tabs)
       return .none
       
     case .changeTab(let tab):
@@ -51,13 +50,9 @@ final class MainViewModel: Reducer {
   
   private func handleEffect(_ effect: Effect<Action>) {
     switch effect {
-    case .none:
-      break
+    case .none: break
     case .run(let action):
-      Task.detached {
-        let act = await action()
-        self.send(act)
-      }
+      Task { send(await action()) }
     }
   }
 }
