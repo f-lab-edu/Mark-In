@@ -15,6 +15,8 @@ private enum ViewConstants {
 }
 
 struct LinkListView: View {
+  
+  let viewModel: MainViewModel
 
   var body: some View {
     GeometryReader { geometry in
@@ -91,6 +93,6 @@ private struct LinkCell: View {
 }
 
 #Preview {
-  LinkListView()
+  LinkListView(viewModel: MainViewModel())
     .frame(width: 600, height: 600)
 }

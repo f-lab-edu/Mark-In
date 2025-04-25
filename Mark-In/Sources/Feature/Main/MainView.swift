@@ -10,26 +10,37 @@ import DesignSystem
 
 
 struct MainView: View {
-  @State private var selectedIndex: Int? = 1
+  @State private var viewModel = MainViewModel()
   @State private var searchText: String = ""
   
   var body: some View {
-    VStack {
+    ZStack {
       NavigationSplitView {
-        SideBar(selectedIndex: $selectedIndex)
+        SideBar(viewModel: viewModel)
           .navigationSplitViewColumnWidth(
             min: 200, ideal: 200, max: 300
           )
       } detail: {
-        LinkListView()
+        LinkListView(viewModel: viewModel)
       }
       .navigationTitle("")
-    }
-    .searchable(text: $searchText, placement: .toolbar)
-    .toolbar {
-      ToolbarItemGroup(placement: .primaryAction) {
-        toolBarButtons
+      .searchable(text: $searchText, placement: .toolbar)
+      .toolbar {
+        ToolbarItemGroup(placement: .primaryAction) {
+          toolBarButtons
+        }
       }
+      .disabled(viewModel.state.isLoading)
+      
+      if viewModel.state.isLoading {
+        ProgressView()
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .contentShape(Rectangle())
+          .background(.gray.opacity(0.5))
+      }
+    }
+    .onAppear {
+      viewModel.send(.onAppear)
     }
   }
   
