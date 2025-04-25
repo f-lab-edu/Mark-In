@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import DesignSystem
 
+import DesignSystem
 
 struct MainView: View {
   @State private var viewModel = MainViewModel()
