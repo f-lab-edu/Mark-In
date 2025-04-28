@@ -12,6 +12,7 @@ import DesignSystem
 struct MainView: View {
   @State private var viewModel = MainViewModel()
   @State private var searchText: String = ""
+  @State private var isAddMode: Bool = false
   
   var body: some View {
     ZStack {
@@ -41,6 +42,9 @@ struct MainView: View {
     }
     .onAppear {
       viewModel.send(.onAppear)
+    }
+    .sheet(isPresented: $isAddMode) {
+      AddLinkView()
     }
   }
   
@@ -75,6 +79,7 @@ struct MainView: View {
       Spacer()
       Button {
         // TODO: 구현 예정
+        isAddMode = true
       } label: {
         Image(systemName: "plus")
       }
