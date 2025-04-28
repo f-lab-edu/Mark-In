@@ -6,38 +6,38 @@
 //
 
 import SwiftUI
+
 import DesignSystem
 
 struct SideBar: View {
-  @Binding var selectedIndex: Int?
+  let viewModel: MainViewModel
   
   var body: some View {
     VStack(alignment: .leading) {
       
-      List(selection: $selectedIndex) {
+      List(selection: .init(
+        get: { viewModel.state.selectedTab },
+        set: { viewModel.send(.changeTab($0)) })
+      ) {
         Section("기본") {
-          NavigationLink(value: 1) {
-            Label("전체", systemImage: "clock")
-          }
-          
-          NavigationLink(value: 2) {
-            Label("즐겨찾기", systemImage: "star")
-          }
-          
-          NavigationLink(value: 3) {
-            Label("읽지 않음", systemImage: "xmark.circle")
+          ForEach(
+            viewModel.state.tabs.filter { !$0.isFolder },
+            id: \.self
+          ) { tab in
+            NavigationLink(value: tab) {
+              Label(tab.title, systemImage: tab.icon)
+            }
           }
         }
         
         Section("저장된 폴더") {
-          NavigationLink(value: 4) {
-            Label("폴더1", systemImage: "folder")
-          }
-          NavigationLink(value: 5) {
-            Label("폴더2", systemImage: "folder")
-          }
-          NavigationLink(value: 6) {
-            Label("폴더3", systemImage: "folder")
+          ForEach(
+            viewModel.state.tabs.filter { $0.isFolder },
+            id: \.self
+          ) { tab in
+            NavigationLink(value: tab) {
+              Label(tab.title, systemImage: tab.icon)
+            }
           }
         }
       }
@@ -63,6 +63,5 @@ struct SideBar: View {
 }
 
 #Preview {
-  @Previewable @State var selectedIndex: Int? = 1
-  SideBar(selectedIndex: $selectedIndex)
+  SideBar(viewModel: MainViewModel())
 }

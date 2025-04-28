@@ -9,28 +9,39 @@ import SwiftUI
 
 import DesignSystem
 
-
 struct MainView: View {
-  @State private var selectedIndex: Int? = 1
+  @State private var viewModel = MainViewModel()
   @State private var searchText: String = ""
   @State private var isAddMode: Bool = false
   
   var body: some View {
-    
-    NavigationSplitView {
-      SideBar(selectedIndex: $selectedIndex)
-        .navigationSplitViewColumnWidth(
-          min: 200, ideal: 200, max: 300
-        )
-    } detail: {
-      LinkListView()
-    }
-    .navigationTitle("")
-    .searchable(text: $searchText, placement: .toolbar)
-    .toolbar {
-      ToolbarItemGroup(placement: .primaryAction) {
-        toolBarButtons
+    ZStack {
+      NavigationSplitView {
+        SideBar(viewModel: viewModel)
+          .navigationSplitViewColumnWidth(
+            min: 200, ideal: 200, max: 300
+          )
+      } detail: {
+        LinkListView(viewModel: viewModel)
       }
+      .navigationTitle("")
+      .searchable(text: $searchText, placement: .toolbar)
+      .toolbar {
+        ToolbarItemGroup(placement: .primaryAction) {
+          toolBarButtons
+        }
+      }
+      .disabled(viewModel.state.isLoading)
+      
+      if viewModel.state.isLoading {
+        ProgressView()
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .contentShape(Rectangle())
+          .background(.gray.opacity(0.5))
+      }
+    }
+    .onAppear {
+      viewModel.send(.onAppear)
     }
     .sheet(isPresented: $isAddMode) {
       AddLinkView()
