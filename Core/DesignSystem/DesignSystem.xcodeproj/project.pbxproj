@@ -41,7 +41,9 @@
 				57AC52E72DA4FBC800BA84BD /* Sources */,
 				57AC52E62DA4FBC800BA84BD /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		57AC52E62DA4FBC800BA84BD /* Products */ = {
 			isa = PBXGroup;
