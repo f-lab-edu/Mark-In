@@ -15,6 +15,7 @@
 		57AC56A72DA5120600BA84BD /* LinkMetadataKitInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC567F2DA511F200BA84BD /* LinkMetadataKitInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57AC56A82DA5120600BA84BD /* Util.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56732DA511E900BA84BD /* Util.framework */; };
 		57AC56A92DA5120600BA84BD /* Util.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56732DA511E900BA84BD /* Util.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57B5F82E2DC08B400061F0DE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 57B5F82D2DC08B400061F0DE /* FirebaseStorage */; };
 		57E1F9852DA8F9B40033F30C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 57E1F9842DA8F9B40033F30C /* FirebaseAuth */; };
 		57E1F9872DA8F9B40033F30C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 57E1F9862DA8F9B40033F30C /* FirebaseCore */; };
 		57E1F9892DA8F9B40033F30C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 57E1F9882DA8F9B40033F30C /* FirebaseFirestore */; };
@@ -93,6 +94,7 @@
 				57AC56A62DA5120600BA84BD /* LinkMetadataKitInterface.framework in Frameworks */,
 				57AC56A42DA5120600BA84BD /* LinkMetadataKit.framework in Frameworks */,
 				57E1F9872DA8F9B40033F30C /* FirebaseCore in Frameworks */,
+				57B5F82E2DC08B400061F0DE /* FirebaseStorage in Frameworks */,
 				57AC56A22DA5120600BA84BD /* DesignSystem.framework in Frameworks */,
 				57E1F9892DA8F9B40033F30C /* FirebaseFirestore in Frameworks */,
 			);
@@ -195,6 +197,7 @@
 				57E1F9842DA8F9B40033F30C /* FirebaseAuth */,
 				57E1F9862DA8F9B40033F30C /* FirebaseCore */,
 				57E1F9882DA8F9B40033F30C /* FirebaseFirestore */,
+				57B5F82D2DC08B400061F0DE /* FirebaseStorage */,
 			);
 			productName = "Mark-In";
 			productReference = 57BFD8C32DA4E19600648AD4 /* Mark-In.app */;
@@ -534,6 +537,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		57B5F82D2DC08B400061F0DE /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57E1F9832DA8F9B40033F30C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		57E1F9842DA8F9B40033F30C /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 57E1F9832DA8F9B40033F30C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
