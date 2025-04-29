@@ -7,7 +7,7 @@
 
 import Foundation
 
-@Observable
+@MainActor @Observable
 final class MainViewModel: Reducer {
   struct State {
     var isLoading: Bool = true
@@ -50,9 +50,13 @@ final class MainViewModel: Reducer {
   
   private func handleEffect(_ effect: Effect<Action>) {
     switch effect {
-    case .none: break
+    case .none:
+      break
     case .run(let action):
-      Task { send(await action()) }
+      Task.detached { [weak self] in
+        let newAction = await action()
+        await self?.send(newAction)
+      }
     }
   }
 }
