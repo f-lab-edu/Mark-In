@@ -25,7 +25,7 @@ struct LinkRepositoryImpl: LinkRepository {
     self.linkMetadataProvider = linkMetadataProvider
   }
   
-  func createLink(_ link: WriteLink) async throws -> Link {
+  func create(_ link: WriteLink) async throws -> Link {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let linkDocRef = db.collection("users/testUser/links").document()
@@ -64,7 +64,7 @@ struct LinkRepositoryImpl: LinkRepository {
     return linkDTO.toEntity()
   }
   
-  func fetchAllLinks() async throws -> [Link] {
+  func fetchAll() async throws -> [Link] {
     /// 1. Links 컬렉션 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let linkColRef = db.collection("users/testUser/links")
@@ -78,7 +78,7 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func updateLink(_ link: Link) async throws {
+  func update(_ link: Link) async throws {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let linkDocRef = db.document("users/testUser/links/\(link.id)")
@@ -108,7 +108,7 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func deleteLink(_ link: Link) async throws {
+  func delete(_ link: Link) async throws {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let linkDocRef = db.document("users/testUser/links/\(link.id)")

@@ -8,8 +8,8 @@
 import Foundation
 
 protocol LinkRepository {
-  func createLink(_ link: WriteLink) async throws -> Link
-  func fetchAllLinks() async throws -> [Link]
-  func updateLink(_ link: Link) async throws
-  func deleteLink(_ link: Link) async throws
+  func create(_ link: WriteLink) async throws -> Link
+  func fetchAll() async throws -> [Link]
+  func update(_ link: Link) async throws
+  func delete(_ link: Link) async throws
 }
