@@ -61,36 +61,6 @@ final class MainViewModel: Reducer {
   }
 }
 
-enum SidebarTab: Hashable {
-  case total
-  case pin
-  case nonRead
-  case folder(TestFolder)
-  
-  var title: String {
-    switch self {
-    case .total: "전체"
-    case .pin: "즐겨찾기"
-    case .nonRead: "읽지 않음"
-    case .folder(let folder): folder.name
-    }
-  }
-  
-  var icon: String {
-    switch self {
-    case .total: "clock"
-    case .pin: "star"
-    case .nonRead: "xmark.circle"
-    case .folder(_): "folder"
-    }
-  }
-  
-  var isFolder: Bool {
-    if case .folder(_) = self { true }
-    else { false }
-  }
-}
-
 // TODO: 이후 제거 예정
 struct TestFolder: Hashable {
   var id: String
