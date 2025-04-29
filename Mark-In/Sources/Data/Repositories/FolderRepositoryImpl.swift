@@ -15,7 +15,7 @@ struct FolderRepositoryImpl: FolderRepository {
   
   private let db = Firestore.firestore()
   
-  func create(_ folder: Folder) async throws -> Folder {
+  func create(_ folder: WriteFolder) async throws -> Folder {
     /// 1. Folder 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let folderDocRef = db.collection("users/testUser/folders").document()
