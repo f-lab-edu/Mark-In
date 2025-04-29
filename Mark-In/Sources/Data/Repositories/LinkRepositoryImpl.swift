@@ -34,7 +34,7 @@ struct LinkRepositoryImpl: LinkRepository {
     let metadata = try await linkMetadataProvider.fetchMetadata(urlString: link.url).get()
     
     /// 3. 썸네일, 파비콘 이미지 업로드
-    let imageUrls = try await uploadImageData(metadata: metadata)
+    let imageUrls = try await uploadImageData(fileID: linkDocRef.documentID, metadata: metadata)
     
     /// 4. Firestore에 저장할 DTO 객체 생성
     let linkDTO = LinkDTO(
@@ -121,12 +121,12 @@ struct LinkRepositoryImpl: LinkRepository {
 private extension LinkRepositoryImpl {
   typealias ImageUrls = (thumbnail: String?, favicon: String?)
   
-  func uploadImageData(metadata: LinkMetadata) async throws -> ImageUrls {
+  func uploadImageData(fileID: String, metadata: LinkMetadata) async throws -> ImageUrls {
     
     /// 1. thumbnail, favicon 이미지 데이터를 저장할 storage 주소 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let thumbnailRef = storage.child("testUser/thumbnails/\(UUID().uuidString)")
-    let faviconRef = storage.child("testUser/favicons/\(UUID().uuidString)")
+    let thumbnailRef = storage.child("testUser/thumbnails/\(fileID)")
+    let faviconRef = storage.child("testUser/favicons/\(fileID)")
     
     /// 2. 이미지 데이터 업로드 후 참조 주소를 가져오는 과정을 비동기 병렬 처리
     let thumbnailTask: Task<String?, Error> = Task {
