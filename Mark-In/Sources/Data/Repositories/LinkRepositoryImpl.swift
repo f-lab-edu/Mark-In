@@ -128,8 +128,8 @@ private extension LinkRepositoryImpl {
     
     /// 1. 썸네일, 파비콘 이미지 데이터를 저장할 storage 주소 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let thumbnailRef = storage.child("testUser/thumbnails/\(fileID)")
-    let faviconRef = storage.child("testUser/favicons/\(fileID)")
+    let thumbnailRef = storage.child("users/testUser/thumbnails/\(fileID)")
+    let faviconRef = storage.child("users/testUser/favicons/\(fileID)")
     
     /// 2. 이미지 데이터 업로드 후 참조 주소를 가져오는 과정을 비동기 병렬 처리
     let thumbnailTask: Task<String?, Error> = Task {
@@ -153,8 +153,8 @@ private extension LinkRepositoryImpl {
   func deleteImageData(fileID: String) async throws {
     /// 1. 썸네일, 파비콘 이미지 참조 주소 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let thumbnailRef = storage.child("testUser/thumbnails/\(fileID)")
-    let faviconRef = storage.child("testUser/favicons/\(fileID)")
+    let thumbnailRef = storage.child("users/testUser/thumbnails/\(fileID)")
+    let faviconRef = storage.child("users/testUser/favicons/\(fileID)")
     
     /// 2. 이미지 데이터를 비동기 병렬 처리로 삭제
     try await withThrowingTaskGroup(of: Void.self) { group in
