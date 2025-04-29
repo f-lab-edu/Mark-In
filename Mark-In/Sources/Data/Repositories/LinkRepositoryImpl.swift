@@ -21,8 +21,17 @@ struct LinkRepositoryImpl: LinkRepository {
     let linkDocRef = db.collection("users/testUser/links").document()
     
     /// 2. Entity를 DTO로 변환 및 새로 생성된 문서 ID를 프로퍼티에 저장
-    var linkDTO = LinkDTO(link)
-    linkDTO.id = linkDocRef.documentID
+    var linkDTO = LinkDTO(
+      id: linkDocRef.documentID,
+      url: link.url,
+      title: link.title,
+      thumbnailUrl: nil,
+      faviconUrl: nil,
+      createdBy: .now,
+      lastAccessedAt: nil,
+      folderId: link.folderId
+    )
+    
     
     /// 3. Firestore에 추가
     try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
@@ -60,7 +69,16 @@ struct LinkRepositoryImpl: LinkRepository {
     let linkDocRef = db.document("users/testUser/links/\(link.id)")
     
     /// 2. Entity를 DTO로 변환
-    let linkDTO = LinkDTO(link)
+    let linkDTO = LinkDTO(
+      id: link.id,
+      url: link.url,
+      title: link.title,
+      thumbnailUrl: link.thumbnailUrl,
+      faviconUrl: link.faviconUrl,
+      createdBy: link.createdBy,
+      lastAccessedAt: link.lastAccessedAt,
+      folderId: link.folderId
+    )
     
     /// 3. 업데이트
     try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
