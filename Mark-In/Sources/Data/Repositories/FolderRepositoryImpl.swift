@@ -20,9 +20,12 @@ struct FolderRepositoryImpl: FolderRepository {
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let folderDocRef = db.collection("users/testUser/folders").document()
     
-    /// 2. Entity를 DTO로 변환 및 새로 생성된 문서 ID를 프로퍼티에 저장
-    var folderDTO = FolderDTO(folder)
-    folderDTO.id = folderDocRef.documentID
+    /// 2. Firestore에 저장할 DTO 객체 생성
+    let folderDTO = FolderDTO(
+      id: folderDocRef.documentID,
+      name: folder.name,
+      createdBy: .now
+    )
     
     /// 3. Firestore에 추가
     try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
@@ -60,7 +63,11 @@ struct FolderRepositoryImpl: FolderRepository {
     let folderDocRef = db.document("users/testUser/folders/\(folder.id)")
     
     /// 2. Entity를 DTO로 변환
-    let folderDTO = FolderDTO(folder)
+    let folderDTO = FolderDTO(
+      id: folderDocRef.documentID,
+      name: folder.name,
+      createdBy: folder.createdBy
+    )
     
     /// 3. 업데이트
     try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in

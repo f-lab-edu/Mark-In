@@ -8,7 +8,7 @@
 import Foundation
 
 struct Folder {
-  var id: String = ""
+  var id: String
   var name: String
-  var createdBy: Date = .now
+  var createdBy: Date
 }
