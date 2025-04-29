@@ -15,7 +15,7 @@ struct FolderRepositoryImpl: FolderRepository {
   
   private let db = Firestore.firestore()
   
-  func createFolder(_ folder: Folder) async throws -> Folder {
+  func create(_ folder: Folder) async throws -> Folder {
     /// 1. Folder 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let folderDocRef = db.collection("users/testUser/folders").document()
@@ -40,7 +40,7 @@ struct FolderRepositoryImpl: FolderRepository {
     return folderDTO.toEntity()
   }
   
-  func fetchAllFolders() async throws -> [Folder] {
+  func fetchAll() async throws -> [Folder] {
     /// 1. Folders 컬렉션 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let folderColRef = db.collection("users/testUser/folders")
@@ -54,7 +54,7 @@ struct FolderRepositoryImpl: FolderRepository {
     }
   }
   
-  func updateFolder(_ folder: Folder) async throws {
+  func update(_ folder: Folder) async throws {
     /// 1. Folder 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let folderDocRef = db.document("users/testUser/folders/\(folder.id)")
@@ -75,7 +75,7 @@ struct FolderRepositoryImpl: FolderRepository {
     }
   }
   
-  func deleteFolder(_ folder: Folder) async throws {
+  func delete(_ folder: Folder) async throws {
     /// 1. Folder 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
     let folderDocRef = db.document("users/testUser/folders/\(folder.id)")
