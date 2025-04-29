@@ -10,5 +10,5 @@ import Foundation
 struct WriteLink {
   var url: String
   var title: String?
-  var folderId: String?
+  var folderID: String?
 }

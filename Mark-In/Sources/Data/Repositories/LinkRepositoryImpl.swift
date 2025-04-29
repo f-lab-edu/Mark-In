@@ -45,7 +45,7 @@ struct LinkRepositoryImpl: LinkRepository {
       faviconUrl: imageUrls.favicon,
       createdBy: .now,
       lastAccessedAt: nil,
-      folderId: link.folderId
+      folderID: link.folderID
     )
     
     /// 5. Firestore에 추가
@@ -92,7 +92,7 @@ struct LinkRepositoryImpl: LinkRepository {
       faviconUrl: link.faviconUrl,
       createdBy: link.createdBy,
       lastAccessedAt: link.lastAccessedAt,
-      folderId: link.folderId
+      folderID: link.folderID
     )
     
     /// 3. 업데이트

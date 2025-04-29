@@ -15,5 +15,5 @@ struct Link {
   var faviconUrl: String?
   var createdBy: Date
   var lastAccessedAt: Date?
-  var folderId: String?
+  var folderID: String?
 }

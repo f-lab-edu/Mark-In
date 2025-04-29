@@ -15,7 +15,7 @@ struct LinkDTO: Codable {
   var faviconUrl: String?
   var createdBy: Date
   var lastAccessedAt: Date?
-  var folderId: String?
+  var folderID: String?
   
   func toEntity() -> Link {
     Link(
@@ -26,7 +26,7 @@ struct LinkDTO: Codable {
       faviconUrl: self.faviconUrl,
       createdBy: self.createdBy,
       lastAccessedAt: self.lastAccessedAt,
-      folderId: self.folderId
+      folderID: self.folderID
     )
   }
 }
