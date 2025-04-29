@@ -17,17 +17,6 @@ struct LinkDTO: Codable {
   var lastAccessedAt: Date?
   var folderId: String?
   
-  init(_ link: Link) {
-    self.id = link.id
-    self.url = link.url
-    self.title = link.title
-    self.thumbnailUrl = link.thumbnailUrl
-    self.faviconUrl = link.faviconUrl
-    self.createdBy = link.createdBy
-    self.lastAccessedAt = link.lastAccessedAt
-    self.folderId = link.folderId
-  }
-  
   func toEntity() -> Link {
     Link(
       id: self.id,
