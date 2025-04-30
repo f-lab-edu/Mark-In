@@ -25,17 +25,20 @@ struct LinkRepositoryImpl: LinkRepository {
     self.linkMetadataProvider = linkMetadataProvider
   }
   
-  func create(_ link: WriteLink) async throws -> Link {
+  func create(userID: String, link: WriteLink) async throws -> Link {
     /// 1. Link 문서 참조 생성
-    // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let path = FirebasePath.links(userID: "testUser").path
+    let path = FirebasePath.links(userID: userID).path
     let linkDocRef = db.collection(path).document()
         
     /// 2. URL의 메타데이터 가져오기
     let metadata = try await linkMetadataProvider.fetchMetadata(urlString: link.url).get()
     
     /// 3. 썸네일, 파비콘 이미지 업로드
-    let imageUrls = try await uploadImageData(fileID: linkDocRef.documentID, metadata: metadata)
+    let imageUrls = try await uploadImageData(
+      userID: userID,
+      fileID: linkDocRef.documentID,
+      metadata: metadata
+    )
     
     /// 4. Firestore에 저장할 DTO 객체 생성
     let linkDTO = LinkDTO(
@@ -66,10 +69,9 @@ struct LinkRepositoryImpl: LinkRepository {
     return linkDTO.toEntity()
   }
   
-  func fetchAll() async throws -> [Link] {
+  func fetchAll(userID: String) async throws -> [Link] {
     /// 1. Links 컬렉션 참조 생성
-    // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let path = FirebasePath.links(userID: "testUser").path
+    let path = FirebasePath.links(userID: userID).path
     let linkColRef = db.collection(path)
     
     /// 2. 컬렉션의 모든 문서 가져오기
@@ -81,10 +83,9 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func update(_ link: Link) async throws {
+  func update(userID: String, link: Link) async throws {
     /// 1. Link 문서 참조 생성
-    // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let path = FirebasePath.links(userID: "testUser").path + "/\(link.id)"
+    let path = FirebasePath.links(userID: userID).path + "/\(link.id)"
     let linkDocRef = db.document(path)
     
     /// 2. Entity를 DTO로 변환
@@ -113,14 +114,13 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func delete(_ link: Link) async throws {
+  func delete(userID: String, link: Link) async throws {
     /// 1. Link 문서 참조 생성
-    // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let path = FirebasePath.links(userID: "testUser").path + "/\(link.id)"
+    let path = FirebasePath.links(userID: userID).path + "/\(link.id)"
     let linkDocRef = db.document(path)
     
     /// 2. 이미지 데이터 삭제
-    try await deleteImageData(fileID: linkDocRef.documentID)
+    try await deleteImageData(userID: userID, fileID: linkDocRef.documentID)
     
     /// 3. Link 삭제
     try await linkDocRef.delete()
@@ -130,12 +130,15 @@ struct LinkRepositoryImpl: LinkRepository {
 private extension LinkRepositoryImpl {
   typealias ImageUrls = (thumbnail: String?, favicon: String?)
   
-  func uploadImageData(fileID: String, metadata: LinkMetadata) async throws -> ImageUrls {
+  func uploadImageData(
+    userID: String,
+    fileID: String,
+    metadata: LinkMetadata
+  ) async throws -> ImageUrls {
     
     /// 1. 썸네일, 파비콘 이미지 데이터를 저장할 storage 주소 생성
-    // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let thumbnailPath = FirebasePath.thumbnails(userID: "testUser").path + "/\(fileID)"
-    let faviconPath = FirebasePath.favicons(userID: "testUser").path + "/\(fileID)"
+    let thumbnailPath = FirebasePath.thumbnails(userID: userID).path + "/\(fileID)"
+    let faviconPath = FirebasePath.favicons(userID: userID).path + "/\(fileID)"
     
     let thumbnailRef = storage.child(thumbnailPath)
     let faviconRef = storage.child(faviconPath)
@@ -159,11 +162,10 @@ private extension LinkRepositoryImpl {
     return try await (thumbnailTask.value, faviconTask.value)
   }
   
-  func deleteImageData(fileID: String) async throws {
+  func deleteImageData(userID: String, fileID: String) async throws {
     /// 1. 썸네일, 파비콘 이미지 참조 주소 생성
-    // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let thumbnailPath = FirebasePath.thumbnails(userID: "testUser").path + "/\(fileID)"
-    let faviconPath = FirebasePath.favicons(userID: "testUser").path + "/\(fileID)"
+    let thumbnailPath = FirebasePath.thumbnails(userID: userID).path + "/\(fileID)"
+    let faviconPath = FirebasePath.favicons(userID: userID).path + "/\(fileID)"
     
     let thumbnailRef = storage.child(thumbnailPath)
     let faviconRef = storage.child(faviconPath)
