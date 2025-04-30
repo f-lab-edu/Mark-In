@@ -44,6 +44,7 @@ struct LinkRepositoryImpl: LinkRepository {
       title: link.title ?? metadata.title,
       thumbnailUrl: imageUrls.thumbnail,
       faviconUrl: imageUrls.favicon,
+      isPinned: false,
       createdBy: .now,
       lastAccessedAt: nil,
       folderID: link.folderID
@@ -93,6 +94,7 @@ struct LinkRepositoryImpl: LinkRepository {
       title: link.title,
       thumbnailUrl: link.thumbnailUrl,
       faviconUrl: link.faviconUrl,
+      isPinned: link.isPinned,
       createdBy: link.createdBy,
       lastAccessedAt: link.lastAccessedAt,
       folderID: link.folderID

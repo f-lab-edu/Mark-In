@@ -13,6 +13,7 @@ struct LinkDTO: Codable {
   var title: String?
   var thumbnailUrl: String?
   var faviconUrl: String?
+  var isPinned: Bool
   var createdBy: Date
   var lastAccessedAt: Date?
   var folderID: String?
@@ -24,6 +25,7 @@ struct LinkDTO: Codable {
       title: self.title,
       thumbnailUrl: self.thumbnailUrl,
       faviconUrl: self.faviconUrl,
+      isPinned: self.isPinned,
       createdBy: self.createdBy,
       lastAccessedAt: self.lastAccessedAt,
       folderID: self.folderID
