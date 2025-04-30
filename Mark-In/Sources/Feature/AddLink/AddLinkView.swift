@@ -10,11 +10,11 @@ import SwiftUI
 import DesignSystem
 
 // TODO: 후에 제거 예정
-private struct TestFolder: Hashable {
+private struct TestFolder1: Hashable {
   var id: String
   var name: String
   
-  static let dummy: [TestFolder] = [
+  static let dummy: [Self] = [
     .init(id: "1", name: "Root"),
     .init(id: "2", name: "Work"),
     .init(id: "3", name: "Personal"),
@@ -26,7 +26,7 @@ struct AddLinkView: View {
   @State private var title: String = ""
   @State private var url: String = ""
   
-  @State private var currentFolder: TestFolder = TestFolder.dummy[0]
+  @State private var currentFolder: TestFolder1 = TestFolder1.dummy[0]
   
   var body: some View {
     VStack {
@@ -35,7 +35,7 @@ struct AddLinkView: View {
       
       VStack(spacing: 8) {
         Picker("", selection: $currentFolder) {
-          ForEach(TestFolder.dummy, id: \.self) { folder in
+          ForEach(TestFolder1.dummy, id: \.self) { folder in
             Label(title: {
               Text(folder.name)
             }, icon: {
