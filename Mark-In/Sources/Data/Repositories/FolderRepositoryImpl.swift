@@ -18,7 +18,8 @@ struct FolderRepositoryImpl: FolderRepository {
   func create(_ folder: WriteFolder) async throws -> Folder {
     /// 1. Folder 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let folderDocRef = db.collection("users/testUser/folders").document()
+    let path = FirebasePath.folders(userID: "testUser").path
+    let folderDocRef = db.collection(path).document()
     
     /// 2. Firestore에 저장할 DTO 객체 생성
     let folderDTO = FolderDTO(
@@ -46,7 +47,8 @@ struct FolderRepositoryImpl: FolderRepository {
   func fetchAll() async throws -> [Folder] {
     /// 1. Folders 컬렉션 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let folderColRef = db.collection("users/testUser/folders")
+    let path = FirebasePath.folders(userID: "testUser").path
+    let folderColRef = db.collection(path)
     
     /// 2. 컬렉션의 모든 문서 가져오기
     let snapshot = try await folderColRef.getDocuments()
@@ -60,7 +62,8 @@ struct FolderRepositoryImpl: FolderRepository {
   func update(_ folder: Folder) async throws {
     /// 1. Folder 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let folderDocRef = db.document("users/testUser/folders/\(folder.id)")
+    let path = FirebasePath.folders(userID: "testUser").path + "/\(folder.id)"
+    let folderDocRef = db.document(path)
     
     /// 2. Entity를 DTO로 변환
     let folderDTO = FolderDTO(
@@ -85,7 +88,8 @@ struct FolderRepositoryImpl: FolderRepository {
   func delete(_ folder: Folder) async throws {
     /// 1. Folder 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let folderDocRef = db.document("users/testUser/folders/\(folder.id)")
+    let path = FirebasePath.folders(userID: "testUser").path + "/\(folder.id)"
+    let folderDocRef = db.document(path)
     
     /// 2. Folder 삭제
     try await folderDocRef.delete()

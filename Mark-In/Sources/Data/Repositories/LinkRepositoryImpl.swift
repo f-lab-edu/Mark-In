@@ -28,7 +28,8 @@ struct LinkRepositoryImpl: LinkRepository {
   func create(_ link: WriteLink) async throws -> Link {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let linkDocRef = db.collection("users/testUser/links").document()
+    let path = FirebasePath.links(userID: "testUser").path
+    let linkDocRef = db.collection(path).document()
         
     /// 2. URL의 메타데이터 가져오기
     let metadata = try await linkMetadataProvider.fetchMetadata(urlString: link.url).get()
@@ -67,7 +68,8 @@ struct LinkRepositoryImpl: LinkRepository {
   func fetchAll() async throws -> [Link] {
     /// 1. Links 컬렉션 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let linkColRef = db.collection("users/testUser/links")
+    let path = FirebasePath.links(userID: "testUser").path
+    let linkColRef = db.collection(path)
     
     /// 2. 컬렉션의 모든 문서 가져오기
     let snapshot = try await linkColRef.getDocuments()
@@ -81,7 +83,8 @@ struct LinkRepositoryImpl: LinkRepository {
   func update(_ link: Link) async throws {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let linkDocRef = db.document("users/testUser/links/\(link.id)")
+    let path = FirebasePath.links(userID: "testUser").path + "/\(link.id)"
+    let linkDocRef = db.document(path)
     
     /// 2. Entity를 DTO로 변환
     let linkDTO = LinkDTO(
@@ -111,7 +114,8 @@ struct LinkRepositoryImpl: LinkRepository {
   func delete(_ link: Link) async throws {
     /// 1. Link 문서 참조 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let linkDocRef = db.document("users/testUser/links/\(link.id)")
+    let path = FirebasePath.links(userID: "testUser").path + "/\(link.id)"
+    let linkDocRef = db.document(path)
     
     /// 2. 이미지 데이터 삭제
     try await deleteImageData(fileID: linkDocRef.documentID)
@@ -128,8 +132,11 @@ private extension LinkRepositoryImpl {
     
     /// 1. 썸네일, 파비콘 이미지 데이터를 저장할 storage 주소 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let thumbnailRef = storage.child("users/testUser/thumbnails/\(fileID)")
-    let faviconRef = storage.child("users/testUser/favicons/\(fileID)")
+    let thumbnailPath = FirebasePath.thumbnails(userID: "testUser").path + "/\(fileID)"
+    let faviconPath = FirebasePath.favicons(userID: "testUser").path + "/\(fileID)"
+    
+    let thumbnailRef = storage.child(thumbnailPath)
+    let faviconRef = storage.child(faviconPath)
     
     /// 2. 이미지 데이터 업로드 후 참조 주소를 가져오는 과정을 비동기 병렬 처리
     let thumbnailTask: Task<String?, Error> = Task {
@@ -153,8 +160,11 @@ private extension LinkRepositoryImpl {
   func deleteImageData(fileID: String) async throws {
     /// 1. 썸네일, 파비콘 이미지 참조 주소 생성
     // TODO: 후에 testUser를 실제 로그인 된 유저로 변경 예정
-    let thumbnailRef = storage.child("users/testUser/thumbnails/\(fileID)")
-    let faviconRef = storage.child("users/testUser/favicons/\(fileID)")
+    let thumbnailPath = FirebasePath.thumbnails(userID: "testUser").path + "/\(fileID)"
+    let faviconPath = FirebasePath.favicons(userID: "testUser").path + "/\(fileID)"
+    
+    let thumbnailRef = storage.child(thumbnailPath)
+    let faviconRef = storage.child(faviconPath)
     
     /// 2. 이미지 데이터를 비동기 병렬 처리로 삭제
     try await withThrowingTaskGroup(of: Void.self) { group in
