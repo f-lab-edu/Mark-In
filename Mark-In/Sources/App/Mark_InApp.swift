@@ -13,11 +13,12 @@ import DesignSystem
 
 @main
 struct Mark_InApp: App {
+  @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
   
   init() {
     FontLoader.registerFont()
     
-//    Self.configureFirebase()
+    //    Self.configureFirebase()
   }
   
   var body: some Scene {
@@ -25,6 +26,7 @@ struct Mark_InApp: App {
       MainView()
         .frame(minWidth: 500, minHeight: 500)
     }
+    .windowStyle(.hiddenTitleBar)
   }
 }
 
