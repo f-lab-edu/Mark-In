@@ -13,7 +13,6 @@ import DesignSystem
 
 @main
 struct Mark_InApp: App {
-  @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
   
   init() {
     FontLoader.registerFont()
@@ -26,7 +25,6 @@ struct Mark_InApp: App {
       MainView()
         .frame(minWidth: 500, minHeight: 500)
     }
-    .windowStyle(.hiddenTitleBar)
   }
 }
 

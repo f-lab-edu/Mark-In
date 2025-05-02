@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-final class AppDelegate: NSObject, NSApplicationDelegate {
-  func applicationDidFinishLaunching(_ notification: Notification) {
-    if let window = NSApplication.shared.windows.first {
-      window.backgroundColor = .clear // 윈도우 툴바 배경색을 clear로
-    }
-  }
-}
+
+// TODO: 디자인 논의 후 수정 예정
+//final class AppDelegate: NSObject, NSApplicationDelegate {
+//  func applicationDidFinishLaunching(_ notification: Notification) {
+//    if let window = NSApplication.shared.windows.first {
+//      window.titlebarAppearsTransparent = false
+////      window.titleVisibility = .hidden
+//      window.title = ""
+//    }
+//  }
+//}
