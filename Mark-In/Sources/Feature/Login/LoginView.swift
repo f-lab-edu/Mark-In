@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 import DesignSystem
 import Util
 
 struct LoginView: View {
+  @State private var loginViewModel = LoginViewModel()
+  
   var body: some View {
     ZStack {
       LinearGradient(
@@ -23,10 +26,9 @@ struct LoginView: View {
       VStack(spacing: 28) {
         headerView
         
-        BodyView()
+        BodyView(loginViewModel: loginViewModel)
       }
     }
-    
   }
   
   @ViewBuilder
@@ -44,6 +46,11 @@ struct LoginView: View {
 }
 
 private struct BodyView: View {
+  private let loginViewModel: LoginViewModel
+  
+  init(loginViewModel: LoginViewModel) {
+    self.loginViewModel = loginViewModel
+  }
   
   var body: some View {
     VStack(spacing: 2) {
@@ -52,7 +59,7 @@ private struct BodyView: View {
         
         divider
         
-        SignInButtonList()
+        SignInButtonList(loginViewModel: loginViewModel)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -88,12 +95,17 @@ private struct BodyView: View {
 }
 
 private struct SignInButtonList: View {
-  // TODO: LoginViewModel 전달 받도록
+  @Environment(\.authorizationController) private var authorizationController
+  private let loginViewModel: LoginViewModel
+  
+  init(loginViewModel: LoginViewModel) {
+    self.loginViewModel = loginViewModel
+  }
   
   var body: some View {
     VStack(spacing: 12) {
       SignInButton(provider: .apple) {
-        // TODO: 애플 로그인 로직
+        loginViewModel.send(.appleLoginButtonTapped(authorizationController))
       }
       
       SignInButton(provider: .google) {
