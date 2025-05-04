@@ -10,6 +10,7 @@ import AuthenticationServices
 import SwiftUI
 
 import FirebaseAuth
+import GoogleSignIn
 
 import Util
 
@@ -21,6 +22,7 @@ final class LoginViewModel: Reducer {
   
   enum Action {
     case appleLoginButtonTapped(AuthorizationController)
+    case googleLoginButtonTapped
     
     case signInError(SignInError)
     
@@ -48,7 +50,7 @@ final class LoginViewModel: Reducer {
       return .run { [nonce = requestProvider.currentNonce] in
         
         /// 중간에 로그인을 취소하거나, 애플 로그인 인증 방식이 아닌 경우는 빈 액션 반환
-        /// (에러 상황은 아니고, 어떠한 액션을 던질 필요가 없음)
+        /// (에러 상황은 아니기 때문에 어떠한 액션을 던질 필요가 없음)
         guard let result = try? await authController.performRequest(request),
               case let .appleID(idCredential) = result else { return .empty }
         
@@ -56,7 +58,7 @@ final class LoginViewModel: Reducer {
         guard let nonce,
               let appleIDToken = idCredential.identityToken,
               let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-          return .signInError(.invalid)
+          return .signInError(.missingData)
         }
         
         /// Firebase 인증 요청을 위한 AuthCredential 생성
@@ -69,11 +71,39 @@ final class LoginViewModel: Reducer {
         return .firebaseAuthRequest(credential)
       }
       
-    // TODO: 에러 처리 필요
+    case .googleLoginButtonTapped:
+
+      guard let windowScene = NSApplication.shared.windows.first else {
+        return .none
+      }
+      
+      return .run {
+        do {
+          /// 구글 로그인 요청
+          let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: windowScene)
+          
+          /// 로그인에 필요한 정보(IDToken)가 누락된 경우
+          guard let idToken = result.user.idToken?.tokenString else {
+            return .signInError(.missingData)
+          }
+          
+          /// Firebase 인증 요청을 위한 AuthCredential 생성
+          let credential = GoogleAuthProvider.credential(
+            withIDToken: idToken,
+            accessToken: result.user.accessToken.tokenString
+          )
+          
+          return .firebaseAuthRequest(credential)
+        } catch {
+          return .signInError(.invalid)
+        }
+      }
+      
+      // TODO: 에러 처리 필요
     case .signInError(_):
       return .none
       
-    // TODO: 현재는 러프하고 구현된 상태. 구글 로그인까지 구현 후 디테일 수정
+      // TODO: 구글 로그인까지 구현 후 디테일 수정
     case .firebaseAuthRequest(let credential):
       return .run {
         do {
@@ -117,6 +147,7 @@ final class LoginViewModel: Reducer {
 
 extension LoginViewModel {
   enum SignInError: Error {
+    case missingData
     case invalid
   }
 }
