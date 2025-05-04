@@ -8,6 +8,7 @@
 import SwiftUI
 
 import FirebaseCore
+import GoogleSignIn
 
 import DesignSystem
 
@@ -17,19 +18,23 @@ struct Mark_InApp: App {
   init() {
     FontLoader.registerFont()
     
-    //    Self.configureFirebase()
+    configureFirebase()
+    configureGoogleSignIn()
   }
   
   var body: some Scene {
     WindowGroup {
       MainView()
         .frame(minWidth: 500, minHeight: 500)
+        .onOpenURL { url in
+          GIDSignIn.sharedInstance.handle(url)
+        }
     }
   }
 }
 
 extension Mark_InApp {
-  static func configureFirebase() {
+  private func configureFirebase() {
 #if DEBUG
     let resource = "GoogleService-Info-Dev"
 #else
@@ -44,5 +49,13 @@ extension Mark_InApp {
     }
     
     FirebaseApp.configure(options: options)
+  }
+  
+  private func configureGoogleSignIn() {
+    guard let clientID = FirebaseApp.app()?.options.clientID else {
+      fatalError("No client ID found in Firebase configuration")
+    }
+    let config = GIDConfiguration(clientID: clientID)
+    GIDSignIn.sharedInstance.configuration = config
   }
 }
