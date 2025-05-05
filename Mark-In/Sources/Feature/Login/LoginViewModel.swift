@@ -17,7 +17,7 @@ import Util
 @Observable
 final class LoginViewModel: Reducer {
   struct State {
-    var isSignInSuccess: Bool = false
+    // TODO: 로그인 실패 시 알림 화면을 보여줄 상태 구현 생각 중
   }
   
   enum Action {
@@ -33,6 +33,11 @@ final class LoginViewModel: Reducer {
   }
   
   private(set) var state: State = .init()
+  private(set) var sharedState: AppState
+  
+  init() {
+    self.sharedState = DIContainer.shared.resolve()
+  }
   
   func send(_ action: Action) {
     let effect = reduce(state: &state, action: action)
@@ -119,7 +124,7 @@ final class LoginViewModel: Reducer {
     case .firebaseAuthResponse(let result):
       switch result {
       case .success(_):
-        state.isSignInSuccess = true
+        sharedState.isLoginned = true
       case .failure(let error):
         // TODO: 에러 처리 필요
         let _ = error as? AuthErrorCode
