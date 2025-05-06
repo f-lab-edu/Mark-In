@@ -7,6 +7,9 @@
 
 import Foundation
 
+import LinkMetadataKit
+import LinkMetadataKitInterface
+
 // TODO: 코어 모듈로 이전
 final class DIContainer {
   static let shared = DIContainer()
@@ -44,18 +47,27 @@ extension DIContainer {
     
     register(appState)
     
-    /// Repository
-    let authRepository = AuthRepositoryImpl()
-    let folderRepository = FolderRepositoryImpl()
-    let linkRepository = LinkRepositoryImpl()
+    /// Core
+    let linkMetadataProvider: LinkMetadataProvider = LinkMetadataProviderImpl()
     
-    register(authRepository as AuthRepository)
-    register(folderRepository as FolderRepository)
-    register(linkRepository as LinkRepository)
+    register(linkMetadataProvider)
+    
+    /// Repository
+    let authRepository: AuthRepository = AuthRepositoryImpl()
+    let folderRepository: FolderRepository = FolderRepositoryImpl()
+    let linkRepository: LinkRepository = LinkRepositoryImpl(
+      linkMetadataProvider: linkMetadataProvider
+    )
+    
+    register(authRepository)
+    register(folderRepository)
+    register(linkRepository)
     
     /// UseCase
-    let fetchCurrentUserIDUseCase = FetchCurrentUserIDUseCaseImpl(authRepository: authRepository)
+    let fetchCurrentUserIDUseCase: FetchCurrentUserIDUseCase = FetchCurrentUserIDUseCaseImpl(
+      authRepository: authRepository
+    )
     
-    register(fetchCurrentUserIDUseCase as FetchCurrentUserIDUseCase)
+    register(fetchCurrentUserIDUseCase)
   }
 }
