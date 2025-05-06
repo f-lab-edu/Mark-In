@@ -7,10 +7,8 @@
 
 import SwiftUI
 
-public extension Image {
-    static let sampleImage: Image = Image(.test)
-}
-
 public extension ImageResource {
-    static let sampleImage: ImageResource = .test
+  static let sampleImage: ImageResource = .test
+  static let apple: ImageResource = .appleLogo
+  static let google: ImageResource = .googleLogo
 }
