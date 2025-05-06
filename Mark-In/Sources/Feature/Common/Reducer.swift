@@ -7,14 +7,13 @@
 
 import Foundation
 
+@MainActor
 protocol Reducer {
   associatedtype State
   associatedtype Action
   
-  @MainActor
   func send(_ action: Action)
   
-  @MainActor
   func reduce(state: inout State, action: Action) -> Effect<Action>
 }
 

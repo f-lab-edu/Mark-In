@@ -47,9 +47,9 @@ final class RootViewModel: Reducer {
     case .none:
       break
     case .run(let action):
-      Task {
+      Task.detached { [weak self] in
         let newAction = await action()
-        send(newAction)
+        await self?.send(newAction)
       }
     }
   }

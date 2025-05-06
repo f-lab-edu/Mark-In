@@ -142,9 +142,9 @@ final class LoginViewModel: Reducer {
     case .none:
       break
     case .run(let action):
-      Task {
+      Task.detached { [weak self] in
         let newAction = await action()
-        await send(newAction)
+        await self?.send(newAction)
       }
     }
   }
