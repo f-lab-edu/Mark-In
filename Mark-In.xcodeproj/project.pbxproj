@@ -76,9 +76,22 @@
 		57BFD8C32DA4E19600648AD4 /* Mark-In.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mark-In.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		57B7E0242DC3D44100D9225A /* Exceptions for "Mark-In" folder in "Mark-In" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/Info.plist,
+			);
+			target = 57BFD8C22DA4E19600648AD4 /* Mark-In */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		57BFD8C52DA4E19600648AD4 /* Mark-In */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				57B7E0242DC3D44100D9225A /* Exceptions for "Mark-In" folder in "Mark-In" target */,
+			);
 			path = "Mark-In";
 			sourceTree = "<group>";
 		};
@@ -434,6 +447,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Mark-In/Resources/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "[Dev] Mark-In";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -474,7 +488,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Mark-In";
+				INFOPLIST_FILE = "Mark-In/Resources/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "[Dev] Mark-In";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
