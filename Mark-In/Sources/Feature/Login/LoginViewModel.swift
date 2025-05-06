@@ -139,7 +139,7 @@ final class LoginViewModel: Reducer {
     case .run(let action):
       Task {
         let newAction = await action()
-        send(newAction)
+        await send(newAction)
       }
     }
   }
