@@ -31,14 +31,16 @@ public struct LinkMetadataProviderImpl: LinkMetadataProvider {
     
     /// 파비콘 및 썸네일 리소스 로딩
     do {
-      let favicon = try await metadata.iconProvider?.loadDataRepresentation(for: .image)
-      let thumbnail = try await metadata.imageProvider?.loadDataRepresentation(for: .image)
+      async let favicon = await metadata.iconProvider?.loadDataRepresentation(for: .image)
+      async let thumbnail = await metadata.imageProvider?.loadDataRepresentation(for: .image)
+      
+      let result = try await (favicon, thumbnail)
       
       return .success(LinkMetadata(
         url: url.absoluteString,
         title: metadata.title,
-        favicon: favicon,
-        thumbnail: thumbnail
+        favicon: result.0,
+        thumbnail: result.1
       ))
     } catch {
       return .failure(.resourceLoadFailed)
