@@ -7,7 +7,7 @@
 
 import Foundation
 
-@Observable
+@MainActor @Observable
 final class MainViewModel: Reducer {
   struct State {
     var isLoading: Bool = true
@@ -50,40 +50,14 @@ final class MainViewModel: Reducer {
   
   private func handleEffect(_ effect: Effect<Action>) {
     switch effect {
-    case .none: break
+    case .none:
+      break
     case .run(let action):
-      Task { send(await action()) }
+      Task.detached { [weak self] in
+        let newAction = await action()
+        await self?.send(newAction)
+      }
     }
-  }
-}
-
-enum SidebarTab: Hashable {
-  case total
-  case pin
-  case nonRead
-  case folder(TestFolder)
-  
-  var title: String {
-    switch self {
-    case .total: "전체"
-    case .pin: "즐겨찾기"
-    case .nonRead: "읽지 않음"
-    case .folder(let folder): folder.name
-    }
-  }
-  
-  var icon: String {
-    switch self {
-    case .total: "clock"
-    case .pin: "star"
-    case .nonRead: "xmark.circle"
-    case .folder(_): "folder"
-    }
-  }
-  
-  var isFolder: Bool {
-    if case .folder(_) = self { true }
-    else { false }
   }
 }
 

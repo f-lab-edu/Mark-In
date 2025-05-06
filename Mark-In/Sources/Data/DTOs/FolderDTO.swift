@@ -12,12 +12,6 @@ struct FolderDTO: Codable {
   var name: String
   var createdBy: Date
   
-  init(_ folder: Folder) {
-    self.id = folder.id
-    self.name = folder.name
-    self.createdBy = folder.createdBy
-  }
-  
   func toEntity() -> Folder {
     return Folder(
       id: self.id,
