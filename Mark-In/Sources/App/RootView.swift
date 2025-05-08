@@ -18,7 +18,7 @@ struct RootView: View {
       if rootViewModel.state.isSplashVisible {
         SplashView()
       } else {
-        if rootViewModel.sharedState.isLoginned {
+        if rootViewModel.state.currentUser != nil {
           MainView()
         } else {
           LoginView()

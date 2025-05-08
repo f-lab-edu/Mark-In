@@ -5,26 +5,35 @@
 //  Created by 이정동 on 5/5/25.
 //
 
+import Combine
 import Foundation
 
 @Observable
 final class RootViewModel: Reducer {
   struct State {
     var isSplashVisible: Bool = true
+    var currentUser: UserModel? = nil
   }
   
   enum Action {
     case onAppear
+    case receiveCurrentUserEvent(UserModel?)
   }
   
-  private(set) var state: State = .init()
-  private(set) var sharedState: AppState
+  private let authManager: AuthManager
   
-  private let fetchCurrentUserIDUseCase: FetchCurrentUserIDUseCase
+  private(set) var state: State = .init()
+  private var cancellables = Set<AnyCancellable>()
   
   init() {
-    self.sharedState = DIContainer.shared.resolve()
-    self.fetchCurrentUserIDUseCase = DIContainer.shared.resolve()
+    self.authManager = DIContainer.shared.resolve()
+    
+    self.authManager.userEvent
+      .receive(on: RunLoop.main)
+      .sink { [weak self] value in
+        self?.send(.receiveCurrentUserEvent(value))
+      }
+      .store(in: &cancellables)
   }
   
   func send(_ action: Action) {
@@ -35,9 +44,11 @@ final class RootViewModel: Reducer {
   func reduce(state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .onAppear:
-      let uid = fetchCurrentUserIDUseCase.execute()
+      authManager.checkLoginStatus()
+      return .none
+    case .receiveCurrentUserEvent(let currentUser):
+      state.currentUser = currentUser
       state.isSplashVisible = false
-      sharedState.isLoginned = uid != nil
       return .none
     }
   }

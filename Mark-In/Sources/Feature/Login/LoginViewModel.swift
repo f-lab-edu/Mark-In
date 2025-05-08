@@ -27,16 +27,16 @@ final class LoginViewModel: Reducer {
     case signInError(SignInError)
     
     case firebaseAuthRequest(AuthCredential)
-    case firebaseAuthResponse(Result<Void, Error>)
+    case firebaseAuthResponse(Result<String, Error>)
     
     case empty
   }
   
   private(set) var state: State = .init()
-  private(set) var sharedState: AppState
+  private let authSessionManager: AuthManager
   
   init() {
-    self.sharedState = DIContainer.shared.resolve()
+    self.authSessionManager = DIContainer.shared.resolve()
   }
   
   func send(_ action: Action) {
@@ -113,9 +113,9 @@ final class LoginViewModel: Reducer {
       return .run {
         do {
           /// Firebase 인증 요청
-          let _ = try await Auth.auth().signIn(with: credential)
+          let response = try await Auth.auth().signIn(with: credential)
           
-          return .firebaseAuthResponse(.success(()))
+          return .firebaseAuthResponse(.success(response.user.uid))
         } catch {
           return .firebaseAuthResponse(.failure(error))
         }
@@ -123,8 +123,8 @@ final class LoginViewModel: Reducer {
 
     case .firebaseAuthResponse(let result):
       switch result {
-      case .success(_):
-        sharedState.isLoginned = true
+      case .success(let id):
+        authSessionManager.setCurrentUser(id: id)
       case .failure(let error):
         // TODO: 에러 처리 필요
         let _ = error as? AuthErrorCode
