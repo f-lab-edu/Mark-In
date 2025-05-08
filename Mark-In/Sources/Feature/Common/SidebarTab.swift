@@ -30,9 +30,4 @@ enum SidebarTab: Hashable {
     case .folder(_): "folder"
     }
   }
-  
-  var isFolder: Bool {
-    if case .folder(_) = self { true }
-    else { false }
-  }
 }

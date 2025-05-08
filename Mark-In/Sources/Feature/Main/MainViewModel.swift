@@ -12,7 +12,8 @@ final class MainViewModel: Reducer {
   struct State {
     var isLoading: Bool = true
     
-    var tabs: [SidebarTab] = [.total, .pin, .nonRead]
+    var defaultTabs: [SidebarTab] = [.total, .pin, .nonRead]
+    var folderTabs: [SidebarTab] = []
     var selectedTab: SidebarTab? = .total
   }
   
@@ -38,7 +39,10 @@ final class MainViewModel: Reducer {
       }
       
     case .refresh:
-      (1...3).forEach { state.tabs.append(.folder(.init(id: "\($0)", name: "\($0)"))) }
+      // TODO: 실제 데이터 가져오는 작업 구현 필요
+      (1...3).forEach {
+        state.folderTabs.append(.folder(.init(id: "\($0)", name: "\($0)", createdBy: .now)))
+      }
       state.isLoading = false
       return .none
       

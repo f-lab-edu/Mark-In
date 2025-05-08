@@ -21,7 +21,7 @@ struct SideBar: View {
       ) {
         Section("기본") {
           ForEach(
-            viewModel.state.tabs.filter { !$0.isFolder },
+            viewModel.state.defaultTabs,
             id: \.self
           ) { tab in
             NavigationLink(value: tab) {
@@ -32,7 +32,7 @@ struct SideBar: View {
         
         Section("저장된 폴더") {
           ForEach(
-            viewModel.state.tabs.filter { $0.isFolder },
+            viewModel.state.folderTabs,
             id: \.self
           ) { tab in
             NavigationLink(value: tab) {
@@ -47,7 +47,7 @@ struct SideBar: View {
       
       Divider()
         .padding(.horizontal, 10)
-        .foregroundStyle(.blue)
+        .foregroundStyle(.markBlack20)
       
       Button(action: {
         // TODO: 구현 예정
