@@ -63,12 +63,12 @@ struct AddLinkView: View {
           Text("취소")
             .padding(.vertical, 4)
             .padding(.horizontal, 14)
-            .foregroundStyle(.black)
-            .background(.white)
+            .foregroundStyle(.markBlack)
+            .background(.markWhite)
             .clipShape(RoundedRectangle(cornerRadius: 6))
             .overlay {
               RoundedRectangle(cornerRadius: 6)
-                .stroke(.gray, lineWidth: 0.5)
+                .stroke(.markBlack10, lineWidth: 0.5)
             }
         }
 
@@ -79,8 +79,8 @@ struct AddLinkView: View {
           Text("추가")
             .padding(.vertical, 4)
             .padding(.horizontal, 14)
-            .foregroundStyle(.white)
-            .background(.blue)
+            .foregroundStyle(.markWhite)
+            .background(.markPoint)
             .clipShape(RoundedRectangle(cornerRadius: 6))
         }
       }
