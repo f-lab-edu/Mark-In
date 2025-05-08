@@ -21,6 +21,7 @@ protocol AuthManager {
   
   func checkLoginStatus()
   func setCurrentUser(id: String)
+  func getCurrentUser() -> UserModel?
   func clearCurrentUser()
 }
 
@@ -41,6 +42,10 @@ final class AuthManagerImpl: AuthManager {
     let user = UserModel(id: id)
     userEvent.send(user)
     currentUser = user
+  }
+  
+  func getCurrentUser() -> UserModel? {
+    return currentUser
   }
   
   func clearCurrentUser() {
