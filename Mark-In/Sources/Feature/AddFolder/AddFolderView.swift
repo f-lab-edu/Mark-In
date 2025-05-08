@@ -11,7 +11,10 @@ import DesignSystem
 
 struct AddFolderView: View {
   @Environment(\.dismiss) private var dismiss
+  @State private var viewModel = AddFolderViewModel()
   @State private var title: String = ""
+  
+  let completion: (Folder) -> ()
   
   var body: some View {
     VStack(spacing: 0) {
@@ -39,8 +42,7 @@ struct AddFolderView: View {
         }
         
         Button {
-          // TODO: 폴더 추가 로직
-          dismiss()
+          viewModel.send(.addLinkButtonTapped(title: title))
         } label: {
           Text("추가")
             .padding(.vertical, 4)
@@ -49,6 +51,7 @@ struct AddFolderView: View {
             .background(.markPoint)
             .clipShape(RoundedRectangle(cornerRadius: 6))
         }
+        .disabled(title.isEmpty)
       }
       .frame(maxWidth: .infinity, alignment: .trailing)
       .padding(.top, 18)
@@ -57,9 +60,24 @@ struct AddFolderView: View {
     }
     .padding(20)
     .frame(width: 400)
+    .overlay(content: {
+      if viewModel.state.isSaving {
+        ProgressView()
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .contentShape(Rectangle())
+          .background(.gray.opacity(0.5))
+      }
+    })
+    .onChange(of: viewModel.state.createdFolder) {
+      guard let folder = $1 else { return }
+      completion(folder)
+      dismiss()
+    }
   }
 }
 
 #Preview {
-  AddFolderView()
+  AddFolderView() {
+    print($0)
+  }
 }
