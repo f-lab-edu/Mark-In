@@ -34,18 +34,8 @@ final class DIContainer {
   }
 }
 
-// TODO: Core 모듈 or Feature(공통) 모듈 중 어느 곳이 적합한지 고민
-@Observable
-final class AppState {
-  var isLoginned: Bool = false
-}
-
 extension DIContainer {
   func registerDependencies() {
-    /// AppState
-    let appState = AppState()
-    
-    register(appState)
     
     /// Core
     let linkMetadataProvider: LinkMetadataProvider = LinkMetadataProviderImpl()
@@ -55,21 +45,12 @@ extension DIContainer {
     register(authSessionManager)
     
     /// Repository
-    let authRepository: AuthRepository = AuthRepositoryImpl()
     let folderRepository: FolderRepository = FolderRepositoryImpl()
     let linkRepository: LinkRepository = LinkRepositoryImpl(
       linkMetadataProvider: linkMetadataProvider
     )
     
-    register(authRepository)
     register(folderRepository)
     register(linkRepository)
-    
-    /// UseCase
-    let fetchCurrentUserIDUseCase: FetchCurrentUserIDUseCase = FetchCurrentUserIDUseCaseImpl(
-      authRepository: authRepository
-    )
-    
-    register(fetchCurrentUserIDUseCase)
   }
 }
