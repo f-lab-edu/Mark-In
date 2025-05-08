@@ -15,12 +15,18 @@ final class MainViewModel: Reducer {
     var defaultTabs: [SidebarTab] = [.total, .pin, .nonRead]
     var folderTabs: [SidebarTab] = []
     var selectedTab: SidebarTab? = .total
+    
+    var isPresentedSheet: SheetType?
   }
   
   enum Action {
     case onAppear
     case refresh
     case changeTab(SidebarTab?)
+    
+    case presentSheet(SheetType?)
+    
+    case didCreateFolder(Folder)
   }
   
   private(set) var state: State = .init()
@@ -49,6 +55,14 @@ final class MainViewModel: Reducer {
     case .changeTab(let tab):
       state.selectedTab = tab
       return .none
+      
+    case .presentSheet(let sheetType):
+      state.isPresentedSheet = sheetType
+      return .none
+      
+    case .didCreateFolder(let folder):
+      state.folderTabs.append(.folder(folder))
+      return .none
     }
   }
   
@@ -65,4 +79,11 @@ final class MainViewModel: Reducer {
   }
 }
 
-
+extension MainViewModel {
+  enum SheetType: Identifiable {
+    case addLink
+    case addFolder
+    
+    var id: String { String(describing: self) }
+  }
+}

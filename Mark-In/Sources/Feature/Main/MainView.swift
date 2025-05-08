@@ -12,7 +12,6 @@ import DesignSystem
 struct MainView: View {
   @State private var viewModel = MainViewModel()
   @State private var searchText: String = ""
-  @State private var isAddMode: Bool = false
   
   var body: some View {
     ZStack {
@@ -43,8 +42,12 @@ struct MainView: View {
     .onAppear {
       viewModel.send(.onAppear)
     }
-    .sheet(isPresented: $isAddMode) {
-      AddLinkView()
+    .sheet(item: .init(
+      get: { viewModel.state.isPresentedSheet },
+      set: { viewModel.send(.presentSheet($0))
+      }
+    )) { type in
+      buildSheet(type)
     }
   }
   
@@ -79,7 +82,6 @@ struct MainView: View {
       Spacer()
       Button {
         // TODO: 구현 예정
-        isAddMode = true
       } label: {
         Image(systemName: "plus")
       }
@@ -96,6 +98,18 @@ struct MainView: View {
         Image(systemName: "person.circle.fill")
           .resizable()
           .frame(width: 22, height: 22)
+      }
+    }
+  }
+  
+  @ViewBuilder
+  private func buildSheet(_ type: MainViewModel.SheetType) -> some View {
+    switch type {
+    case .addLink:
+      AddLinkView()
+    case .addFolder:
+      AddFolderView() {
+        viewModel.send(.didCreateFolder($0))
       }
     }
   }

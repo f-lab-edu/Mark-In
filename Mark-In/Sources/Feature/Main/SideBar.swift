@@ -50,7 +50,7 @@ struct SideBar: View {
         .foregroundStyle(.markBlack20)
       
       Button(action: {
-        // TODO: 구현 예정
+        viewModel.send(.presentSheet(.addFolder))
       }, label: {
         Label("새로운 폴더 만들기", systemImage: "plus")
           .lineLimit(1)
