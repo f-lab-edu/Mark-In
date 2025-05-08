@@ -14,6 +14,10 @@ struct AddFolderView: View {
   @State private var viewModel = AddFolderViewModel()
   @State private var title: String = ""
   
+  private var isSaving: Bool {
+    viewModel.state.isSaving
+  }
+  
   let completion: (Folder) -> ()
   
   var body: some View {
@@ -24,8 +28,15 @@ struct AddFolderView: View {
       TextField("", text: $title, prompt: Text("제목"))
         .textFieldStyle(.roundedBorder)
         .padding(.top, 14)
+        .disabled(isSaving)
       
       HStack {
+        if isSaving {
+          ProgressView()
+            .frame(width: 12, height: 12)
+            .scaleEffect(0.4, anchor: .center)
+        }
+        
         Button {
           dismiss()
         } label: {
@@ -40,6 +51,7 @@ struct AddFolderView: View {
                 .stroke(.markBlack10, lineWidth: 0.5)
             }
         }
+        .disabled(title.isEmpty || isSaving)
         
         Button {
           viewModel.send(.addLinkButtonTapped(title: title))
@@ -51,7 +63,7 @@ struct AddFolderView: View {
             .background(.markPoint)
             .clipShape(RoundedRectangle(cornerRadius: 6))
         }
-        .disabled(title.isEmpty)
+        .disabled(title.isEmpty || isSaving)
       }
       .frame(maxWidth: .infinity, alignment: .trailing)
       .padding(.top, 18)
@@ -60,18 +72,22 @@ struct AddFolderView: View {
     }
     .padding(20)
     .frame(width: 400)
-    .overlay(content: {
-      if viewModel.state.isSaving {
-        ProgressView()
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
-          .contentShape(Rectangle())
-          .background(.gray.opacity(0.5))
-      }
-    })
     .onChange(of: viewModel.state.createdFolder) {
       guard let folder = $1 else { return }
       completion(folder)
       dismiss()
+    }
+    .alert(
+      "폴더 생성에 실패했습니다.",
+      isPresented: .init(
+        get: { viewModel.state.isError },
+        set: { viewModel.send(.occurError($0)) }
+      )
+    ) {
+      Button(role: .cancel) {
+      } label: {
+        Text("확인")
+      }
     }
   }
 }
