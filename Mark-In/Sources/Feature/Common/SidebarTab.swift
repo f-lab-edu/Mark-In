@@ -11,7 +11,7 @@ enum SidebarTab: Hashable {
   case total
   case pin
   case nonRead
-  case folder(TestFolder)
+  case folder(Folder)
   
   var title: String {
     switch self {

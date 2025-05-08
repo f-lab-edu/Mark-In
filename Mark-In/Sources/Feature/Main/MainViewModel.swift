@@ -61,8 +61,4 @@ final class MainViewModel: Reducer {
   }
 }
 
-// TODO: 이후 제거 예정
-struct TestFolder: Hashable {
-  var id: String
-  var name: String
-}
+
