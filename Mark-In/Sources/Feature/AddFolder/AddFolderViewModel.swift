@@ -12,14 +12,23 @@ final class AddFolderViewModel: Reducer {
   struct State {
     var createdFolder: Folder?
     var isSaving: Bool = false
+    var isError: Bool = false
   }
   
   enum Action {
     case addLinkButtonTapped(title: String)
     case completeSave(Folder)
+    case occurError(Bool)
   }
   
+  private let generateFolderUseCase: GenerateFolderUseCase
+  
   private(set) var state: State = .init()
+  
+  init() {
+    // TODO: DIContainer PR 머지 이후 DIContainer를 통해 의존성 주입
+    self.generateFolderUseCase = GenerateFolderUseCaseImpl(folderRepository: FolderRepositoryImpl())
+  }
   
   func send(_ action: Action) {
     let effect = reduce(state: &state, action: action)
@@ -31,14 +40,23 @@ final class AddFolderViewModel: Reducer {
     case .addLinkButtonTapped(let title):
       state.isSaving = true
       
-      // TODO: 실제 저장 과정 구현 예정
       return .run {
-        try? await Task.sleep(nanoseconds: 3_000_000_000)
-        return .completeSave(.init(id: "", name: title, createdBy: .now))
+        do {
+          let result = try await self.generateFolderUseCase.execute(name: title)
+          return .completeSave(result)
+        } catch {
+          return .occurError(true)
+        }
       }
+      
     case .completeSave(let folder):
       state.isSaving = false
       state.createdFolder = folder
+      return .none
+      
+    case .occurError(let bool):
+      state.isSaving = false
+      state.isError = bool
       return .none
     }
   }
