@@ -20,7 +20,7 @@ final class AddLinkViewModel: Reducer {
   }
   
   enum Action {
-    case addLinkButtonTapped(WriteLink)
+    case addLinkButtonTapped(link: WriteLink)
     case completeSave(Link)
     case occurError(Bool)
   }

@@ -91,7 +91,7 @@ struct AddLinkView: View {
             title: title,
             folderID: currentFolder.id
           )
-          viewModel.send(.addLinkButtonTapped(link))
+          viewModel.send(.addLinkButtonTapped(link: link))
         } label: {
           Text("추가")
             .padding(.vertical, 4)
