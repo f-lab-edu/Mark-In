@@ -74,7 +74,7 @@ final class MainViewModel: Reducer {
       
       state.links = links
       
-      state.folderTabs.append(.folder(.init(id: "", name: "기본폴더", createdBy: .now)))
+      state.folderTabs.append(.folder(.init(id: nil, name: "기본폴더", createdBy: .now)))
       folders.forEach {
         state.folderTabs.append(
           .folder(.init(id: $0.id, name: $0.name, createdBy: $0.createdBy))
@@ -137,8 +137,7 @@ extension Array where Element == Link {
     case .nonRead:
       return self.filter { $0.lastAccessedAt == nil }
     case .folder(let folder):
-      let folderID = folder.id == "" ? nil : folder.id
-      return self.filter { $0.folderID == folderID }
+      return self.filter { $0.folderID == folder.id }
     }
   }
 }
