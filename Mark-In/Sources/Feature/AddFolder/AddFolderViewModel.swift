@@ -16,7 +16,7 @@ final class AddFolderViewModel: Reducer {
   }
   
   enum Action {
-    case addLinkButtonTapped(title: String)
+    case addFolderButtonTapped(title: String)
     case completeSave(Folder)
     case occurError(Bool)
   }
@@ -37,7 +37,7 @@ final class AddFolderViewModel: Reducer {
   
   func reduce(state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .addLinkButtonTapped(let title):
+    case .addFolderButtonTapped(let title):
       state.isSaving = true
       
       return .run {
