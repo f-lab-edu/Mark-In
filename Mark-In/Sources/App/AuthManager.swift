@@ -7,7 +7,6 @@
 
 // TODO: Core 모듈로 이전 예정
 
-import Combine
 import Foundation
 
 import FirebaseAuth
@@ -17,39 +16,27 @@ struct UserModel {
 }
 
 protocol AuthManager {
-  var userEvent: PassthroughSubject<UserModel?, Never> { get }
+  var user: UserModel? { get }
   
-  func checkLoginStatus()
-  func setCurrentUser(id: String)
-  func getCurrentUser() -> UserModel?
-  func clearCurrentUser()
+  func saveUser(id: String)
+  func clear()
 }
 
+@Observable
 final class AuthManagerImpl: AuthManager {
-  var userEvent: PassthroughSubject<UserModel?, Never> = .init()
+  var user: UserModel?
   
-  private var currentUser: UserModel?
-  
-  func checkLoginStatus() {
-    if let user = Auth.auth().currentUser {
-      setCurrentUser(id: user.uid)
-    } else {
-      clearCurrentUser()
-    }
+  init() {
+    guard let currentUser = Auth.auth().currentUser else { return }
+    self.user = UserModel(id: currentUser.uid)
   }
   
-  func setCurrentUser(id: String) {
+  func saveUser(id: String) {
     let user = UserModel(id: id)
-    userEvent.send(user)
-    currentUser = user
+    self.user = user
   }
   
-  func getCurrentUser() -> UserModel? {
-    return currentUser
-  }
-  
-  func clearCurrentUser() {
-    userEvent.send(nil)
-    currentUser = nil
+  func clear() {
+    user = nil
   }
 }
