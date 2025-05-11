@@ -7,10 +7,16 @@
 
 import Foundation
 
+// TODO: DIContainer 도입 시 제거
+import LinkMetadataKit
+import LinkMetadataKitInterface
+
 @MainActor @Observable
 final class MainViewModel: Reducer {
   struct State {
     var isLoading: Bool = true
+    
+    var links: [Link] = []
     
     var defaultTabs: [SidebarTab] = [.total, .pin, .nonRead]
     var folderTabs: [SidebarTab] = []
@@ -21,15 +27,28 @@ final class MainViewModel: Reducer {
   
   enum Action {
     case onAppear
-    case refresh
+    case fetchSucceeded([Link], [Folder])
     case changeTab(SidebarTab?)
     
     case presentSheet(SheetType?)
     
     case didCreateFolder(Folder)
+    
+    case occuredError
+    
+    case empty
   }
   
+  private let fetchLinkListUseCase: FetchLinkListUseCase
+  private let fetchFolderListUseCase: FetchFolderListUseCase
+  
   private(set) var state: State = .init()
+  
+  init() {
+    // TODO: DIContainer로 주입
+    self.fetchLinkListUseCase = FetchLinkListUseCaseImpl(linkRepository: LinkRepositoryImpl(linkMetadataProvider: LinkMetadataProviderImpl()))
+    self.fetchFolderListUseCase = FetchFolderListUseCaseImpl(folderRepository: FolderRepositoryImpl())
+  }
   
   func send(_ action: Action) {
     let effect = reduce(state: &state, action: action)
@@ -40,15 +59,28 @@ final class MainViewModel: Reducer {
     switch action {
     case .onAppear:
       return .run {
-        try? await Task.sleep(nanoseconds: 3_000_000_000)
-        return .refresh
+        do {
+          // TODO: 실제 로그인 유저 ID 전달
+          async let links = await self.fetchLinkListUseCase.execute(userID: "testUser")
+          async let folders = await self.fetchFolderListUseCase.execute(userID: "testUser")
+          
+          return try await .fetchSucceeded(links, folders)
+        } catch {
+          return .occuredError
+        }
       }
       
-    case .refresh:
-      // TODO: 실제 데이터 가져오는 작업 구현 필요
-      (1...3).forEach {
-        state.folderTabs.append(.folder(.init(id: "\($0)", name: "\($0)", createdBy: .now)))
+    case let .fetchSucceeded(links, folders):
+      
+      state.links = links
+      
+      state.folderTabs.append(.folder(.init(id: "", name: "기본폴더", createdBy: .now)))
+      folders.forEach {
+        state.folderTabs.append(
+          .folder(.init(id: $0.id, name: $0.name, createdBy: $0.createdBy))
+        )
       }
+      
       state.isLoading = false
       return .none
       
@@ -62,6 +94,13 @@ final class MainViewModel: Reducer {
       
     case .didCreateFolder(let folder):
       state.folderTabs.append(.folder(folder))
+      return .none
+      
+      // TODO: 에러 처리 로직 추가
+    case .occuredError:
+      return .none
+      
+    case .empty:
       return .none
     }
   }
