@@ -20,13 +20,21 @@ struct LinkListView: View {
   let viewModel: MainViewModel
   
   private var links: [Link] {
-    viewModel.state.links
+    let totalLinks = viewModel.state.links
+    let tab = viewModel.state.selectedTab ?? .total
+    
+    switch tab {
+    case .total:
+      return totalLinks
+    case .pin:
+      return totalLinks.filter { $0.isPinned }
+    case .nonRead:
+      return totalLinks.filter { $0.lastAccessedAt == nil }
+    case .folder(let folder):
+      return totalLinks.filter { $0.folderID == folder.id }
+    }
   }
   
-  private var currentTab: SidebarTab {
-    viewModel.state.selectedTab ?? .total
-  }
-
   var body: some View {
     GeometryReader { geometry in
       let columns = getColumns(from: geometry.size.width)
@@ -37,10 +45,7 @@ struct LinkListView: View {
           alignment: .leading,
           spacing: ViewConstants.spacing
         ) {
-          ForEach(
-            links.filter(tab: currentTab),
-            id: \.self
-          ) { link in
+          ForEach(links, id: \.self) { link in
             LinkCell(link: link)
           }
         }

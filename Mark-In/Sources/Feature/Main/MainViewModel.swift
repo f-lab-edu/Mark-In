@@ -131,18 +131,3 @@ extension MainViewModel {
     var id: String { String(describing: self) }
   }
 }
-
-extension Array where Element == Link {
-  func filter(tab: SidebarTab) -> Self {
-    switch tab {
-    case .total:
-      return self
-    case .pin:
-      return self.filter { $0.isPinned == true }
-    case .nonRead:
-      return self.filter { $0.lastAccessedAt == nil }
-    case .folder(let folder):
-      return self.filter { $0.folderID == folder.id }
-    }
-  }
-}
