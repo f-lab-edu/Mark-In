@@ -81,7 +81,7 @@ struct MainView: View {
 
       Spacer()
       Button {
-        // TODO: 구현 예정
+        viewModel.send(.presentSheet(.addLink))
       } label: {
         Image(systemName: "plus")
       }
@@ -106,7 +106,15 @@ struct MainView: View {
   private func buildSheet(_ type: MainViewModel.SheetType) -> some View {
     switch type {
     case .addLink:
-      AddLinkView()
+      let folderTabs = viewModel.state.folderTabs
+      let folders = folderTabs
+        .compactMap {
+          if case let .folder(folder) = $0 { folder }
+          else { nil }
+        }
+      AddLinkView(folders: folders) {
+        viewModel.send(.didCreateLink($0))
+      }
     case .addFolder:
       AddFolderView() {
         viewModel.send(.didCreateFolder($0))

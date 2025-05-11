@@ -32,6 +32,7 @@ final class MainViewModel: Reducer {
     
     case presentSheet(SheetType?)
     
+    case didCreateLink(Link)
     case didCreateFolder(Folder)
     
     case occuredError
@@ -90,6 +91,10 @@ final class MainViewModel: Reducer {
       
     case .presentSheet(let sheetType):
       state.isPresentedSheet = sheetType
+      return .none
+      
+    case .didCreateLink(let link):
+      state.links.insert(link, at: 0)
       return .none
       
     case .didCreateFolder(let folder):
