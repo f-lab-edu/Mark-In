@@ -74,6 +74,21 @@ private struct LinkCell: View {
   
   var body: some View {
     ZStack(alignment: .bottom) {
+      // TODO: Link 네이밍 충돌로, 이후 리팩토링 작업 후 적용 예정
+//      Link(destination: URL(string: link.url)) {
+//        AsyncImage(
+//          url: URL(string: link.thumbnailUrl ?? "")
+//        ) { image in
+//          image
+//            .resizable()
+//            .aspectRatio(contentMode: .fill)
+//        } placeholder: {
+//          Rectangle()
+//            .fill(.markWhite70)
+//        }
+//        .frame(width: ViewConstants.cellWidth, height: ViewConstants.cellHeight)
+//      }
+      
       AsyncImage(
         url: URL(string: link.thumbnailUrl ?? "")
       ) { image in
@@ -83,7 +98,10 @@ private struct LinkCell: View {
       } placeholder: {
         Rectangle()
       }
-      .frame(width: ViewConstants.cellWidth, height: ViewConstants.cellHeight)
+      .frame(
+        width: ViewConstants.cellWidth,
+        height: ViewConstants.cellHeight
+      )
       
       VStack(alignment: .leading, spacing: 0) {
         headerTitle
