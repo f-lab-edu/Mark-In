@@ -54,7 +54,8 @@ struct AddFolderView: View {
         .disabled(title.isEmpty || isSaving)
         
         Button {
-          viewModel.send(.addFolderButtonTapped(title: title))
+          let folder = WriteFolder(name: title)
+          viewModel.send(.addFolderButtonTapped(folder: folder))
         } label: {
           Text("추가")
             .padding(.vertical, 4)

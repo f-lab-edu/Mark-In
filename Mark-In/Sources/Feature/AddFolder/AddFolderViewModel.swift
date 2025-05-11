@@ -16,7 +16,7 @@ final class AddFolderViewModel: Reducer {
   }
   
   enum Action {
-    case addFolderButtonTapped(title: String)
+    case addFolderButtonTapped(folder: WriteFolder)
     case completeSave(Folder)
     case occurError(Bool)
   }
@@ -37,12 +37,12 @@ final class AddFolderViewModel: Reducer {
   
   func reduce(state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .addFolderButtonTapped(let title):
+    case .addFolderButtonTapped(let writeFolder):
       state.isSaving = true
       
       return .run {
         do {
-          let result = try await self.generateFolderUseCase.execute(name: title)
+          let result = try await self.generateFolderUseCase.execute(writeFolder: writeFolder)
           return .completeSave(result)
         } catch {
           return .occurError(true)
