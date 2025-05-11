@@ -11,39 +11,15 @@ import DesignSystem
 
 struct RootView: View {
   
-  @State private var rootViewModel = RootViewModel()
+  @State private var authManager: AuthManager = DIContainer.shared.resolve()
   
   var body: some View {
     ZStack {
-      if rootViewModel.state.isSplashVisible {
-        SplashView()
+      if authManager.user != nil {
+        MainView()
       } else {
-        if rootViewModel.state.currentUser != nil {
-          MainView()
-        } else {
-          LoginView()
-        }
+        LoginView()
       }
-    }
-    .onAppear {
-      rootViewModel.send(.onAppear)
-    }
-  }
-}
-
-
-private struct SplashView: View {
-  
-  var body: some View {
-    ZStack {
-      LinearGradient(
-        colors: [.markPoint, .markWhite],
-        startPoint: .top,
-        endPoint: .bottom
-      )
-      .ignoresSafeArea()
-      
-      Text("Splash View")
     }
   }
 }

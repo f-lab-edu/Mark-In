@@ -39,10 +39,10 @@ extension DIContainer {
     
     /// Core
     let linkMetadataProvider: LinkMetadataProvider = LinkMetadataProviderImpl()
-    let authSessionManager: AuthManager = AuthManagerImpl()
+    let authManager: AuthManager = AuthManagerImpl()
     
     register(linkMetadataProvider)
-    register(authSessionManager)
+    register(authManager)
     
     /// Repository
     let folderRepository: FolderRepository = FolderRepositoryImpl()
