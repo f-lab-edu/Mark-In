@@ -125,7 +125,7 @@ final class LoginViewModel: Reducer {
       switch result {
       case .success(let id):
         let user = AuthUser(id: id)
-        authUserManager.saveUser(user)
+        authUserManager.save(user)
       case .failure(let error):
         // TODO: 에러 처리 필요
         let _ = error as? AuthErrorCode
