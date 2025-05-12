@@ -33,10 +33,10 @@ final class LoginViewModel: Reducer {
   }
   
   private(set) var state: State = .init()
-  private let authManager: AuthManager
+  private let authUserManager: AuthUserManager
   
   init() {
-    self.authManager = DIContainer.shared.resolve()
+    self.authUserManager = DIContainer.shared.resolve()
   }
   
   func send(_ action: Action) {
@@ -124,7 +124,7 @@ final class LoginViewModel: Reducer {
     case .firebaseAuthResponse(let result):
       switch result {
       case .success(let id):
-        authManager.saveUser(id: id)
+        authUserManager.saveUser(id: id)
       case .failure(let error):
         // TODO: 에러 처리 필요
         let _ = error as? AuthErrorCode

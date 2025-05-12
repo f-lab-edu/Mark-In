@@ -11,11 +11,11 @@ import DesignSystem
 
 struct RootView: View {
   
-  @State private var authManager: AuthManager = DIContainer.shared.resolve()
+  @State private var authUserManager: AuthUserManager = DIContainer.shared.resolve()
   
   var body: some View {
     ZStack {
-      if authManager.user != nil {
+      if authUserManager.user != nil {
         MainView()
       } else {
         LoginView()

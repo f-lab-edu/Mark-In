@@ -11,28 +11,28 @@ import Foundation
 
 import FirebaseAuth
 
-struct UserModel {
+struct AuthUser {
   let id: String
 }
 
-protocol AuthManager {
-  var user: UserModel? { get }
+protocol AuthUserManager {
+  var user: AuthUser? { get }
   
   func saveUser(id: String)
   func clear()
 }
 
 @Observable
-final class AuthManagerImpl: AuthManager {
-  var user: UserModel?
+final class AuthUserManagerImpl: AuthUserManager {
+  var user: AuthUser?
   
   init() {
     guard let currentUser = Auth.auth().currentUser else { return }
-    self.user = UserModel(id: currentUser.uid)
+    self.user = AuthUser(id: currentUser.uid)
   }
   
   func saveUser(id: String) {
-    let user = UserModel(id: id)
+    let user = AuthUser(id: id)
     self.user = user
   }
   
