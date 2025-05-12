@@ -19,6 +19,7 @@ protocol AuthUserManager {
   var user: AuthUser? { get }
   
   func saveUser(_ user: AuthUser)
+  func load()
   func clear()
 }
 
@@ -27,6 +28,10 @@ final class AuthUserManagerImpl: AuthUserManager {
   var user: AuthUser?
   
   init() {
+    self.load()
+  }
+  
+  func load() {
     guard let currentUser = Auth.auth().currentUser else { return }
     self.user = AuthUser(id: currentUser.uid)
   }
