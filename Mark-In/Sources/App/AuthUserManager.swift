@@ -18,7 +18,7 @@ struct AuthUser {
 protocol AuthUserManager {
   var user: AuthUser? { get }
   
-  func saveUser(id: String)
+  func saveUser(_ user: AuthUser)
   func clear()
 }
 
@@ -31,8 +31,7 @@ final class AuthUserManagerImpl: AuthUserManager {
     self.user = AuthUser(id: currentUser.uid)
   }
   
-  func saveUser(id: String) {
-    let user = AuthUser(id: id)
+  func saveUser(_ user: AuthUser) {
     self.user = user
   }
   

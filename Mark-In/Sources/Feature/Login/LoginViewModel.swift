@@ -124,7 +124,8 @@ final class LoginViewModel: Reducer {
     case .firebaseAuthResponse(let result):
       switch result {
       case .success(let id):
-        authUserManager.saveUser(id: id)
+        let user = AuthUser(id: id)
+        authUserManager.saveUser(user)
       case .failure(let error):
         // TODO: 에러 처리 필요
         let _ = error as? AuthErrorCode
