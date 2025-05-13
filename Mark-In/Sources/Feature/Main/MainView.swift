@@ -13,6 +13,7 @@ struct MainView: View {
   @State private var viewModel = MainViewModel()
   @State private var searchText: String = ""
   @State private var isAddMode: Bool = false
+  @State private var isPresentedMyPage: Bool = false
   
   var body: some View {
     ZStack {
@@ -91,11 +92,17 @@ struct MainView: View {
       
       Spacer()
       Button {
-        // TODO: 구현 예정
+        isPresentedMyPage = true
       } label: {
         Image(systemName: "person.circle.fill")
           .resizable()
           .frame(width: 22, height: 22)
+      }
+      .popover(
+        isPresented: $isPresentedMyPage,
+        arrowEdge: .bottom
+      ) {
+        MyPageView()
       }
     }
   }
