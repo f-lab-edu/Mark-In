@@ -65,7 +65,7 @@ struct MyPageView: View {
         .padding(.horizontal, 8)
 
       Button {
-        // TODO: 회원탈퇴
+        viewModel.send(.withdrawalButtonTapped)
       } label: {
         Text("회원 탈퇴")
           .font(.pretendard(size: 12, weight: .regular))

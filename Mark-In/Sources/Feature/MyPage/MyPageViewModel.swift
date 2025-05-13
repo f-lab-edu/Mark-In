@@ -13,7 +13,7 @@ import GoogleSignIn
 @Observable
 final class MyPageViewModel: Reducer {
   struct State {
-    
+    var userState: AuthUserState = .init()
   }
   
   enum Action {
@@ -22,6 +22,9 @@ final class MyPageViewModel: Reducer {
     
     case didSuccessLogout
     case didFailLogout
+    
+    case didSuccessWithdrawal
+    case didFailWithdrawal
   }
   
   private let authUserManager: AuthUserManager
@@ -41,7 +44,7 @@ final class MyPageViewModel: Reducer {
     switch action {
     case .logoutButtonTapped:
       return .run {
-        // TODO: 이후 Auth 모듈을 분리하면서 코드 리팩토링 예정
+        // TODO: 이후 Auth 모듈로 분리하면서 코드 리팩토링 예정
         do {
           try Auth.auth().signOut()
           
@@ -55,7 +58,23 @@ final class MyPageViewModel: Reducer {
       }
       
     case .withdrawalButtonTapped:
-      return .none
+      return .run {
+        // TODO: 이후 Auth 모듈로 분리하면서 코드 리팩토링 예정
+        do {
+          // TODO: 재인증 과정 필요
+          // try await Auth.auth().currentUser?.reauthenticate(with: credential)
+          try await Auth.auth().currentUser?.delete()
+          
+          if GIDSignIn.sharedInstance.currentUser != nil {
+            try await GIDSignIn.sharedInstance.disconnect()
+            GIDSignIn.sharedInstance.signOut()
+          }
+          
+          return .didSuccessWithdrawal
+        } catch {
+          return .didFailWithdrawal
+        }
+      }
       
     case .didSuccessLogout:
       authUserManager.clear()
@@ -63,6 +82,14 @@ final class MyPageViewModel: Reducer {
       
       // TODO: 로그아웃 실패에 대한 처리 필요
     case .didFailLogout:
+      return .none
+      
+    case .didSuccessWithdrawal:
+      authUserManager.clear()
+      return .none
+      
+      // TODO: 회원탈퇴 실패에 대한 처리 필요
+    case .didFailWithdrawal:
       return .none
     }
   }
@@ -77,5 +104,12 @@ final class MyPageViewModel: Reducer {
         await self?.send(newAction)
       }
     }
+  }
+}
+
+extension MyPageViewModel {
+  struct AuthUserState {
+    var name: String = ""
+    var email: String = ""
   }
 }
