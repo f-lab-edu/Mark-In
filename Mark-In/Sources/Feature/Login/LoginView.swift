@@ -117,7 +117,7 @@ private struct SignInButtonList: View {
 }
 
 private struct SignInButton: View {
-  let provider: OAuthProvider
+  let provider: SocialSignInProvider
   
   let action: () -> Void
   

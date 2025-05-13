@@ -17,7 +17,7 @@ import Util
 @Observable
 final class LoginViewModel: Reducer {
   struct State {
-    var isSignInSuccess: Bool = false
+    // TODO: 로그인 실패 시 알림 화면을 보여줄 상태 구현 생각 중
   }
   
   enum Action {
@@ -27,12 +27,17 @@ final class LoginViewModel: Reducer {
     case signInError(SignInError)
     
     case firebaseAuthRequest(AuthCredential)
-    case firebaseAuthResponse(Result<Void, Error>)
+    case firebaseAuthResponse(Result<String, Error>)
     
     case empty
   }
   
   private(set) var state: State = .init()
+  private let authUserManager: AuthUserManager
+  
+  init() {
+    self.authUserManager = DIContainer.shared.resolve()
+  }
   
   func send(_ action: Action) {
     let effect = reduce(state: &state, action: action)
@@ -108,9 +113,9 @@ final class LoginViewModel: Reducer {
       return .run {
         do {
           /// Firebase 인증 요청
-          let _ = try await Auth.auth().signIn(with: credential)
+          let response = try await Auth.auth().signIn(with: credential)
           
-          return .firebaseAuthResponse(.success(()))
+          return .firebaseAuthResponse(.success(response.user.uid))
         } catch {
           return .firebaseAuthResponse(.failure(error))
         }
@@ -118,8 +123,9 @@ final class LoginViewModel: Reducer {
 
     case .firebaseAuthResponse(let result):
       switch result {
-      case .success(_):
-        state.isSignInSuccess = true
+      case .success(let id):
+        let user = AuthUser(id: id)
+        authUserManager.save(user)
       case .failure(let error):
         // TODO: 에러 처리 필요
         let _ = error as? AuthErrorCode
@@ -137,9 +143,9 @@ final class LoginViewModel: Reducer {
     case .none:
       break
     case .run(let action):
-      Task {
+      Task.detached { [weak self] in
         let newAction = await action()
-        await send(newAction)
+        await self?.send(newAction)
       }
     }
   }

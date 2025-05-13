@@ -7,7 +7,7 @@
 
 import Foundation
 
-@MainActor @Observable
+@Observable
 final class MainViewModel: Reducer {
   struct State {
     var isLoading: Bool = true

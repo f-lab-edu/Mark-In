@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum OAuthProvider {
+public enum SocialSignInProvider {
   case apple
   case google
 }
