@@ -14,6 +14,7 @@ private enum ViewConstants {
 }
 
 struct MyPageView: View {
+  @State private var viewModel = MyPageViewModel()
   @State private var contentWidth = ViewConstants.minContentWidth
 
   var body: some View {
@@ -53,7 +54,7 @@ struct MyPageView: View {
   private var footerButtons: some View {
     VStack(spacing: 8) {
       Button {
-        // TODO: 로그아웃
+        viewModel.send(.logoutButtonTapped)
       } label: {
         Text("로그아웃")
           .font(.pretendard(size: 12, weight: .regular))
