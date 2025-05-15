@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SocialSignInProvider {
+public enum SocialSignInProvider: Codable {
   case apple
   case google
 }

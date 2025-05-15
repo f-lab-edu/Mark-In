@@ -9,10 +9,13 @@
 
 import Foundation
 
-import FirebaseAuth
+import Util
 
-struct AuthUser {
+struct AuthUser: Codable {
   let id: String
+  let name: String
+  let email: String
+  let provider: SocialSignInProvider
 }
 
 protocol AuthUserManager {
@@ -25,22 +28,28 @@ protocol AuthUserManager {
 
 @Observable
 final class AuthUserManagerImpl: AuthUserManager {
+  
+  private let keychainStore: KeychainStore
+  
   var user: AuthUser?
   
-  init() {
+  init(keychainStore: KeychainStore) {
+    self.keychainStore = keychainStore
     self.load()
   }
   
   func load() {
-    guard let currentUser = Auth.auth().currentUser else { return }
-    self.user = AuthUser(id: currentUser.uid)
+    let user: AuthUser? = try? keychainStore.load(forKey: "authUser")
+    self.user = user
   }
   
   func save(_ user: AuthUser) {
+    try? keychainStore.save(user, forKey: "authUser")
     self.user = user
   }
   
   func clear() {
+    try? keychainStore.delete(forKey: "authUser")
     user = nil
   }
 }

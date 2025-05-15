@@ -38,8 +38,11 @@ extension DIContainer {
   func registerDependencies() {
     
     /// Core
+    let keychainStore: KeychainStore = KeychainStoreImpl()
     let linkMetadataProvider: LinkMetadataProvider = LinkMetadataProviderImpl()
-    let authUserManager: AuthUserManager = AuthUserManagerImpl()
+    let authUserManager: AuthUserManager = AuthUserManagerImpl(
+      keychainStore: keychainStore
+    )
     
     register(linkMetadataProvider)
     register(authUserManager)
