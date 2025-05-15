@@ -18,9 +18,9 @@ struct SignOutUseCaseImpl: SignOutUseCase {
     self.authUserManager = authUserManager
   }
   
-  func execute() throws {
+  func execute() {
     // TODO: Core(Auth) 모듈에서 처리하도록 리팩토링
-    try Auth.auth().signOut()
+    try? Auth.auth().signOut()
     
     /// 구글 사용자인 경우
     if authUserManager.user?.provider == .google {

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol SignOutUseCase {
-  func execute() throws
+  func execute()
 }

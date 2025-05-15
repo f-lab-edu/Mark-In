@@ -43,11 +43,7 @@ final class MyPageViewModel: Reducer {
   func reduce(state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .logoutButtonTapped:
-      do {
-        try signOutUseCase.execute()
-      } catch {
-        // TODO: 로그아웃 실패 처리 필요
-      }
+      signOutUseCase.execute()
       return .none
       
     case .withdrawalButtonTapped:
