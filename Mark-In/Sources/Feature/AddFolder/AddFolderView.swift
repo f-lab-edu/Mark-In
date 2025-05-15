@@ -15,7 +15,7 @@ struct AddFolderView: View {
   @State private var title: String = ""
   
   private var isSaving: Bool {
-    viewModel.state.isSaving
+    viewModel.state.isLoading
   }
   
   let completion: (Folder) -> ()
@@ -54,8 +54,7 @@ struct AddFolderView: View {
         .disabled(title.isEmpty || isSaving)
         
         Button {
-          let folder = WriteFolder(name: title)
-          viewModel.send(.addFolderButtonTapped(folder: folder))
+          viewModel.send(.didTapAddFolderButton(name: title))
         } label: {
           Text("추가")
             .padding(.vertical, 4)
@@ -82,7 +81,7 @@ struct AddFolderView: View {
       "폴더 생성에 실패했습니다.",
       isPresented: .init(
         get: { viewModel.state.isError },
-        set: { viewModel.send(.occurError($0)) }
+        set: { viewModel.send(.updateErrorState($0)) }
       )
     ) {
       Button(role: .cancel) {

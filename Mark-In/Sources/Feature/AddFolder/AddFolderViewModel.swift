@@ -11,14 +11,14 @@ import Foundation
 final class AddFolderViewModel: Reducer {
   struct State {
     var createdFolder: Folder?
-    var isSaving: Bool = false
+    var isLoading: Bool = false
     var isError: Bool = false
   }
   
   enum Action {
-    case addFolderButtonTapped(folder: WriteFolder)
-    case completeSave(Folder)
-    case occurError(Bool)
+    case didTapAddFolderButton(name: String)
+    case didCompleteSave(Folder)
+    case updateErrorState(Bool)
   }
   
   private let generateFolderUseCase: GenerateFolderUseCase
@@ -37,25 +37,26 @@ final class AddFolderViewModel: Reducer {
   
   func reduce(state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .addFolderButtonTapped(let writeFolder):
-      state.isSaving = true
+    case .didTapAddFolderButton(let name):
+      state.isLoading = true
       
       return .run {
         do {
+          let writeFolder = WriteFolder(name: name)
           let result = try await self.generateFolderUseCase.execute(writeFolder: writeFolder)
-          return .completeSave(result)
+          return .didCompleteSave(result)
         } catch {
-          return .occurError(true)
+          return .updateErrorState(true)
         }
       }
       
-    case .completeSave(let folder):
-      state.isSaving = false
+    case .didCompleteSave(let folder):
+      state.isLoading = false
       state.createdFolder = folder
       return .none
       
-    case .occurError(let bool):
-      state.isSaving = false
+    case .updateErrorState(let bool):
+      state.isLoading = false
       state.isError = bool
       return .none
     }

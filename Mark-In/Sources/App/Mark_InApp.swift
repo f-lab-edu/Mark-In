@@ -20,11 +20,13 @@ struct Mark_InApp: App {
     
     configureFirebase()
     configureGoogleSignIn()
+    
+    DIContainer.shared.registerDependencies()
   }
   
   var body: some Scene {
     WindowGroup {
-      MainView()
+      RootView()
         .frame(minWidth: 500, minHeight: 500)
         .onOpenURL { url in
           GIDSignIn.sharedInstance.handle(url)
