@@ -12,14 +12,21 @@ final class MainViewModel: Reducer {
   struct State {
     var isLoading: Bool = true
     
-    var tabs: [SidebarTab] = [.total, .pin, .nonRead]
+    var defaultTabs: [SidebarTab] = [.total, .pin, .nonRead]
+    var folderTabs: [SidebarTab] = []
     var selectedTab: SidebarTab? = .total
+    
+    var isPresentedSheet: SheetType?
   }
   
   enum Action {
     case onAppear
     case refresh
     case changeTab(SidebarTab?)
+    
+    case presentSheet(SheetType?)
+    
+    case didCreateFolder(Folder)
   }
   
   private(set) var state: State = .init()
@@ -38,12 +45,23 @@ final class MainViewModel: Reducer {
       }
       
     case .refresh:
-      (1...3).forEach { state.tabs.append(.folder(.init(id: "\($0)", name: "\($0)"))) }
+      // TODO: 실제 데이터 가져오는 작업 구현 필요
+      (1...3).forEach {
+        state.folderTabs.append(.folder(.init(id: "\($0)", name: "\($0)", createdBy: .now)))
+      }
       state.isLoading = false
       return .none
       
     case .changeTab(let tab):
       state.selectedTab = tab
+      return .none
+      
+    case .presentSheet(let sheetType):
+      state.isPresentedSheet = sheetType
+      return .none
+      
+    case .didCreateFolder(let folder):
+      state.folderTabs.append(.folder(folder))
       return .none
     }
   }
@@ -61,8 +79,11 @@ final class MainViewModel: Reducer {
   }
 }
 
-// TODO: 이후 제거 예정
-struct TestFolder: Hashable {
-  var id: String
-  var name: String
+extension MainViewModel {
+  enum SheetType: Identifiable {
+    case addLink
+    case addFolder
+    
+    var id: String { String(describing: self) }
+  }
 }

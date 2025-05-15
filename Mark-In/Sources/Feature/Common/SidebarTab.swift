@@ -11,7 +11,7 @@ enum SidebarTab: Hashable {
   case total
   case pin
   case nonRead
-  case folder(TestFolder)
+  case folder(Folder)
   
   var title: String {
     switch self {
@@ -29,10 +29,5 @@ enum SidebarTab: Hashable {
     case .nonRead: "xmark.circle"
     case .folder(_): "folder"
     }
-  }
-  
-  var isFolder: Bool {
-    if case .folder(_) = self { true }
-    else { false }
   }
 }
