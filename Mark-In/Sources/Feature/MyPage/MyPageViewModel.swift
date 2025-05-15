@@ -57,7 +57,6 @@ final class MyPageViewModel: Reducer {
           try await self.withdrawalUseCase.execute()
           return .empty
         } catch {
-          print(error.localizedDescription)
           return .didFailWithdrawal
         }
       }

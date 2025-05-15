@@ -109,7 +109,6 @@ private struct SignInButtonList: View {
       }
       
       SignInButton(provider: .google) {
-        // TODO: 구글 로그인 로직
         loginViewModel.send(.googleLoginButtonTapped)
       }
     }

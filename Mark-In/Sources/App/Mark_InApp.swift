@@ -44,10 +44,8 @@ extension Mark_InApp {
 #endif
     
     guard let filePath = Bundle.main.path(forResource: resource, ofType: "plist"),
-          let options = FirebaseOptions(contentsOfFile: filePath)
-    else {
-      print("Firebase: \(resource) not found or invalid.")
-      return
+          let options = FirebaseOptions(contentsOfFile: filePath) else {
+      fatalError("Firebase: \(resource) not found or invalid.")
     }
     
     FirebaseApp.configure(options: options)
