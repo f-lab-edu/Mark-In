@@ -26,8 +26,7 @@ final class AddFolderViewModel: Reducer {
   private(set) var state: State = .init()
   
   init() {
-    // TODO: DIContainer PR 머지 이후 DIContainer를 통해 의존성 주입
-    self.generateFolderUseCase = GenerateFolderUseCaseImpl(folderRepository: FolderRepositoryImpl())
+    self.generateFolderUseCase = DIContainer.shared.resolve()
   }
   
   func send(_ action: Action) {

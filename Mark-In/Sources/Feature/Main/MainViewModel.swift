@@ -7,10 +7,6 @@
 
 import Foundation
 
-// TODO: DIContainer 도입 시 제거
-import LinkMetadataKit
-import LinkMetadataKitInterface
-
 @MainActor @Observable
 final class MainViewModel: Reducer {
   struct State {
@@ -46,9 +42,8 @@ final class MainViewModel: Reducer {
   private(set) var state: State = .init()
   
   init() {
-    // TODO: DIContainer로 주입
-    self.fetchLinkListUseCase = FetchLinkListUseCaseImpl(linkRepository: LinkRepositoryImpl(linkMetadataProvider: LinkMetadataProviderImpl()))
-    self.fetchFolderListUseCase = FetchFolderListUseCaseImpl(folderRepository: FolderRepositoryImpl())
+    self.fetchLinkListUseCase = DIContainer.shared.resolve()
+    self.fetchFolderListUseCase = DIContainer.shared.resolve()
   }
   
   func send(_ action: Action) {
