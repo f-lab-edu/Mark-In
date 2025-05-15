@@ -86,7 +86,7 @@ struct SignInUseCaseImpl: SignInUseCase {
       id: response.user.uid,
       name: response.user.displayName ?? "-",
       email: response.user.email ?? "-",
-      provider: .apple
+      provider: .google
     )
     authUserManager.save(authUser)
   }
