@@ -73,11 +73,15 @@ extension DIContainer {
       keychainStore: keychainStore,
       authUserManager: authUserManager
     )
+    let signOutUseCase: SignOutUseCase = SignOutUseCaseImpl(
+      authUserManager: authUserManager
+    )
     
     register(fetchLinkListUseCase)
     register(fetchFolderListUseCase)
     register(generateLinkUseCase)
     register(generateFolderUseCase)
     register(signInUseCase)
+    register(signOutUseCase)
   }
 }

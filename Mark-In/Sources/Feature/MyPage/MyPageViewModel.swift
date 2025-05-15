@@ -20,19 +20,20 @@ final class MyPageViewModel: Reducer {
     case logoutButtonTapped
     case withdrawalButtonTapped
     
-    case didSuccessLogout
-    case didFailLogout
-    
     case didSuccessWithdrawal
     case didFailWithdrawal
   }
   
+  private let signOutUseCase: SignOutUseCase
   private let authUserManager: AuthUserManager
+  private let tokenStore: KeychainStore
   
   private(set) var state: State = .init()
   
   init() {
+    self.signOutUseCase = DIContainer.shared.resolve()
     self.authUserManager = DIContainer.shared.resolve()
+    self.tokenStore = KeychainStoreImpl()
   }
   
   func send(_ action: Action) {
@@ -43,46 +44,42 @@ final class MyPageViewModel: Reducer {
   func reduce(state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .logoutButtonTapped:
-      return .run {
-        // TODO: 이후 Auth 모듈로 분리하면서 코드 리팩토링 예정
-        do {
-          try Auth.auth().signOut()
-          
-          if GIDSignIn.sharedInstance.currentUser != nil {
-            GIDSignIn.sharedInstance.signOut()
-          }
-          return .didSuccessLogout
-        } catch {
-          return .didFailLogout
-        }
+      do {
+        try signOutUseCase.execute()
+      } catch {
+        // TODO: 로그아웃 실패 처리 필요
       }
+      return .none
       
     case .withdrawalButtonTapped:
       return .run {
         // TODO: 이후 Auth 모듈로 분리하면서 코드 리팩토링 예정
         do {
-          // TODO: 재인증 과정 필요
-          // try await Auth.auth().currentUser?.reauthenticate(with: credential)
-          try await Auth.auth().currentUser?.delete()
           
-          if GIDSignIn.sharedInstance.currentUser != nil {
-            try await GIDSignIn.sharedInstance.disconnect()
-            GIDSignIn.sharedInstance.signOut()
-          }
+          let token: String? = try? self.tokenStore.load(forKey: "refreshToken")
+          guard let token else { return .didFailWithdrawal }
           
+          let url = URL(string: "https://\(Config.value(forKey: .revokeTokenURL))/revokeToken?refresh_token=\(token)"
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+          
+          _ = try await URLSession.shared.data(from: url)
+          
+          try self.tokenStore.delete(forKey: "refreshToken")
+          
+//          // TODO: 재인증 과정 필요
+//          // try await Auth.auth().currentUser?.reauthenticate(with: credential)
+//          try await Auth.auth().currentUser?.delete()
+//          
+//          if GIDSignIn.sharedInstance.currentUser != nil {
+//            try await GIDSignIn.sharedInstance.disconnect()
+//            GIDSignIn.sharedInstance.signOut()
+//          }
+//          
           return .didSuccessWithdrawal
         } catch {
           return .didFailWithdrawal
         }
       }
-      
-    case .didSuccessLogout:
-      authUserManager.clear()
-      return .none
-      
-      // TODO: 로그아웃 실패에 대한 처리 필요
-    case .didFailLogout:
-      return .none
       
     case .didSuccessWithdrawal:
       authUserManager.clear()
