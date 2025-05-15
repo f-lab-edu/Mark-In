@@ -54,7 +54,7 @@ struct AddFolderView: View {
         .disabled(title.isEmpty || isSaving)
         
         Button {
-          viewModel.send(.addLinkButtonTapped(title: title))
+          viewModel.send(.didTapAddLinkButton(title: title))
         } label: {
           Text("추가")
             .padding(.vertical, 4)
@@ -81,7 +81,7 @@ struct AddFolderView: View {
       "폴더 생성에 실패했습니다.",
       isPresented: .init(
         get: { viewModel.state.isError },
-        set: { viewModel.send(.occurError($0)) }
+        set: { viewModel.send(.updateErrorState($0)) }
       )
     ) {
       Button(role: .cancel) {
