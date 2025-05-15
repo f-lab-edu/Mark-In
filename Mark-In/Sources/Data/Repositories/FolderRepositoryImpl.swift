@@ -59,7 +59,8 @@ struct FolderRepositoryImpl: FolderRepository {
   
   func update(userID: String, folder: Folder) async throws {
     /// 1. Folder 문서 참조 생성
-    let path = FirebasePath.folders(userID: userID).path + "/\(folder.id)"
+    let folderID = folder.id ?? ""
+    let path = FirebasePath.folders(userID: userID).path + "/\(folderID)"
     let folderDocRef = db.document(path)
     
     /// 2. Entity를 DTO로 변환
@@ -84,7 +85,8 @@ struct FolderRepositoryImpl: FolderRepository {
   
   func delete(userID: String, folder: Folder) async throws {
     /// 1. Folder 문서 참조 생성
-    let path = FirebasePath.folders(userID: userID).path + "/\(folder.id)"
+    let folderID = folder.id ?? ""
+    let path = FirebasePath.folders(userID: userID).path + "/\(folderID)"
     let folderDocRef = db.document(path)
     
     /// 2. Folder 삭제

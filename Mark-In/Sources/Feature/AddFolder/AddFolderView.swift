@@ -54,7 +54,7 @@ struct AddFolderView: View {
         .disabled(title.isEmpty || isSaving)
         
         Button {
-          viewModel.send(.didTapAddLinkButton(title: title))
+          viewModel.send(.didTapAddFolderButton(name: title))
         } label: {
           Text("추가")
             .padding(.vertical, 4)

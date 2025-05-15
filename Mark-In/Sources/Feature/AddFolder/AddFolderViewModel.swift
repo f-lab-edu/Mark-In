@@ -16,7 +16,7 @@ final class AddFolderViewModel: Reducer {
   }
   
   enum Action {
-    case didTapAddLinkButton(title: String)
+    case didTapAddFolderButton(name: String)
     case didCompleteSave(Folder)
     case updateErrorState(Bool)
   }
@@ -26,8 +26,7 @@ final class AddFolderViewModel: Reducer {
   private(set) var state: State = .init()
   
   init() {
-    // TODO: DIContainer PR 머지 이후 DIContainer를 통해 의존성 주입
-    self.generateFolderUseCase = GenerateFolderUseCaseImpl(folderRepository: FolderRepositoryImpl())
+    self.generateFolderUseCase = DIContainer.shared.resolve()
   }
   
   func send(_ action: Action) {
@@ -37,12 +36,13 @@ final class AddFolderViewModel: Reducer {
   
   func reduce(state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .didTapAddLinkButton(let title):
+    case .didTapAddFolderButton(let name):
       state.isLoading = true
       
       return .run {
         do {
-          let result = try await self.generateFolderUseCase.execute(name: title)
+          let writeFolder = WriteFolder(name: name)
+          let result = try await self.generateFolderUseCase.execute(writeFolder: writeFolder)
           return .didCompleteSave(result)
         } catch {
           return .updateErrorState(true)

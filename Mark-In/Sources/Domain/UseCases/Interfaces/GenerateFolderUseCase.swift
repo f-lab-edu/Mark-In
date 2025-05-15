@@ -8,5 +8,5 @@
 import Foundation
 
 protocol GenerateFolderUseCase {
-  func execute(name: String) async throws -> Folder
+  func execute(writeFolder: WriteFolder) async throws -> Folder
 }

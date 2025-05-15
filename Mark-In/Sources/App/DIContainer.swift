@@ -52,5 +52,24 @@ extension DIContainer {
     
     register(folderRepository)
     register(linkRepository)
+    
+    /// UseCase
+    let fetchLinkListUseCase: FetchLinkListUseCase = FetchLinkListUseCaseImpl(
+      linkRepository: linkRepository
+    )
+    let fetchFolderListUseCase: FetchFolderListUseCase = FetchFolderListUseCaseImpl(
+      folderRepository: folderRepository
+    )
+    let generateLinkUseCase: GenerateLinkUseCase = GenerateLinkUseCaseImpl(
+      linkRepository: linkRepository
+    )
+    let generateFolderUseCase: GenerateFolderUseCase = GenerateFolderUseCaseImpl(
+      folderRepository: folderRepository
+    )
+    
+    register(fetchLinkListUseCase)
+    register(fetchFolderListUseCase)
+    register(generateLinkUseCase)
+    register(generateFolderUseCase)
   }
 }

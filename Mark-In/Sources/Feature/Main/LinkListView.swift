@@ -18,7 +18,23 @@ private enum ViewConstants {
 struct LinkListView: View {
   
   let viewModel: MainViewModel
-
+  
+  private var links: [Link] {
+    let totalLinks = viewModel.state.links
+    let tab = viewModel.state.selectedTab ?? .total
+    
+    switch tab {
+    case .total:
+      return totalLinks
+    case .pin:
+      return totalLinks.filter { $0.isPinned }
+    case .nonRead:
+      return totalLinks.filter { $0.lastAccessedAt == nil }
+    case .folder(let folder):
+      return totalLinks.filter { $0.folderID == folder.id }
+    }
+  }
+  
   var body: some View {
     GeometryReader { geometry in
       let columns = getColumns(from: geometry.size.width)
@@ -29,12 +45,8 @@ struct LinkListView: View {
           alignment: .leading,
           spacing: ViewConstants.spacing
         ) {
-          ForEach((0...19), id: \.self) { _ in
-            LinkCell()
-              .frame(
-                width: ViewConstants.cellWidth,
-                height: ViewConstants.cellHeight
-              )
+          ForEach(links, id: \.self) { link in
+            LinkCell(link: link)
           }
         }
         .padding(20)
@@ -44,7 +56,6 @@ struct LinkListView: View {
   
   private func getColumns(from width: Double) -> [GridItem] {
     let cellWidth = ViewConstants.cellWidth
-    let cellHeight = ViewConstants.cellHeight
     let spacing = ViewConstants.spacing
     let numberOfColumns = max(
       Int((width + spacing) / (cellWidth + spacing)), 1
@@ -64,36 +75,105 @@ struct LinkListView: View {
 
 private struct LinkCell: View {
   
+  let link: Link
+  
   var body: some View {
     ZStack(alignment: .bottom) {
-      Image(.sampleImage)
-        .resizable()
-        .aspectRatio(contentMode: .fit)
+      // TODO: Link 네이밍 충돌로, 이후 리팩토링 작업 후 적용 예정
+//      Link(destination: URL(string: link.url)) {
+//        AsyncImage(
+//          url: URL(string: link.thumbnailUrl ?? "")
+//        ) { image in
+//          image
+//            .resizable()
+//            .aspectRatio(contentMode: .fill)
+//        } placeholder: {
+//          Rectangle()
+//            .fill(.markWhite70)
+//        }
+//        .frame(width: ViewConstants.cellWidth, height: ViewConstants.cellHeight)
+//      }
       
-      VStack(alignment: .leading, spacing: 4) {
-        Text("맛집 링크 - 네이버 지도")
-          .font(.pretendard(size: 12, weight: .semiBold))
-        Text("7일 전")
-          .font(.pretendard(size: 10, weight: .regular))
+      AsyncImage(
+        url: URL(string: link.thumbnailUrl ?? "")
+      ) { image in
+        image
+          .resizable()
+          .aspectRatio(contentMode: .fill)
+      } placeholder: {
+        Rectangle()
+      }
+      .frame(
+        width: ViewConstants.cellWidth,
+        height: ViewConstants.cellHeight
+      )
+      
+      VStack(alignment: .leading, spacing: 0) {
+        headerTitle
+        
+        bodyTitle
+          .padding(.top, 1)
+        
+        footerTitle
+          .padding(.top, 7)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
-      .padding([.top, .horizontal], 10)
-      .padding(.bottom, 12)
-      .background(.green)
+      .padding(.horizontal, 10)
+      .padding([.top, .bottom], 12)
+      .background(.markWhite)
     }
-    .background(.yellow)
     .clipShape(
       RoundedRectangle(cornerRadius: 6)
     )
     .overlay(content: {
       RoundedRectangle(cornerRadius: 6)
-        .stroke(lineWidth: 0.5)
+        .stroke(.markBlack20, lineWidth: 0.5)
     })
     
+  }
+  
+  private var headerTitle: some View {
+    HStack(alignment: .top, spacing: 3) {
+      if link.isPinned {
+        Image(systemName: "star.fill")
+          .resizable()
+          .foregroundStyle(.markPoint)
+          .frame(width: 12, height: 12)
+      }
+      
+      Text(link.title ?? "제목 없음")
+        .font(.pretendard(size: 12, weight: .semiBold))
+        .foregroundStyle(.markBlack)
+        .lineLimit(1)
+    }
+  }
+  
+  private var bodyTitle: some View {
+    Text(link.url)
+      .font(.pretendard(size: 10, weight: .regular))
+      .foregroundStyle(.markBlack40)
+      .lineLimit(1)
+  }
+  
+  private var footerTitle: some View {
+    HStack(alignment: .center, spacing: 4) {
+      if link.lastAccessedAt == nil {
+        Circle()
+          .fill(.markRed)
+          .frame(width: 5, height: 5)
+      }
+      
+      Text(link.createdBy.description)
+        .font(.pretendard(size: 10, weight: .regular))
+        .foregroundStyle(.markBlack40)
+        .lineLimit(1)
+    }
   }
 }
 
 #Preview {
-  LinkListView(viewModel: MainViewModel())
-    .frame(width: 600, height: 600)
+  LinkCell(link: .init(id: "", url: "www.naver.com", isPinned: true, createdBy: .now))
+    .frame(width: 210, height: 160)
+//  LinkListView(viewModel: MainViewModel())
+//    .frame(width: 600, height: 600)
 }

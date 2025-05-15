@@ -9,24 +9,29 @@ import SwiftUI
 
 import DesignSystem
 
-// TODO: 후에 제거 예정
-private struct TestFolder1: Hashable {
-  var id: String
-  var name: String
-  
-  static let dummy: [Self] = [
-    .init(id: "1", name: "Root"),
-    .init(id: "2", name: "Work"),
-    .init(id: "3", name: "Personal"),
-  ]
-}
-
 struct AddLinkView: View {
   @Environment(\.dismiss) var dismiss
+  @State private var viewModel = AddLinkViewModel()
   @State private var title: String = ""
   @State private var url: String = ""
   
-  @State private var currentFolder: TestFolder1 = TestFolder1.dummy[0]
+  @State private var currentFolder: Folder
+  
+  private let folders: [Folder]
+  private let completion: (Link) -> Void
+  
+  private var isSaving: Bool {
+    viewModel.state.isSaving
+  }
+  
+  init(
+    folders: [Folder],
+    completion: @escaping (Link) -> Void
+  ) {
+    self.folders = folders
+    self._currentFolder = State(initialValue: folders[0])
+    self.completion = completion
+  }
   
   var body: some View {
     VStack {
@@ -35,7 +40,7 @@ struct AddLinkView: View {
       
       VStack(spacing: 8) {
         Picker("", selection: $currentFolder) {
-          ForEach(TestFolder1.dummy, id: \.self) { folder in
+          ForEach(folders, id: \.self) { folder in
             Label(title: {
               Text(folder.name)
             }, icon: {
@@ -47,16 +52,23 @@ struct AddLinkView: View {
         .pickerStyle(.menu)
         .labelsHidden()
         
-        TextField("", text: $title, prompt: Text("제목"))
+        TextField("", text: $url, prompt: Text("주소"))
           .textFieldStyle(.roundedBorder)
         
-        TextField("", text: $url, prompt: Text("주소"))
+        TextField("", text: $title, prompt: Text("제목(선택)"))
           .textFieldStyle(.roundedBorder)
       }
       .padding(.top, 14)
+      .disabled(isSaving)
       
       
       HStack {
+        if isSaving {
+          ProgressView()
+            .frame(width: 12, height: 12)
+            .scaleEffect(0.4, anchor: .center)
+        }
+        
         Button {
           dismiss()
         } label: {
@@ -71,10 +83,15 @@ struct AddLinkView: View {
                 .stroke(.markBlack10, lineWidth: 0.5)
             }
         }
+        .disabled(isSaving)
 
         Button {
-          // TODO: 링크 추가 로직
-          dismiss()
+          let link = WriteLink(
+            url: url,
+            title: title,
+            folderID: currentFolder.id
+          )
+          viewModel.send(.addLinkButtonTapped(link: link))
         } label: {
           Text("추가")
             .padding(.vertical, 4)
@@ -83,6 +100,7 @@ struct AddLinkView: View {
             .background(.markPoint)
             .clipShape(RoundedRectangle(cornerRadius: 6))
         }
+        .disabled(url.isEmpty || isSaving)
       }
       .frame(maxWidth: .infinity, alignment: .trailing)
       .padding(.top, 18)
@@ -91,9 +109,33 @@ struct AddLinkView: View {
     }
     .padding(20)
     .frame(width: 400)
+    .onChange(of: viewModel.state.createdLink) {
+      guard let link = $1 else { return }
+      completion(link)
+      dismiss()
+    }
+    .alert(
+      "링크 생성에 실패했습니다.",
+      isPresented: .init(
+        get: { viewModel.state.isError },
+        set: { viewModel.send(.occurError($0)) }
+      )
+    ) {
+      Button(role: .cancel) {
+      } label: {
+        Text("확인")
+      }
+    }
   }
 }
 
 #Preview {
-  AddLinkView()
+  AddLinkView(
+    folders: [
+      .init(id: "", name: "기본폴더", createdBy: .now),
+      .init(id: "1", name: "폴더1", createdBy: .now),
+    ]
+  ) {
+    print($0)
+  }
 }
