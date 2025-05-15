@@ -71,6 +71,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReducerKit.xcodeproj; path = ReducerKit/ReducerKit.xcodeproj; sourceTree = "<group>"; };
 		57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DesignSystem.xcodeproj; path = DesignSystem/DesignSystem.xcodeproj; sourceTree = "<group>"; };
 		57AC53092DA4FC1800BA84BD /* Util.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Util.xcodeproj; path = Util/Util.xcodeproj; sourceTree = "<group>"; };
 		57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkMetadataKit.xcodeproj; path = LinkMetadataKit/LinkMetadataKit.xcodeproj; sourceTree = "<group>"; };
@@ -118,6 +119,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57588A542DD63B5900DBD9A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		57AC55422DA507EC00BA84BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +136,7 @@
 		57AC565F2DA511A900BA84BD /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */,
 				57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */,
 				57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */,
 			);
@@ -258,6 +267,10 @@
 				{
 					ProductGroup = 57AC56782DA511F200BA84BD /* Products */;
 					ProjectRef = 57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */;
+				},
+				{
+					ProductGroup = 57588A542DD63B5900DBD9A7 /* Products */;
+					ProjectRef = 57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */;
 				},
 				{
 					ProductGroup = 57AC566F2DA511E900BA84BD /* Products */;
