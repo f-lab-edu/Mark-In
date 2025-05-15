@@ -11,7 +11,7 @@ import Foundation
 final class AddFolderViewModel: Reducer {
   struct State {
     var createdFolder: Folder?
-    var isSaving: Bool = false
+    var isLoading: Bool = false
     var isError: Bool = false
   }
   
@@ -38,7 +38,7 @@ final class AddFolderViewModel: Reducer {
   func reduce(state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .addLinkButtonTapped(let title):
-      state.isSaving = true
+      state.isLoading = true
       
       return .run {
         do {
@@ -50,12 +50,12 @@ final class AddFolderViewModel: Reducer {
       }
       
     case .completeSave(let folder):
-      state.isSaving = false
+      state.isLoading = false
       state.createdFolder = folder
       return .none
       
     case .occurError(let bool):
-      state.isSaving = false
+      state.isLoading = false
       state.isError = bool
       return .none
     }

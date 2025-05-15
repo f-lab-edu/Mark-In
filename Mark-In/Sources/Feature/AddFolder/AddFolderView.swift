@@ -15,7 +15,7 @@ struct AddFolderView: View {
   @State private var title: String = ""
   
   private var isSaving: Bool {
-    viewModel.state.isSaving
+    viewModel.state.isLoading
   }
   
   let completion: (Folder) -> ()
