@@ -24,19 +24,17 @@ final class LoginViewModel: Reducer {
     case appleLoginButtonTapped(AuthorizationController)
     case googleLoginButtonTapped
     
-    case signInError(SignInError)
-    
-    case firebaseAuthRequest(AuthCredential)
-    case firebaseAuthResponse(Result<String, Error>)
+    case signInError
     
     case empty
   }
   
+  private let signInUseCase: SignInUseCase
+  
   private(set) var state: State = .init()
-  private let authUserManager: AuthUserManager
   
   init() {
-    self.authUserManager = DIContainer.shared.resolve()
+    self.signInUseCase = DIContainer.shared.resolve()
   }
   
   func send(_ action: Action) {
@@ -59,25 +57,18 @@ final class LoginViewModel: Reducer {
         guard let result = try? await authController.performRequest(request),
               case let .appleID(idCredential) = result else { return .empty }
         
-        /// 애플 로그인 정보에 필요한 정보들이 누락되는 경우
-        guard let nonce,
-              let appleIDToken = idCredential.identityToken,
-              let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-          return .signInError(.missingData)
+        let appleSignInInfo = AppleSignInInfo(nonce: nonce, idCredential: idCredential)
+        
+        do {
+          try await self.signInUseCase.signIn(using: appleSignInInfo)
+          return .empty
+        } catch {
+          return .signInError
         }
-        
-        /// Firebase 인증 요청을 위한 AuthCredential 생성
-        let credential = OAuthProvider.appleCredential(
-          withIDToken: idTokenString,
-          rawNonce: nonce,
-          fullName: idCredential.fullName
-        )
-        
-        return .firebaseAuthRequest(credential)
       }
       
     case .googleLoginButtonTapped:
-
+      
       guard let windowScene = NSApplication.shared.windows.first else {
         return .none
       }
@@ -87,50 +78,17 @@ final class LoginViewModel: Reducer {
           /// 구글 로그인 요청
           let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: windowScene)
           
-          /// 로그인에 필요한 정보(IDToken)가 누락된 경우
-          guard let idToken = result.user.idToken?.tokenString else {
-            return .signInError(.missingData)
-          }
+          let googleSignInInfo = GoogleSignInInfo(user: result.user)
+          try await self.signInUseCase.signIn(using: googleSignInInfo)
           
-          /// Firebase 인증 요청을 위한 AuthCredential 생성
-          let credential = GoogleAuthProvider.credential(
-            withIDToken: idToken,
-            accessToken: result.user.accessToken.tokenString
-          )
-          
-          return .firebaseAuthRequest(credential)
+          return .empty
         } catch {
-          return .signInError(.invalid)
+          return .signInError
         }
       }
       
       // TODO: 에러 처리 필요
-    case .signInError(_):
-      return .none
-      
-      // TODO: 구글 로그인까지 구현 후 디테일 수정
-    case .firebaseAuthRequest(let credential):
-      return .run {
-        do {
-          /// Firebase 인증 요청
-          let response = try await Auth.auth().signIn(with: credential)
-          
-          return .firebaseAuthResponse(.success(response.user.uid))
-        } catch {
-          return .firebaseAuthResponse(.failure(error))
-        }
-      }
-
-    case .firebaseAuthResponse(let result):
-      switch result {
-      case .success(let id):
-        let user = AuthUser(id: id)
-        authUserManager.save(user)
-      case .failure(let error):
-        // TODO: 에러 처리 필요
-        let _ = error as? AuthErrorCode
-        break
-      }
+    case .signInError:
       return .none
       
     case .empty:
@@ -148,12 +106,5 @@ final class LoginViewModel: Reducer {
         await self?.send(newAction)
       }
     }
-  }
-}
-
-extension LoginViewModel {
-  enum SignInError: Error {
-    case missingData
-    case invalid
   }
 }

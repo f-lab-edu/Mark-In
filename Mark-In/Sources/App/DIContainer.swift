@@ -69,10 +69,15 @@ extension DIContainer {
     let generateFolderUseCase: GenerateFolderUseCase = GenerateFolderUseCaseImpl(
       folderRepository: folderRepository
     )
+    let signInUseCase: SignInUseCase = SignInUseCaseImpl(
+      keychainStore: keychainStore,
+      authUserManager: authUserManager
+    )
     
     register(fetchLinkListUseCase)
     register(fetchFolderListUseCase)
     register(generateLinkUseCase)
     register(generateFolderUseCase)
+    register(signInUseCase)
   }
 }
