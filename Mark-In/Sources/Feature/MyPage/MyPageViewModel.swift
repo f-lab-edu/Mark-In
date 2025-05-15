@@ -20,20 +20,19 @@ final class MyPageViewModel: Reducer {
     case logoutButtonTapped
     case withdrawalButtonTapped
     
-    case didSuccessWithdrawal
     case didFailWithdrawal
+    
+    case empty
   }
   
   private let signOutUseCase: SignOutUseCase
-  private let authUserManager: AuthUserManager
-  private let tokenStore: KeychainStore
+  private let withdrawalUseCase: WithdrawalUseCase
   
   private(set) var state: State = .init()
   
   init() {
     self.signOutUseCase = DIContainer.shared.resolve()
-    self.authUserManager = DIContainer.shared.resolve()
-    self.tokenStore = KeychainStoreImpl()
+    self.withdrawalUseCase = DIContainer.shared.resolve()
   }
   
   func send(_ action: Action) {
@@ -55,38 +54,19 @@ final class MyPageViewModel: Reducer {
       return .run {
         // TODO: 이후 Auth 모듈로 분리하면서 코드 리팩토링 예정
         do {
-          
-          let token: String? = try? self.tokenStore.load(forKey: "refreshToken")
-          guard let token else { return .didFailWithdrawal }
-          
-          let url = URL(string: "https://\(Config.value(forKey: .revokeTokenURL))/revokeToken?refresh_token=\(token)"
-            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-          
-          _ = try await URLSession.shared.data(from: url)
-          
-          try self.tokenStore.delete(forKey: "refreshToken")
-          
-//          // TODO: 재인증 과정 필요
-//          // try await Auth.auth().currentUser?.reauthenticate(with: credential)
-//          try await Auth.auth().currentUser?.delete()
-//          
-//          if GIDSignIn.sharedInstance.currentUser != nil {
-//            try await GIDSignIn.sharedInstance.disconnect()
-//            GIDSignIn.sharedInstance.signOut()
-//          }
-//          
-          return .didSuccessWithdrawal
+          try await self.withdrawalUseCase.execute()
+          return .empty
         } catch {
+          print(error.localizedDescription)
           return .didFailWithdrawal
         }
       }
       
-    case .didSuccessWithdrawal:
-      authUserManager.clear()
-      return .none
-      
       // TODO: 회원탈퇴 실패에 대한 처리 필요
     case .didFailWithdrawal:
+      return .none
+      
+    case .empty:
       return .none
     }
   }
