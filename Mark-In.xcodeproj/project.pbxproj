@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57588B452DD640C100DBD9A7 /* ReducerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57588B412DD63D9700DBD9A7 /* ReducerKit.framework */; };
+		57588B462DD640C100DBD9A7 /* ReducerKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57588B412DD63D9700DBD9A7 /* ReducerKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57944D0C2DC52AEF00EF3D9A /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 57944D0B2DC52AEF00EF3D9A /* GoogleSignIn */; };
 		57AC56A22DA5120600BA84BD /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56A12DA511F800BA84BD /* DesignSystem.framework */; };
 		57AC56A32DA5120600BA84BD /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56A12DA511F800BA84BD /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -23,6 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		57588B402DD63D9700DBD9A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57606D5B2DD63B14005EBE3D;
+			remoteInfo = ReducerKit;
+		};
 		57AC56722DA511E900BA84BD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 57AC53092DA4FC1800BA84BD /* Util.xcodeproj */;
@@ -61,6 +70,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				57AC56A92DA5120600BA84BD /* Util.framework in Embed Frameworks */,
+				57588B462DD640C100DBD9A7 /* ReducerKit.framework in Embed Frameworks */,
 				57AC56A72DA5120600BA84BD /* LinkMetadataKitInterface.framework in Embed Frameworks */,
 				57AC56A52DA5120600BA84BD /* LinkMetadataKit.framework in Embed Frameworks */,
 				57AC56A32DA5120600BA84BD /* DesignSystem.framework in Embed Frameworks */,
@@ -110,6 +120,7 @@
 				57AC56A62DA5120600BA84BD /* LinkMetadataKitInterface.framework in Frameworks */,
 				57AC56A42DA5120600BA84BD /* LinkMetadataKit.framework in Frameworks */,
 				57E1F9872DA8F9B40033F30C /* FirebaseCore in Frameworks */,
+				57588B452DD640C100DBD9A7 /* ReducerKit.framework in Frameworks */,
 				57B5F82E2DC08B400061F0DE /* FirebaseStorage in Frameworks */,
 				57AC56A22DA5120600BA84BD /* DesignSystem.framework in Frameworks */,
 				57E1F9892DA8F9B40033F30C /* FirebaseFirestore in Frameworks */,
@@ -122,6 +133,7 @@
 		57588A542DD63B5900DBD9A7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				57588B412DD63D9700DBD9A7 /* ReducerKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -285,6 +297,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		57588B412DD63D9700DBD9A7 /* ReducerKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ReducerKit.framework;
+			remoteRef = 57588B402DD63D9700DBD9A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		57AC56732DA511E900BA84BD /* Util.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;

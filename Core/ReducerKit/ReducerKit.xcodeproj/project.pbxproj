@@ -35,7 +35,9 @@
 				57606D5D2DD63B14005EBE3D /* Sources */,
 				57606D5C2DD63B14005EBE3D /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		57606D5C2DD63B14005EBE3D /* Products */ = {
 			isa = PBXGroup;
