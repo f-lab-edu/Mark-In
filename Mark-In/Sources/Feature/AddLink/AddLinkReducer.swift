@@ -7,8 +7,9 @@
 
 import Foundation
 
-@Observable @MainActor
-final class AddLinkViewModel: Reducer {
+import ReducerKit
+
+struct AddLinkReducer: Reducer {
   struct State {
     var createdLink: Link?
     var isSaving: Bool = false
@@ -23,18 +24,11 @@ final class AddLinkViewModel: Reducer {
   
   private let generateLinkUseCase: GenerateLinkUseCase
   
-  private(set) var state: State = .init()
-  
   init() {
     self.generateLinkUseCase = DIContainer.shared.resolve()
   }
   
-  func send(_ action: Action) {
-    let effect = reduce(state: &state, action: action)
-    handleEffect(effect)
-  }
-  
-  func reduce(state: inout State, action: Action) -> Effect<Action> {
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .addLinkButtonTapped(let writeLink):
       state.isSaving = true
@@ -54,18 +48,6 @@ final class AddLinkViewModel: Reducer {
       state.isError = bool
       state.isSaving = false
       return .none
-    }
-  }
-  
-  private func handleEffect(_ effect: Effect<Action>) {
-    switch effect {
-    case .none:
-      break
-    case .run(let action):
-      Task.detached { [weak self] in
-        let newAction = await action()
-        await self?.send(newAction)
-      }
     }
   }
 }

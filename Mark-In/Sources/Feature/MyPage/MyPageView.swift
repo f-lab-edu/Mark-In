@@ -8,13 +8,17 @@
 import SwiftUI
 
 import DesignSystem
+import ReducerKit
 
 private enum ViewConstants {
   static let minContentWidth: CGFloat = 164
 }
 
 struct MyPageView: View {
-  @State private var viewModel = MyPageViewModel()
+  @State private var store: StoreOf<MyPageReducer> = .init(
+    initialState: MyPageReducer.State(),
+    reducer: MyPageReducer()
+  )
   @State private var contentWidth = ViewConstants.minContentWidth
 
   var body: some View {
@@ -54,7 +58,7 @@ struct MyPageView: View {
   private var footerButtons: some View {
     VStack(spacing: 8) {
       Button {
-        viewModel.send(.logoutButtonTapped)
+        store.send(.logoutButtonTapped)
       } label: {
         Text("로그아웃")
           .font(.pretendard(size: 12, weight: .regular))
@@ -65,7 +69,7 @@ struct MyPageView: View {
         .padding(.horizontal, 8)
 
       Button {
-        viewModel.send(.withdrawalButtonTapped)
+        store.send(.withdrawalButtonTapped)
       } label: {
         Text("회원 탈퇴")
           .font(.pretendard(size: 12, weight: .regular))

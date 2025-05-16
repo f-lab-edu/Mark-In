@@ -8,9 +8,13 @@
 import SwiftUI
 
 import DesignSystem
+import ReducerKit
 
 struct MainView: View {
-  @State private var viewModel = MainViewModel()
+  @State private var store: StoreOf<MainReducer> = .init(
+    initialState: MainReducer.State(),
+    reducer: MainReducer()
+  )
   @State private var searchText: String = ""
 
   @State private var isPresentedMyPage: Bool = false
@@ -18,12 +22,12 @@ struct MainView: View {
   var body: some View {
     ZStack {
       NavigationSplitView {
-        SideBar(viewModel: viewModel)
+        SideBar(store: store)
           .navigationSplitViewColumnWidth(
             min: 200, ideal: 200, max: 300
           )
       } detail: {
-        LinkListView(viewModel: viewModel)
+        LinkListView(store: store)
       }
       .navigationTitle("")
       .searchable(text: $searchText, placement: .toolbar)
@@ -32,9 +36,9 @@ struct MainView: View {
           toolBarButtons
         }
       }
-      .disabled(viewModel.state.isLoading)
+      .disabled(store.state.isLoading)
       
-      if viewModel.state.isLoading {
+      if store.state.isLoading {
         ProgressView()
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .contentShape(Rectangle())
@@ -42,11 +46,11 @@ struct MainView: View {
       }
     }
     .onAppear {
-      viewModel.send(.onAppear)
+      store.send(.onAppear)
     }
     .sheet(item: .init(
-      get: { viewModel.state.isPresentedSheet },
-      set: { viewModel.send(.presentSheet($0))
+      get: { store.state.isPresentedSheet },
+      set: { store.send(.presentSheet($0))
       }
     )) { type in
       buildSheet(type)
@@ -83,7 +87,7 @@ struct MainView: View {
 
       Spacer()
       Button {
-        viewModel.send(.presentSheet(.addLink))
+        store.send(.presentSheet(.addLink))
       } label: {
         Image(systemName: "plus")
       }
@@ -111,21 +115,21 @@ struct MainView: View {
   }
   
   @ViewBuilder
-  private func buildSheet(_ type: MainViewModel.SheetType) -> some View {
+  private func buildSheet(_ type: MainReducer.SheetType) -> some View {
     switch type {
     case .addLink:
-      let folderTabs = viewModel.state.folderTabs
+      let folderTabs = store.state.folderTabs
       let folders = folderTabs
         .compactMap {
           if case let .folder(folder) = $0 { folder }
           else { nil }
         }
       AddLinkView(folders: folders) {
-        viewModel.send(.didCreateLink($0))
+        store.send(.didCreateLink($0))
       }
     case .addFolder:
       AddFolderView() {
-        viewModel.send(.didCreateFolder($0))
+        store.send(.didCreateFolder($0))
       }
     }
   }

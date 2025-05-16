@@ -8,6 +8,7 @@
 import SwiftUI
 
 import DesignSystem
+import ReducerKit
 
 private enum ViewConstants {
   static let cellWidth: CGFloat = 210
@@ -17,11 +18,11 @@ private enum ViewConstants {
 
 struct LinkListView: View {
   
-  let viewModel: MainViewModel
+  let store: StoreOf<MainReducer>
   
   private var links: [Link] {
-    let totalLinks = viewModel.state.links
-    let tab = viewModel.state.selectedTab ?? .total
+    let totalLinks = store.state.links
+    let tab = store.state.selectedTab ?? .total
     
     switch tab {
     case .total:

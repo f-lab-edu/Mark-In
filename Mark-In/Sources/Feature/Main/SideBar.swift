@@ -8,20 +8,21 @@
 import SwiftUI
 
 import DesignSystem
+import ReducerKit
 
 struct SideBar: View {
-  let viewModel: MainViewModel
+  let store: StoreOf<MainReducer>
   
   var body: some View {
     VStack(alignment: .leading) {
       
       List(selection: .init(
-        get: { viewModel.state.selectedTab },
-        set: { viewModel.send(.changeTab($0)) })
+        get: { store.state.selectedTab },
+        set: { store.send(.changeTab($0)) })
       ) {
         Section("기본") {
           ForEach(
-            viewModel.state.defaultTabs,
+            store.state.defaultTabs,
             id: \.self
           ) { tab in
             NavigationLink(value: tab) {
@@ -32,7 +33,7 @@ struct SideBar: View {
         
         Section("저장된 폴더") {
           ForEach(
-            viewModel.state.folderTabs,
+            store.state.folderTabs,
             id: \.self
           ) { tab in
             NavigationLink(value: tab) {
@@ -50,7 +51,7 @@ struct SideBar: View {
         .foregroundStyle(.markBlack20)
       
       Button(action: {
-        viewModel.send(.presentSheet(.addFolder))
+        store.send(.presentSheet(.addFolder))
       }, label: {
         Label("새로운 폴더 만들기", systemImage: "plus")
           .lineLimit(1)
@@ -63,5 +64,8 @@ struct SideBar: View {
 }
 
 #Preview {
-  SideBar(viewModel: MainViewModel())
+  SideBar(store: .init(
+    initialState: MainReducer.State(),
+    reducer: MainReducer()
+  ))
 }
