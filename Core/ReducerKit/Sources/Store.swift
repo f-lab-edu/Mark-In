@@ -10,14 +10,14 @@ import Foundation
 /// Store 타입을 좀 더 간편하게 정의(표현).
 public typealias StoreOf<R: Reducer> = Store<R.State, R.Action>
 
-/// Reducer를 실행하고 UI를 업데이트하는 상태 관리 라이프 사이클 관리자
+/// Reducer를 실행하고 UI를 업데이트하는 상태 관리자
 @MainActor @Observable
 public final class Store<State, Action> {
   
   private(set) public var state: State
   private let reduce: (inout State, Action) -> Effect<Action>
   
-  // Reducer의 연관 타입 State, Action과 Store의 타입 파라미터 State, Action이 동일함을 표현
+  // Store.State == Reducer.State, Store.Action == Reducer.Action
   public init<R: Reducer<State, Action>>(
     initialState: State,
     reducer: R

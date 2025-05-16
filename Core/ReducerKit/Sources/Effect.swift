@@ -12,6 +12,6 @@ public enum Effect<Action> {
   /// 추가적인 작업을 실행하지 않음
   case none
   
-  /// Side Effect를 처리하고, 새로운 Action을 호출
+  /// Side Effect를 처리하고, 새로운 Action을 반환
   case run(() async -> Action)
 }
