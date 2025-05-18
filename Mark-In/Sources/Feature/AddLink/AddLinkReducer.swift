@@ -12,14 +12,14 @@ import ReducerKit
 
 struct AddLinkReducer: Reducer {
   struct State {
-    var createdLink: Link?
+    var createdLink: WebLink?
     var isSaving: Bool = false
     var isError: Bool = false
   }
   
   enum Action {
     case addLinkButtonTapped(link: WriteLink)
-    case completeSave(Link)
+    case completeSave(WebLink)
     case occurError(Bool)
   }
   

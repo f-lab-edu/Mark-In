@@ -8,5 +8,5 @@
 import Foundation
 
 protocol GenerateLinkUseCase {
-  func execute(writeLink: WriteLink) async throws -> Link
+  func execute(writeLink: WriteLink) async throws -> WebLink
 }

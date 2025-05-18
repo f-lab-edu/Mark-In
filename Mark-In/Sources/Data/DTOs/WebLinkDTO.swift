@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LinkDTO: Codable {
+struct WebLinkDTO: Codable {
   var id: String
   var url: String
   var title: String?
@@ -18,8 +18,8 @@ struct LinkDTO: Codable {
   var lastAccessedAt: Date?
   var folderID: String?
   
-  func toEntity() -> Link {
-    Link(
+  func toEntity() -> WebLink {
+    WebLink(
       id: self.id,
       url: self.url,
       title: self.title,

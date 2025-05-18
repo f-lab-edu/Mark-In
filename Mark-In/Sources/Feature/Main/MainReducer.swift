@@ -14,7 +14,7 @@ struct MainReducer: Reducer {
   struct State {
     var isLoading: Bool = true
     
-    var links: [Link] = []
+    var links: [WebLink] = []
     
     var defaultTabs: [SidebarTab] = [.total, .pin, .nonRead]
     var folderTabs: [SidebarTab] = []
@@ -25,12 +25,12 @@ struct MainReducer: Reducer {
   
   enum Action {
     case onAppear
-    case fetchSucceeded([Link], [Folder])
+    case fetchSucceeded([WebLink], [Folder])
     case changeTab(SidebarTab?)
     
     case presentSheet(SheetType?)
     
-    case didCreateLink(Link)
+    case didCreateLink(WebLink)
     case didCreateFolder(Folder)
     
     case occuredError

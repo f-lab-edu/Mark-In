@@ -25,7 +25,7 @@ struct LinkRepositoryImpl: LinkRepository {
     self.linkMetadataProvider = linkMetadataProvider
   }
   
-  func create(userID: String, link: WriteLink) async throws -> Link {
+  func create(userID: String, link: WriteLink) async throws -> WebLink {
     /// 1. Link 문서 참조 생성
     let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
     let linkDocRef = db.collection(path).document()
@@ -41,7 +41,7 @@ struct LinkRepositoryImpl: LinkRepository {
     )
     
     /// 4. Firestore에 저장할 DTO 객체 생성
-    let linkDTO = LinkDTO(
+    let linkDTO = WebLinkDTO(
       id: linkDocRef.documentID,
       url: link.url,
       title: link.title ?? metadata.title,
@@ -69,7 +69,7 @@ struct LinkRepositoryImpl: LinkRepository {
     return linkDTO.toEntity()
   }
   
-  func fetchAll(userID: String) async throws -> [Link] {
+  func fetchAll(userID: String) async throws -> [WebLink] {
     /// 1. Links 컬렉션 참조 생성
     let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
     let linkColRef = db.collection(path)
@@ -79,17 +79,17 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 3. 문서를 DTO로 변환 후 다시 Entity로 변환
     return snapshot.documents.compactMap {
-      try? $0.data(as: LinkDTO.self).toEntity()
+      try? $0.data(as: WebLinkDTO.self).toEntity()
     }
   }
   
-  func update(userID: String, link: Link) async throws {
+  func update(userID: String, link: WebLink) async throws {
     /// 1. Link 문서 참조 생성
     let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: link.id).path
     let linkDocRef = db.document(path)
     
     /// 2. Entity를 DTO로 변환
-    let linkDTO = LinkDTO(
+    let linkDTO = WebLinkDTO(
       id: link.id,
       url: link.url,
       title: link.title,
@@ -114,7 +114,7 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func delete(userID: String, link: Link) async throws {
+  func delete(userID: String, link: WebLink) async throws {
     /// 1. Link 문서 참조 생성
     let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: link.id).path
     let linkDocRef = db.document(path)

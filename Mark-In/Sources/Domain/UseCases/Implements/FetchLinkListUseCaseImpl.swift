@@ -15,7 +15,7 @@ struct FetchLinkListUseCaseImpl: FetchLinkListUseCase {
     self.linkRepository = linkRepository
   }
   
-  func execute(userID: String) async throws -> [Link] {
+  func execute(userID: String) async throws -> [WebLink] {
     try await linkRepository.fetchAll(userID: userID)
   }
 }
