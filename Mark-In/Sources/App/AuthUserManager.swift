@@ -53,3 +53,7 @@ final class AuthUserManagerImpl: AuthUserManager {
     user = nil
   }
 }
+
+enum AuthError: Error {
+  case unauthenticated
+}

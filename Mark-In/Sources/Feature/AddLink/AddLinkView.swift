@@ -92,7 +92,7 @@ struct AddLinkView: View {
         Button {
           let link = WriteLink(
             url: url,
-            title: title,
+            title: title.isEmpty ? nil : title,
             folderID: currentFolder.id
           )
           store.send(.addLinkButtonTapped(link: link))

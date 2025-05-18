@@ -9,18 +9,22 @@ import Foundation
 
 struct GenerateLinkUseCaseImpl: GenerateLinkUseCase {
   
+  private let authUserManager: AuthUserManager
   private let linkRepository: LinkRepository
   
-  init(linkRepository: LinkRepository) {
+  init(
+    authUserManager: AuthUserManager,
+    linkRepository: LinkRepository
+  ) {
+    self.authUserManager = authUserManager
     self.linkRepository = linkRepository
   }
   
   func execute(writeLink: WriteLink) async throws -> WebLink {
     
-    // TODO: #29번 PR 머지 후 AuthManager를 통해 현재 로그인 유저 정보 가져옴
-    let user = "testUser"
+    guard let user = authUserManager.user else { throw AuthError.unauthenticated }
     
-    let newLink = try await linkRepository.create(userID: user, link: writeLink)
+    let newLink = try await linkRepository.create(userID: user.id, link: writeLink)
     return newLink
   }
 }

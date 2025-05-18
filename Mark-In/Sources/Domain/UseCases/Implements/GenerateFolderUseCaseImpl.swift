@@ -9,18 +9,22 @@ import Foundation
 
 struct GenerateFolderUseCaseImpl: GenerateFolderUseCase {
   
+  private let authUserManager: AuthUserManager
   private let folderRepository: FolderRepository
   
-  init(folderRepository: FolderRepository) {
+  init(
+    authUserManager: AuthUserManager,
+    folderRepository: FolderRepository
+  ) {
+    self.authUserManager = authUserManager
     self.folderRepository = folderRepository
   }
   
   func execute(writeFolder: WriteFolder) async throws -> Folder {
     
-    // TODO: #29번 PR 머지 후 AuthManager를 통해 현재 로그인 유저 정보 가져옴
-    let user = "123"
+    guard let user = authUserManager.user else { throw AuthError.unauthenticated }
     
-    let newFolder = try await folderRepository.create(userID: user, folder: writeFolder)
+    let newFolder = try await folderRepository.create(userID: user.id, folder: writeFolder)
     return newFolder
   }
 }

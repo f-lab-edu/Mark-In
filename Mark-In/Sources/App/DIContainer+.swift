@@ -57,9 +57,11 @@ private extension DIContainer {
       folderRepository: resolve()
     )
     let generateLinkUseCase: GenerateLinkUseCase = GenerateLinkUseCaseImpl(
+      authUserManager: resolve(),
       linkRepository: resolve()
     )
     let generateFolderUseCase: GenerateFolderUseCase = GenerateFolderUseCaseImpl(
+      authUserManager: resolve(),
       folderRepository: resolve()
     )
     let signInUseCase: SignInUseCase = SignInUseCaseImpl(
