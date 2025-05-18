@@ -9,13 +9,19 @@ import Foundation
 
 struct FetchFolderListUseCaseImpl: FetchFolderListUseCase {
   
+  private let authUserManager: AuthUserManager
   private let folderRepository: FolderRepository
   
-  init(folderRepository: FolderRepository) {
+  init(
+    authUserManager: AuthUserManager,
+    folderRepository: FolderRepository
+  ) {
+    self.authUserManager = authUserManager
     self.folderRepository = folderRepository
   }
   
-  func execute(userID: String) async throws -> [Folder] {
-    try await folderRepository.fetchAll(userID: userID)
+  func execute() async throws -> [Folder] {
+    guard let user = authUserManager.user else { throw AuthError.unauthenticated }
+    return try await folderRepository.fetchAll(userID: user.id)
   }
 }

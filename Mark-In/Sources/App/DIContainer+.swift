@@ -51,9 +51,11 @@ private extension DIContainer {
   // MARK: - Domain - UseCase
   func registerUseCaseDependencies() {
     let fetchLinkListUseCase: FetchLinkListUseCase = FetchLinkListUseCaseImpl(
+      authUserManager: resolve(),
       linkRepository: resolve()
     )
     let fetchFolderListUseCase: FetchFolderListUseCase = FetchFolderListUseCaseImpl(
+      authUserManager: resolve(),
       folderRepository: resolve()
     )
     let generateLinkUseCase: GenerateLinkUseCase = GenerateLinkUseCaseImpl(

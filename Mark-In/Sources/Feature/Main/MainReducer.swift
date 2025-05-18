@@ -46,9 +46,8 @@ struct MainReducer: Reducer {
     case .onAppear:
       return .run {
         do {
-          // TODO: 실제 로그인 유저 ID 전달
-          async let links = await self.fetchLinkListUseCase.execute(userID: "testUser")
-          async let folders = await self.fetchFolderListUseCase.execute(userID: "testUser")
+          async let links = await self.fetchLinkListUseCase.execute()
+          async let folders = await self.fetchFolderListUseCase.execute()
           
           return try await .fetchSucceeded(links, folders)
         } catch {
