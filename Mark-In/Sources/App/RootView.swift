@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+import AppDI
 import DesignSystem
 
 struct RootView: View {

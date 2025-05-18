@@ -7,6 +7,7 @@
 
 import Foundation
 
+import AppDI
 import ReducerKit
 
 struct AddLinkReducer: Reducer {
@@ -22,11 +23,7 @@ struct AddLinkReducer: Reducer {
     case occurError(Bool)
   }
   
-  private let generateLinkUseCase: GenerateLinkUseCase
-  
-  init() {
-    self.generateLinkUseCase = DIContainer.shared.resolve()
-  }
+  @Dependency private var generateLinkUseCase: GenerateLinkUseCase
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {

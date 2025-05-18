@@ -18,7 +18,7 @@ public final class DIContainer {
     dependencies[key] = dependency
   }
   
-  func resolve<T>() -> T {
+  public func resolve<T>() -> T {
     let key = String(describing: T.self)
     let dependency = dependencies[key]
     

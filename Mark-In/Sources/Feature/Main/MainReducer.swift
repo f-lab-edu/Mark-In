@@ -7,6 +7,7 @@
 
 import Foundation
 
+import AppDI
 import ReducerKit
 
 struct MainReducer: Reducer {
@@ -37,13 +38,8 @@ struct MainReducer: Reducer {
     case empty
   }
   
-  private let fetchLinkListUseCase: FetchLinkListUseCase
-  private let fetchFolderListUseCase: FetchFolderListUseCase
-  
-  init() {
-    self.fetchLinkListUseCase = DIContainer.shared.resolve()
-    self.fetchFolderListUseCase = DIContainer.shared.resolve()
-  }
+  @Dependency private var fetchLinkListUseCase: FetchLinkListUseCase
+  @Dependency private var fetchFolderListUseCase: FetchFolderListUseCase
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {

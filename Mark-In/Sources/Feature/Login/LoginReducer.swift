@@ -12,6 +12,7 @@ import SwiftUI
 import FirebaseAuth
 import GoogleSignIn
 
+import AppDI
 import ReducerKit
 import Util
 
@@ -29,11 +30,7 @@ struct LoginReducer: Reducer {
     case empty
   }
   
-  private let signInUseCase: SignInUseCase
-  
-  init() {
-    self.signInUseCase = DIContainer.shared.resolve()
-  }
+  @Dependency private var signInUseCase: SignInUseCase
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {

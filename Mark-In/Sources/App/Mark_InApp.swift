@@ -10,6 +10,7 @@ import SwiftUI
 import FirebaseCore
 import GoogleSignIn
 
+import AppDI
 import DesignSystem
 
 @main
