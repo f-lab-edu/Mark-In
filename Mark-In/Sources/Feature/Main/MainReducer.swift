@@ -7,8 +7,9 @@
 
 import Foundation
 
-@MainActor @Observable
-final class MainViewModel: Reducer {
+import ReducerKit
+
+struct MainReducer: Reducer {
   struct State {
     var isLoading: Bool = true
     
@@ -39,19 +40,12 @@ final class MainViewModel: Reducer {
   private let fetchLinkListUseCase: FetchLinkListUseCase
   private let fetchFolderListUseCase: FetchFolderListUseCase
   
-  private(set) var state: State = .init()
-  
   init() {
     self.fetchLinkListUseCase = DIContainer.shared.resolve()
     self.fetchFolderListUseCase = DIContainer.shared.resolve()
   }
   
-  func send(_ action: Action) {
-    let effect = reduce(state: &state, action: action)
-    handleEffect(effect)
-  }
-  
-  func reduce(state: inout State, action: Action) -> Effect<Action> {
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .onAppear:
       return .run {
@@ -104,21 +98,9 @@ final class MainViewModel: Reducer {
       return .none
     }
   }
-  
-  private func handleEffect(_ effect: Effect<Action>) {
-    switch effect {
-    case .none:
-      break
-    case .run(let action):
-      Task.detached { [weak self] in
-        let newAction = await action()
-        await self?.send(newAction)
-      }
-    }
-  }
 }
 
-extension MainViewModel {
+extension MainReducer {
   enum SheetType: Identifiable {
     case addLink
     case addFolder

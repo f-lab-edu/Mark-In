@@ -5,14 +5,18 @@
 //  Created by 이정동 on 4/30/25.
 //
 
-import SwiftUI
 import AuthenticationServices
+import SwiftUI
 
 import DesignSystem
+import ReducerKit
 import Util
 
 struct LoginView: View {
-  @State private var loginViewModel = LoginViewModel()
+  @State private var store: StoreOf<LoginReducer> = .init(
+    initialState: LoginReducer.State(),
+    reducer: LoginReducer()
+  )
   
   var body: some View {
     ZStack {
@@ -26,7 +30,7 @@ struct LoginView: View {
       VStack(spacing: 28) {
         headerView
         
-        BodyView(loginViewModel: loginViewModel)
+        BodyView(store: store)
       }
     }
   }
@@ -46,10 +50,10 @@ struct LoginView: View {
 }
 
 private struct BodyView: View {
-  private let loginViewModel: LoginViewModel
+  private let store: StoreOf<LoginReducer>
   
-  init(loginViewModel: LoginViewModel) {
-    self.loginViewModel = loginViewModel
+  init(store: StoreOf<LoginReducer>) {
+    self.store = store
   }
   
   var body: some View {
@@ -59,7 +63,7 @@ private struct BodyView: View {
         
         divider
         
-        SignInButtonList(loginViewModel: loginViewModel)
+        SignInButtonList(store: store)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -96,20 +100,20 @@ private struct BodyView: View {
 
 private struct SignInButtonList: View {
   @Environment(\.authorizationController) private var authorizationController
-  private let loginViewModel: LoginViewModel
+  private let store: StoreOf<LoginReducer>
   
-  init(loginViewModel: LoginViewModel) {
-    self.loginViewModel = loginViewModel
+  init(store: StoreOf<LoginReducer>) {
+    self.store = store
   }
   
   var body: some View {
     VStack(spacing: 12) {
       SignInButton(provider: .apple) {
-        loginViewModel.send(.appleLoginButtonTapped(authorizationController))
+        store.send(.appleLoginButtonTapped(authorizationController))
       }
       
       SignInButton(provider: .google) {
-        loginViewModel.send(.googleLoginButtonTapped)
+        store.send(.googleLoginButtonTapped)
       }
     }
   }

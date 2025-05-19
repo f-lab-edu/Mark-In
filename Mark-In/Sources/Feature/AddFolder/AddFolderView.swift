@@ -8,14 +8,18 @@
 import SwiftUI
 
 import DesignSystem
+import ReducerKit
 
 struct AddFolderView: View {
   @Environment(\.dismiss) private var dismiss
-  @State private var viewModel = AddFolderViewModel()
+  @State private var store: StoreOf<AddFolderReducer> = .init(
+    initialState: AddFolderReducer.State(),
+    reducer: AddFolderReducer()
+  )
   @State private var title: String = ""
   
   private var isSaving: Bool {
-    viewModel.state.isLoading
+    store.state.isLoading
   }
   
   let completion: (Folder) -> ()
@@ -54,7 +58,7 @@ struct AddFolderView: View {
         .disabled(title.isEmpty || isSaving)
         
         Button {
-          viewModel.send(.didTapAddFolderButton(name: title))
+          store.send(.didTapAddFolderButton(name: title))
         } label: {
           Text("추가")
             .padding(.vertical, 4)
@@ -72,7 +76,7 @@ struct AddFolderView: View {
     }
     .padding(20)
     .frame(width: 400)
-    .onChange(of: viewModel.state.createdFolder) {
+    .onChange(of: store.state.createdFolder) {
       guard let folder = $1 else { return }
       completion(folder)
       dismiss()
@@ -80,8 +84,8 @@ struct AddFolderView: View {
     .alert(
       "폴더 생성에 실패했습니다.",
       isPresented: .init(
-        get: { viewModel.state.isError },
-        set: { viewModel.send(.updateErrorState($0)) }
+        get: { store.state.isError },
+        set: { store.send(.updateErrorState($0)) }
       )
     ) {
       Button(role: .cancel) {

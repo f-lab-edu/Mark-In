@@ -5,17 +5,17 @@
 //  Created by 이정동 on 5/1/25.
 //
 
-import Foundation
 import AuthenticationServices
+import Foundation
 import SwiftUI
 
 import FirebaseAuth
 import GoogleSignIn
 
+import ReducerKit
 import Util
 
-@Observable
-final class LoginViewModel: Reducer {
+struct LoginReducer: Reducer {
   struct State {
     // TODO: 로그인 실패 시 알림 화면을 보여줄 상태 구현 생각 중
   }
@@ -31,18 +31,11 @@ final class LoginViewModel: Reducer {
   
   private let signInUseCase: SignInUseCase
   
-  private(set) var state: State = .init()
-  
   init() {
     self.signInUseCase = DIContainer.shared.resolve()
   }
   
-  func send(_ action: Action) {
-    let effect = reduce(state: &state, action: action)
-    handleEffect(effect)
-  }
-  
-  func reduce(state: inout State, action: Action) -> Effect<Action> {
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .appleLoginButtonTapped(let authController):
       /// 1. 애플 로그인 요청을 위한 객체 생성
@@ -93,18 +86,6 @@ final class LoginViewModel: Reducer {
       
     case .empty:
       return .none
-    }
-  }
-  
-  private func handleEffect(_ effect: Effect<Action>) {
-    switch effect {
-    case .none:
-      break
-    case .run(let action):
-      Task.detached { [weak self] in
-        let newAction = await action()
-        await self?.send(newAction)
-      }
     }
   }
 }

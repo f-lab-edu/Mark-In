@@ -7,8 +7,9 @@
 
 import Foundation
 
-@Observable @MainActor
-final class AddFolderViewModel: Reducer {
+import ReducerKit
+
+struct AddFolderReducer: Reducer {
   struct State {
     var createdFolder: Folder?
     var isLoading: Bool = false
@@ -23,18 +24,11 @@ final class AddFolderViewModel: Reducer {
   
   private let generateFolderUseCase: GenerateFolderUseCase
   
-  private(set) var state: State = .init()
-  
   init() {
     self.generateFolderUseCase = DIContainer.shared.resolve()
   }
   
-  func send(_ action: Action) {
-    let effect = reduce(state: &state, action: action)
-    handleEffect(effect)
-  }
-  
-  func reduce(state: inout State, action: Action) -> Effect<Action> {
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .didTapAddFolderButton(let name):
       state.isLoading = true
@@ -58,18 +52,6 @@ final class AddFolderViewModel: Reducer {
       state.isLoading = false
       state.isError = bool
       return .none
-    }
-  }
-  
-  private func handleEffect(_ effect: Effect<Action>) {
-    switch effect {
-    case .none:
-      break
-    case .run(let action):
-      Task.detached { [weak self] in
-        let newAction = await action()
-        await self?.send(newAction)
-      }
     }
   }
 }

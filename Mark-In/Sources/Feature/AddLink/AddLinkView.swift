@@ -8,10 +8,14 @@
 import SwiftUI
 
 import DesignSystem
+import ReducerKit
 
 struct AddLinkView: View {
   @Environment(\.dismiss) var dismiss
-  @State private var viewModel = AddLinkViewModel()
+  @State private var store: StoreOf<AddLinkReducer> = .init(
+    initialState: AddLinkReducer.State(),
+    reducer: AddLinkReducer()
+  )
   @State private var title: String = ""
   @State private var url: String = ""
   
@@ -21,7 +25,7 @@ struct AddLinkView: View {
   private let completion: (Link) -> Void
   
   private var isSaving: Bool {
-    viewModel.state.isSaving
+    store.state.isSaving
   }
   
   init(
@@ -91,7 +95,7 @@ struct AddLinkView: View {
             title: title,
             folderID: currentFolder.id
           )
-          viewModel.send(.addLinkButtonTapped(link: link))
+          store.send(.addLinkButtonTapped(link: link))
         } label: {
           Text("추가")
             .padding(.vertical, 4)
@@ -109,7 +113,7 @@ struct AddLinkView: View {
     }
     .padding(20)
     .frame(width: 400)
-    .onChange(of: viewModel.state.createdLink) {
+    .onChange(of: store.state.createdLink) {
       guard let link = $1 else { return }
       completion(link)
       dismiss()
@@ -117,8 +121,8 @@ struct AddLinkView: View {
     .alert(
       "링크 생성에 실패했습니다.",
       isPresented: .init(
-        get: { viewModel.state.isError },
-        set: { viewModel.send(.occurError($0)) }
+        get: { store.state.isError },
+        set: { store.send(.occurError($0)) }
       )
     ) {
       Button(role: .cancel) {
