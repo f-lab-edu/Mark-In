@@ -38,8 +38,11 @@ extension DIContainer {
   func registerDependencies() {
     
     /// Core
+    let keychainStore: KeychainStore = KeychainStoreImpl()
     let linkMetadataProvider: LinkMetadataProvider = LinkMetadataProviderImpl()
-    let authUserManager: AuthUserManager = AuthUserManagerImpl()
+    let authUserManager: AuthUserManager = AuthUserManagerImpl(
+      keychainStore: keychainStore
+    )
     
     register(linkMetadataProvider)
     register(authUserManager)
@@ -66,10 +69,24 @@ extension DIContainer {
     let generateFolderUseCase: GenerateFolderUseCase = GenerateFolderUseCaseImpl(
       folderRepository: folderRepository
     )
+    let signInUseCase: SignInUseCase = SignInUseCaseImpl(
+      keychainStore: keychainStore,
+      authUserManager: authUserManager
+    )
+    let signOutUseCase: SignOutUseCase = SignOutUseCaseImpl(
+      authUserManager: authUserManager
+    )
+    let withdrawalUseCase: WithdrawalUseCase = WithdrawalUseCaseImpl(
+      keychainStore: keychainStore,
+      authUserManager: authUserManager
+    )
     
     register(fetchLinkListUseCase)
     register(fetchFolderListUseCase)
     register(generateLinkUseCase)
     register(generateFolderUseCase)
+    register(signInUseCase)
+    register(signOutUseCase)
+    register(withdrawalUseCase)
   }
 }

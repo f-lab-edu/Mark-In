@@ -3,6 +3,9 @@ Configuration/
 
 ### Firebase ###
 GoogleService-Info*.plist
+functions
+.firebaserc
+firebase.json
 
 ### macOS ###
 .DS_Store
