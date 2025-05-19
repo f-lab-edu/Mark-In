@@ -7,13 +7,14 @@
 
 import Foundation
 
+import AppDI
 import ReducerKit
 
 struct MainReducer: Reducer {
   struct State {
     var isLoading: Bool = true
     
-    var links: [Link] = []
+    var links: [WebLink] = []
     
     var defaultTabs: [SidebarTab] = [.total, .pin, .nonRead]
     var folderTabs: [SidebarTab] = []
@@ -24,12 +25,12 @@ struct MainReducer: Reducer {
   
   enum Action {
     case onAppear
-    case fetchSucceeded([Link], [Folder])
+    case fetchSucceeded([WebLink], [Folder])
     case changeTab(SidebarTab?)
     
     case presentSheet(SheetType?)
     
-    case didCreateLink(Link)
+    case didCreateLink(WebLink)
     case didCreateFolder(Folder)
     
     case occuredError
@@ -37,22 +38,16 @@ struct MainReducer: Reducer {
     case empty
   }
   
-  private let fetchLinkListUseCase: FetchLinkListUseCase
-  private let fetchFolderListUseCase: FetchFolderListUseCase
-  
-  init() {
-    self.fetchLinkListUseCase = DIContainer.shared.resolve()
-    self.fetchFolderListUseCase = DIContainer.shared.resolve()
-  }
+  @Dependency private var fetchLinkListUseCase: FetchLinkListUseCase
+  @Dependency private var fetchFolderListUseCase: FetchFolderListUseCase
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .onAppear:
       return .run {
         do {
-          // TODO: 실제 로그인 유저 ID 전달
-          async let links = await self.fetchLinkListUseCase.execute(userID: "testUser")
-          async let folders = await self.fetchFolderListUseCase.execute(userID: "testUser")
+          async let links = await self.fetchLinkListUseCase.execute()
+          async let folders = await self.fetchFolderListUseCase.execute()
           
           return try await .fetchSucceeded(links, folders)
         } catch {

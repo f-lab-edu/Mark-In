@@ -11,11 +11,12 @@ import LinkPresentation
 import LinkMetadataKitInterface
 
 public struct LinkMetadataProviderImpl: LinkMetadataProvider {
-  private let metadataProvider = LPMetadataProvider()
   
   public init() {}
   
   public func fetchMetadata(urlString: String) async -> Result<LinkMetadata, LinkMetadataError> {
+    let metadataProvider = LPMetadataProvider()
+    
     /// URL 인코딩
     guard let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
           let url = URL(string: encoded)

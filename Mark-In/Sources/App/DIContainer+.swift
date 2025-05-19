@@ -7,78 +7,75 @@
 
 import Foundation
 
+import AppDI
 import LinkMetadataKit
 import LinkMetadataKitInterface
 
-// TODO: 코어 모듈로 이전
-final class DIContainer {
-  static let shared = DIContainer()
-  private var dependencies: [String: Any] = [:]
-  
-  private init() {}
-  
-  func register<T>(_ dependency: T) {
-    let key = String(describing: T.self)
-    dependencies[key] = dependency
-  }
-  
-  func resolve<T>() -> T {
-    let key = String(describing: T.self)
-    let dependency = dependencies[key]
-    
-    guard let dependency = dependency as? T else {
-      fatalError("\(key)는 register되지 않았어어요. resolve 부르기전에 register 해주세요")
-    }
-    
-    return dependency
-  }
-}
 
 extension DIContainer {
   func registerDependencies() {
+    /// Core-Level 의존성 등록
+    registerCoreDependencies()
     
-    /// Core
+    /// Domain-Level 의존성 등록
+    registerRepositoryDependencies()
+    registerUseCaseDependencies()
+  }
+}
+
+private extension DIContainer {
+  // MARK: - Core
+  func registerCoreDependencies() {
     let keychainStore: KeychainStore = KeychainStoreImpl()
     let linkMetadataProvider: LinkMetadataProvider = LinkMetadataProviderImpl()
     let authUserManager: AuthUserManager = AuthUserManagerImpl(
       keychainStore: keychainStore
     )
     
+    register(keychainStore)
     register(linkMetadataProvider)
     register(authUserManager)
-    
-    /// Repository
+  }
+  
+  // MARK: - Domain - Repository
+  func registerRepositoryDependencies() {
     let folderRepository: FolderRepository = FolderRepositoryImpl()
     let linkRepository: LinkRepository = LinkRepositoryImpl(
-      linkMetadataProvider: linkMetadataProvider
+      linkMetadataProvider: resolve()
     )
     
     register(folderRepository)
     register(linkRepository)
-    
-    /// UseCase
+  }
+  
+  // MARK: - Domain - UseCase
+  func registerUseCaseDependencies() {
     let fetchLinkListUseCase: FetchLinkListUseCase = FetchLinkListUseCaseImpl(
-      linkRepository: linkRepository
+      authUserManager: resolve(),
+      linkRepository: resolve()
     )
     let fetchFolderListUseCase: FetchFolderListUseCase = FetchFolderListUseCaseImpl(
-      folderRepository: folderRepository
+      authUserManager: resolve(),
+      folderRepository: resolve()
     )
     let generateLinkUseCase: GenerateLinkUseCase = GenerateLinkUseCaseImpl(
-      linkRepository: linkRepository
+      authUserManager: resolve(),
+      linkRepository: resolve()
     )
     let generateFolderUseCase: GenerateFolderUseCase = GenerateFolderUseCaseImpl(
-      folderRepository: folderRepository
+      authUserManager: resolve(),
+      folderRepository: resolve()
     )
     let signInUseCase: SignInUseCase = SignInUseCaseImpl(
-      keychainStore: keychainStore,
-      authUserManager: authUserManager
+      keychainStore: resolve(),
+      authUserManager: resolve()
     )
     let signOutUseCase: SignOutUseCase = SignOutUseCaseImpl(
-      authUserManager: authUserManager
+      authUserManager: resolve()
     )
     let withdrawalUseCase: WithdrawalUseCase = WithdrawalUseCaseImpl(
-      keychainStore: keychainStore,
-      authUserManager: authUserManager
+      keychainStore: resolve(),
+      authUserManager: resolve()
     )
     
     register(fetchLinkListUseCase)

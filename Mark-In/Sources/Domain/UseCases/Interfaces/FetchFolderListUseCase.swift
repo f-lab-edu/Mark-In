@@ -8,5 +8,5 @@
 import Foundation
 
 protocol FetchFolderListUseCase {
-  func execute(userID: String) async throws -> [Folder]
+  func execute() async throws -> [Folder]
 }

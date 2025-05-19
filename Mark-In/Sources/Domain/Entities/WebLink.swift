@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Link: Hashable {
+struct WebLink: Hashable {
   var id: String
   var url: String
   var title: String?

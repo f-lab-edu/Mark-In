@@ -22,7 +22,7 @@ struct AddLinkView: View {
   @State private var currentFolder: Folder
   
   private let folders: [Folder]
-  private let completion: (Link) -> Void
+  private let completion: (WebLink) -> Void
   
   private var isSaving: Bool {
     store.state.isSaving
@@ -30,7 +30,7 @@ struct AddLinkView: View {
   
   init(
     folders: [Folder],
-    completion: @escaping (Link) -> Void
+    completion: @escaping (WebLink) -> Void
   ) {
     self.folders = folders
     self._currentFolder = State(initialValue: folders[0])
@@ -92,7 +92,7 @@ struct AddLinkView: View {
         Button {
           let link = WriteLink(
             url: url,
-            title: title,
+            title: title.isEmpty ? nil : title,
             folderID: currentFolder.id
           )
           store.send(.addLinkButtonTapped(link: link))

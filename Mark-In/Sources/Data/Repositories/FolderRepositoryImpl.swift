@@ -17,7 +17,7 @@ struct FolderRepositoryImpl: FolderRepository {
   
   func create(userID: String, folder: WriteFolder) async throws -> Folder {
     /// 1. Folder 문서 참조 생성
-    let path = FirebasePath.folders(userID: userID).path
+    let path = FirebaseEndpoint.FirestoreDB.folders(userID: userID).path
     let folderDocRef = db.collection(path).document()
     
     /// 2. Firestore에 저장할 DTO 객체 생성
@@ -45,7 +45,7 @@ struct FolderRepositoryImpl: FolderRepository {
   
   func fetchAll(userID: String) async throws -> [Folder] {
     /// 1. Folders 컬렉션 참조 생성
-    let path = FirebasePath.folders(userID: userID).path
+    let path = FirebaseEndpoint.FirestoreDB.folders(userID: userID).path
     let folderColRef = db.collection(path)
     
     /// 2. 컬렉션의 모든 문서 가져오기
@@ -59,8 +59,8 @@ struct FolderRepositoryImpl: FolderRepository {
   
   func update(userID: String, folder: Folder) async throws {
     /// 1. Folder 문서 참조 생성
-    let folderID = folder.id ?? ""
-    let path = FirebasePath.folders(userID: userID).path + "/\(folderID)"
+    guard let folderID = folder.id else { return }
+    let path = FirebaseEndpoint.FirestoreDB.folder(userID: userID, folderID: folderID).path
     let folderDocRef = db.document(path)
     
     /// 2. Entity를 DTO로 변환
@@ -85,8 +85,8 @@ struct FolderRepositoryImpl: FolderRepository {
   
   func delete(userID: String, folder: Folder) async throws {
     /// 1. Folder 문서 참조 생성
-    let folderID = folder.id ?? ""
-    let path = FirebasePath.folders(userID: userID).path + "/\(folderID)"
+    guard let folderID = folder.id else { return }
+    let path = FirebaseEndpoint.FirestoreDB.folder(userID: userID, folderID: folderID).path
     let folderDocRef = db.document(path)
     
     /// 2. Folder 삭제

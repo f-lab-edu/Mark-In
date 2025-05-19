@@ -25,9 +25,9 @@ struct LinkRepositoryImpl: LinkRepository {
     self.linkMetadataProvider = linkMetadataProvider
   }
   
-  func create(userID: String, link: WriteLink) async throws -> Link {
+  func create(userID: String, link: WriteLink) async throws -> WebLink {
     /// 1. Link 문서 참조 생성
-    let path = FirebasePath.links(userID: userID).path
+    let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
     let linkDocRef = db.collection(path).document()
         
     /// 2. URL의 메타데이터 가져오기
@@ -41,7 +41,7 @@ struct LinkRepositoryImpl: LinkRepository {
     )
     
     /// 4. Firestore에 저장할 DTO 객체 생성
-    let linkDTO = LinkDTO(
+    let linkDTO = WebLinkDTO(
       id: linkDocRef.documentID,
       url: link.url,
       title: link.title ?? metadata.title,
@@ -69,9 +69,9 @@ struct LinkRepositoryImpl: LinkRepository {
     return linkDTO.toEntity()
   }
   
-  func fetchAll(userID: String) async throws -> [Link] {
+  func fetchAll(userID: String) async throws -> [WebLink] {
     /// 1. Links 컬렉션 참조 생성
-    let path = FirebasePath.links(userID: userID).path
+    let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
     let linkColRef = db.collection(path)
     
     /// 2. 컬렉션의 모든 문서 가져오기
@@ -79,17 +79,17 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 3. 문서를 DTO로 변환 후 다시 Entity로 변환
     return snapshot.documents.compactMap {
-      try? $0.data(as: LinkDTO.self).toEntity()
+      try? $0.data(as: WebLinkDTO.self).toEntity()
     }
   }
   
-  func update(userID: String, link: Link) async throws {
+  func update(userID: String, link: WebLink) async throws {
     /// 1. Link 문서 참조 생성
-    let path = FirebasePath.links(userID: userID).path + "/\(link.id)"
+    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: link.id).path
     let linkDocRef = db.document(path)
     
     /// 2. Entity를 DTO로 변환
-    let linkDTO = LinkDTO(
+    let linkDTO = WebLinkDTO(
       id: link.id,
       url: link.url,
       title: link.title,
@@ -114,9 +114,9 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func delete(userID: String, link: Link) async throws {
+  func delete(userID: String, link: WebLink) async throws {
     /// 1. Link 문서 참조 생성
-    let path = FirebasePath.links(userID: userID).path + "/\(link.id)"
+    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: link.id).path
     let linkDocRef = db.document(path)
     
     /// 2. 이미지 데이터 삭제
@@ -137,8 +137,8 @@ private extension LinkRepositoryImpl {
   ) async throws -> ImageUrls {
     
     /// 1. 썸네일, 파비콘 이미지 데이터를 저장할 storage 주소 생성
-    let thumbnailPath = FirebasePath.thumbnails(userID: userID).path + "/\(fileID)"
-    let faviconPath = FirebasePath.favicons(userID: userID).path + "/\(fileID)"
+    let thumbnailPath = FirebaseEndpoint.Storage.thumbnail(userID: userID, thumbnailID: fileID).path
+    let faviconPath = FirebaseEndpoint.Storage.favicon(userID: userID, faviconID: fileID).path
     
     let thumbnailRef = storage.child(thumbnailPath)
     let faviconRef = storage.child(faviconPath)
@@ -164,8 +164,8 @@ private extension LinkRepositoryImpl {
   
   func deleteImageData(userID: String, fileID: String) async throws {
     /// 1. 썸네일, 파비콘 이미지 참조 주소 생성
-    let thumbnailPath = FirebasePath.thumbnails(userID: userID).path + "/\(fileID)"
-    let faviconPath = FirebasePath.favicons(userID: userID).path + "/\(fileID)"
+    let thumbnailPath = FirebaseEndpoint.Storage.thumbnail(userID: userID, thumbnailID: fileID).path
+    let faviconPath = FirebaseEndpoint.Storage.favicon(userID: userID, faviconID: fileID).path
     
     let thumbnailRef = storage.child(thumbnailPath)
     let faviconRef = storage.child(faviconPath)

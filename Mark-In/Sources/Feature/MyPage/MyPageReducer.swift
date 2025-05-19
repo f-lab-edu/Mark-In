@@ -10,6 +10,7 @@ import Foundation
 import FirebaseAuth
 import GoogleSignIn
 
+import AppDI
 import ReducerKit
 
 struct MyPageReducer: Reducer {
@@ -26,13 +27,8 @@ struct MyPageReducer: Reducer {
     case empty
   }
   
-  private let signOutUseCase: SignOutUseCase
-  private let withdrawalUseCase: WithdrawalUseCase
-  
-  init() {
-    self.signOutUseCase = DIContainer.shared.resolve()
-    self.withdrawalUseCase = DIContainer.shared.resolve()
-  }
+  @Dependency private var signOutUseCase: SignOutUseCase
+  @Dependency private var withdrawalUseCase: WithdrawalUseCase
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {

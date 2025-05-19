@@ -20,7 +20,7 @@ struct LinkListView: View {
   
   let store: StoreOf<MainReducer>
   
-  private var links: [Link] {
+  private var links: [WebLink] {
     let totalLinks = store.state.links
     let tab = store.state.selectedTab ?? .total
     
@@ -76,38 +76,23 @@ struct LinkListView: View {
 
 private struct LinkCell: View {
   
-  let link: Link
+  let link: WebLink
   
   var body: some View {
     ZStack(alignment: .bottom) {
-      // TODO: Link 네이밍 충돌로, 이후 리팩토링 작업 후 적용 예정
-//      Link(destination: URL(string: link.url)) {
-//        AsyncImage(
-//          url: URL(string: link.thumbnailUrl ?? "")
-//        ) { image in
-//          image
-//            .resizable()
-//            .aspectRatio(contentMode: .fill)
-//        } placeholder: {
-//          Rectangle()
-//            .fill(.markWhite70)
-//        }
-//        .frame(width: ViewConstants.cellWidth, height: ViewConstants.cellHeight)
-//      }
-      
-      AsyncImage(
-        url: URL(string: link.thumbnailUrl ?? "")
-      ) { image in
-        image
-          .resizable()
-          .aspectRatio(contentMode: .fill)
-      } placeholder: {
-        Rectangle()
+      Link(destination: URL(string: link.url)!) {
+        AsyncImage(
+          url: URL(string: link.thumbnailUrl ?? "")
+        ) { image in
+          image
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+        } placeholder: {
+          Rectangle()
+            .fill(.markWhite70)
+        }
+        .frame(width: ViewConstants.cellWidth, height: ViewConstants.cellHeight)
       }
-      .frame(
-        width: ViewConstants.cellWidth,
-        height: ViewConstants.cellHeight
-      )
       
       VStack(alignment: .leading, spacing: 0) {
         headerTitle

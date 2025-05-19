@@ -8,5 +8,5 @@
 import Foundation
 
 protocol FetchLinkListUseCase {
-  func execute(userID: String) async throws -> [Link]
+  func execute() async throws -> [WebLink]
 }

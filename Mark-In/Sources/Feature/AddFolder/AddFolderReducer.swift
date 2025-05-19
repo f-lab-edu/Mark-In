@@ -7,6 +7,7 @@
 
 import Foundation
 
+import AppDI
 import ReducerKit
 
 struct AddFolderReducer: Reducer {
@@ -22,11 +23,7 @@ struct AddFolderReducer: Reducer {
     case updateErrorState(Bool)
   }
   
-  private let generateFolderUseCase: GenerateFolderUseCase
-  
-  init() {
-    self.generateFolderUseCase = DIContainer.shared.resolve()
-  }
+  @Dependency private var generateFolderUseCase: GenerateFolderUseCase
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {

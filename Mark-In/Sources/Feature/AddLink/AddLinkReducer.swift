@@ -7,26 +7,23 @@
 
 import Foundation
 
+import AppDI
 import ReducerKit
 
 struct AddLinkReducer: Reducer {
   struct State {
-    var createdLink: Link?
+    var createdLink: WebLink?
     var isSaving: Bool = false
     var isError: Bool = false
   }
   
   enum Action {
     case addLinkButtonTapped(link: WriteLink)
-    case completeSave(Link)
+    case completeSave(WebLink)
     case occurError(Bool)
   }
   
-  private let generateLinkUseCase: GenerateLinkUseCase
-  
-  init() {
-    self.generateLinkUseCase = DIContainer.shared.resolve()
-  }
+  @Dependency private var generateLinkUseCase: GenerateLinkUseCase
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		57588B452DD640C100DBD9A7 /* ReducerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57588B412DD63D9700DBD9A7 /* ReducerKit.framework */; };
 		57588B462DD640C100DBD9A7 /* ReducerKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57588B412DD63D9700DBD9A7 /* ReducerKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57588CEC2DD9B66C00DBD9A7 /* AppDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57588CE92DD9B4D600DBD9A7 /* AppDI.framework */; };
+		57588CED2DD9B66C00DBD9A7 /* AppDI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57588CE92DD9B4D600DBD9A7 /* AppDI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57944D0C2DC52AEF00EF3D9A /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 57944D0B2DC52AEF00EF3D9A /* GoogleSignIn */; };
 		57AC56A82DA5120600BA84BD /* Util.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56732DA511E900BA84BD /* Util.framework */; };
 		57AC56A92DA5120600BA84BD /* Util.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57AC56732DA511E900BA84BD /* Util.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -25,6 +27,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 57606D5B2DD63B14005EBE3D;
 			remoteInfo = ReducerKit;
+		};
+		57588CE82DD9B4D600DBD9A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57588CE42DD9B4D500DBD9A7 /* AppDI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57588CDA2DD9B4D500DBD9A7;
+			remoteInfo = AppDI;
 		};
 		57AC56722DA511E900BA84BD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -43,6 +52,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				57AC56A92DA5120600BA84BD /* Util.framework in Embed Frameworks */,
+				57588CED2DD9B66C00DBD9A7 /* AppDI.framework in Embed Frameworks */,
 				57588B462DD640C100DBD9A7 /* ReducerKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -51,6 +61,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		57588CE42DD9B4D500DBD9A7 /* AppDI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AppDI.xcodeproj; path = AppDI/AppDI.xcodeproj; sourceTree = "<group>"; };
 		57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReducerKit.xcodeproj; path = ReducerKit/ReducerKit.xcodeproj; sourceTree = "<group>"; };
 		57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DesignSystem.xcodeproj; path = DesignSystem/DesignSystem.xcodeproj; sourceTree = "<group>"; };
 		57AC53092DA4FC1800BA84BD /* Util.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Util.xcodeproj; path = Util/Util.xcodeproj; sourceTree = "<group>"; };
@@ -85,6 +96,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57AC56A82DA5120600BA84BD /* Util.framework in Frameworks */,
+				57588CEC2DD9B66C00DBD9A7 /* AppDI.framework in Frameworks */,
 				57944D0C2DC52AEF00EF3D9A /* GoogleSignIn in Frameworks */,
 				57E1F9852DA8F9B40033F30C /* FirebaseAuth in Frameworks */,
 				57E1F9872DA8F9B40033F30C /* FirebaseCore in Frameworks */,
@@ -105,6 +117,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		57588CE52DD9B4D500DBD9A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57588CE92DD9B4D600DBD9A7 /* AppDI.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		57AC55422DA507EC00BA84BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +135,7 @@
 		57AC565F2DA511A900BA84BD /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				57588CE42DD9B4D500DBD9A7 /* AppDI.xcodeproj */,
 				57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */,
 				57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */,
 				57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */,
@@ -223,6 +244,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 57588CE52DD9B4D500DBD9A7 /* Products */;
+					ProjectRef = 57588CE42DD9B4D500DBD9A7 /* AppDI.xcodeproj */;
+				},
+				{
 					ProductGroup = 57588A542DD63B5900DBD9A7 /* Products */;
 					ProjectRef = 57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */;
 				},
@@ -244,6 +269,13 @@
 			fileType = wrapper.framework;
 			path = ReducerKit.framework;
 			remoteRef = 57588B402DD63D9700DBD9A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		57588CE92DD9B4D600DBD9A7 /* AppDI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AppDI.framework;
+			remoteRef = 57588CE82DD9B4D600DBD9A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		57AC56732DA511E900BA84BD /* Util.framework */ = {
