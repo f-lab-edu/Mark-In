@@ -50,7 +50,7 @@ struct LoginReducer: Reducer {
         let appleSignInInfo = AppleSignInInfo(nonce: nonce, idCredential: idCredential)
         
         do {
-          try await self.signInUseCase.signIn(using: appleSignInInfo)
+          try await self.signInUseCase.execute(using: appleSignInInfo)
           return .empty
         } catch {
           return .signInError
@@ -69,7 +69,7 @@ struct LoginReducer: Reducer {
           let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: windowScene)
           
           let googleSignInInfo = GoogleSignInInfo(user: result.user)
-          try await self.signInUseCase.signIn(using: googleSignInInfo)
+          try await self.signInUseCase.execute(using: googleSignInInfo)
           
           return .empty
         } catch {

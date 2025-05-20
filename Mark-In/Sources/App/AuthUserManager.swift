@@ -39,17 +39,17 @@ final class AuthUserManagerImpl: AuthUserManager {
   }
   
   func load() {
-    let user: AuthUser? = try? keychainStore.load(forKey: "authUser")
+    let user: AuthUser? = try? keychainStore.load(forKey: .authUser)
     self.user = user
   }
   
   func save(_ user: AuthUser) {
-    try? keychainStore.save(user, forKey: "authUser")
+    try? keychainStore.save(user, forKey: .authUser)
     self.user = user
   }
   
   func clear() {
-    try? keychainStore.delete(forKey: "authUser")
+    try? keychainStore.delete(forKey: .authUser)
     user = nil
   }
 }

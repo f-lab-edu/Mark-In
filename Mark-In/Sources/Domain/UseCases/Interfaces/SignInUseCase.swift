@@ -27,6 +27,6 @@ struct GoogleSignInInfo {
 }
 
 protocol SignInUseCase {
-  func signIn(using info: AppleSignInInfo) async throws
-  func signIn(using info: GoogleSignInInfo) async throws
+  func execute(using info: AppleSignInInfo) async throws
+  func execute(using info: GoogleSignInInfo) async throws
 }

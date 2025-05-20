@@ -19,15 +19,20 @@ enum KeychainError: Error {
   case unexpectedStatus(OSStatus)
 }
 
+enum KeychainKey: String {
+  case authUser = "mark-authUser"
+  case refreshToken = "mark-refreshToken"
+}
+
 protocol KeychainStore {
-  func save<T: Codable>(_ value: T, forKey key: String) throws
-  func load<T: Codable>(forKey key: String) throws -> T?
-  func delete(forKey key: String) throws
+  func save<T: Codable>(_ value: T, forKey key: KeychainKey) throws
+  func load<T: Codable>(forKey key: KeychainKey) throws -> T?
+  func delete(forKey key: KeychainKey) throws
 }
 
 struct KeychainStoreImpl: KeychainStore {
   
-  func save<T: Codable>(_ value: T, forKey key: String) throws {
+  func save<T: Codable>(_ value: T, forKey key: KeychainKey) throws {
     let data: Data
     do {
       data = try JSONEncoder().encode(value)
@@ -40,7 +45,7 @@ struct KeychainStoreImpl: KeychainStore {
     
     let query: [String: Any] = [
       kSecClass as String: kSecClassGenericPassword,
-      kSecAttrAccount as String: key,
+      kSecAttrAccount as String: key.rawValue,
       kSecValueData as String: data
     ]
     
@@ -50,10 +55,10 @@ struct KeychainStoreImpl: KeychainStore {
     }
   }
   
-  func load<T: Codable>(forKey key: String) throws -> T? {
+  func load<T: Codable>(forKey key: KeychainKey) throws -> T? {
     let query: [String: Any] = [
       kSecClass as String: kSecClassGenericPassword,
-      kSecAttrAccount as String: key,
+      kSecAttrAccount as String: key.rawValue,
       kSecReturnData as String: true,
       kSecMatchLimit as String: kSecMatchLimitOne
     ]
@@ -74,10 +79,10 @@ struct KeychainStoreImpl: KeychainStore {
     }
   }
   
-  func delete(forKey key: String) throws {
+  func delete(forKey key: KeychainKey) throws {
     let query: [String: Any] = [
       kSecClass as String: kSecClassGenericPassword,
-      kSecAttrAccount as String: key
+      kSecAttrAccount as String: key.rawValue
     ]
     
     let status = SecItemDelete(query as CFDictionary)

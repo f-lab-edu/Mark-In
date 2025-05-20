@@ -31,7 +31,7 @@ struct WithdrawalUseCaseImpl: WithdrawalUseCase {
     
     switch provider {
     case .apple:
-      let token: String? = try? keychainStore.load(forKey: "refreshToken")
+      let token: String? = try? keychainStore.load(forKey: .refreshToken)
       guard let token else { return }
       
       let url = URL(string: "https://\(Config.value(forKey: .revokeTokenURL))/revokeToken?refresh_token=\(token)"
@@ -39,7 +39,7 @@ struct WithdrawalUseCaseImpl: WithdrawalUseCase {
       
       _ = try await URLSession.shared.data(from: url)
       
-      try keychainStore.delete(forKey: "refreshToken")
+      try keychainStore.delete(forKey: .refreshToken)
       
     case .google:
       try? await GIDSignIn.sharedInstance.disconnect()
