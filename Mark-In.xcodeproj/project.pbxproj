@@ -125,6 +125,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		57985FAB2DDDC2CD00A383F2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		57985FAD2DDDC2CD00A383F2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		57AC55422DA507EC00BA84BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +260,14 @@
 				{
 					ProductGroup = 57588CE52DD9B4D500DBD9A7 /* Products */;
 					ProjectRef = 57588CE42DD9B4D500DBD9A7 /* AppDI.xcodeproj */;
+				},
+				{
+					ProductGroup = 57985FAD2DDDC2CD00A383F2 /* Products */;
+					ProjectRef = 57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */;
+				},
+				{
+					ProductGroup = 57985FAB2DDDC2CD00A383F2 /* Products */;
+					ProjectRef = 57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */;
 				},
 				{
 					ProductGroup = 57588A542DD63B5900DBD9A7 /* Products */;
