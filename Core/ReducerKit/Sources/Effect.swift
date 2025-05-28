@@ -13,5 +13,5 @@ public enum Effect<Action> {
   case none
   
   /// Side Effect를 처리하고, 새로운 Action을 반환
-  case run(() async -> Action)
+  case run(() async -> Action?)
 }
