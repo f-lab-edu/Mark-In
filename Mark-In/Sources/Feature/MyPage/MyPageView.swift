@@ -15,7 +15,7 @@ private enum ViewConstants {
 }
 
 struct MyPageView: View {
-  @State private var store: StoreOf<MyPageReducer> = .init(
+  @State private var store: Store<MyPageReducer> = .init(
     initialState: MyPageReducer.State(),
     reducer: MyPageReducer()
   )

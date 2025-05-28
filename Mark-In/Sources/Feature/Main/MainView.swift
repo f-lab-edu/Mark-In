@@ -11,7 +11,7 @@ import DesignSystem
 import ReducerKit
 
 struct MainView: View {
-  @State private var store: StoreOf<MainReducer> = .init(
+  @State private var store: Store<MainReducer> = .init(
     initialState: MainReducer.State(),
     reducer: MainReducer()
   )

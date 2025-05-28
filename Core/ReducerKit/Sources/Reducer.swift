@@ -8,7 +8,7 @@
 import Foundation
 
 /// 액션에 따른 상태 변화 로직을 정의하기 위한 프로토콜
-public protocol Reducer<State, Action> {
+public protocol Reducer {
   /// View에 표시될 데이터를 정의
   associatedtype State
   

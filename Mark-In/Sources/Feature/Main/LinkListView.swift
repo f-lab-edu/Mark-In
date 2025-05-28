@@ -18,7 +18,7 @@ private enum ViewConstants {
 
 struct LinkListView: View {
   
-  let store: StoreOf<MainReducer>
+  let store: Store<MainReducer>
   
   private var links: [WebLink] {
     let totalLinks = store.state.links
