@@ -125,6 +125,33 @@ struct LinkRepositoryImpl: LinkRepository {
     /// 3. Link 삭제
     try await linkDocRef.delete()
   }
+  
+  func deleteAll(userID: String) async throws {
+    /// 1. Links 컬렉션 참조 생성
+    let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
+    let linkColRef = db.collection(path)
+    
+    /// 2. 컬렉션의 모든 문서 가져오기
+    let snapshot = try await linkColRef.getDocuments()
+    
+    /// 3. 병렬 작업으로 데이터 삭제
+    try await withThrowingTaskGroup(of: Void.self) { group in
+      /// 모둔 문서에 순차 접근
+      snapshot.documents.forEach { document in
+        /// Link 데이터 삭제
+        group.addTask {
+          try await document.reference.delete()
+        }
+        
+        /// 이미지 데이터 삭제
+        group.addTask {
+          try await deleteImageData(userID: userID, fileID: document.documentID)
+        }
+      }
+      
+      try await group.waitForAll()
+    }
+  }
 }
 
 private extension LinkRepositoryImpl {
