@@ -15,9 +15,19 @@ struct WithdrawalUseCaseImpl: WithdrawalUseCase {
   private let keychainStore: KeychainStore
   private let authUserManager: AuthUserManager
   
-  init(keychainStore: KeychainStore, authUserManager: AuthUserManager) {
+  private let linkRepository: LinkRepository
+  private let folderRepsoitory: FolderRepository
+  
+  init(
+    keychainStore: KeychainStore,
+    authUserManager: AuthUserManager,
+    linkRepository: LinkRepository,
+    folderRepsoitory: FolderRepository
+  ) {
     self.keychainStore = keychainStore
     self.authUserManager = authUserManager
+    self.linkRepository = linkRepository
+    self.folderRepsoitory = folderRepsoitory
   }
   
   func execute() async throws {
