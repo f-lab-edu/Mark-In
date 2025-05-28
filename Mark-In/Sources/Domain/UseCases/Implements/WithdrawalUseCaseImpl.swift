@@ -31,15 +31,30 @@ struct WithdrawalUseCaseImpl: WithdrawalUseCase {
   }
   
   func execute() async throws {
+    /// 현재 로그인 된 유저 상태 확인 후 인증 정보 삭제
     do {
       try await Auth.auth().currentUser?.delete()
     } catch {
       throw WithdrawalError.credentialTooOld
     }
     
-    guard let provider = authUserManager.user?.provider else { return }
+    guard let user = authUserManager.user else { return }
     
-    switch provider {
+    /// 사용자의 모든 데이터(링크, 폴더) 삭제
+    try await withThrowingTaskGroup(of: Void.self) { group in
+      group.addTask {
+        try await linkRepository.deleteAll(userID: user.id)
+      }
+      
+      group.addTask {
+        try await folderRepsoitory.deleteAll(userID: user.id)
+      }
+      
+      try await group.waitForAll()
+    }
+    
+    /// OAuth 인증 해제
+    switch user.provider {
     case .apple:
       try await revokeAppleAuthorization()
       
@@ -47,7 +62,7 @@ struct WithdrawalUseCaseImpl: WithdrawalUseCase {
       try await revokeGoogleAuthorization()
       
     @unknown default:
-      fatalError("Do not implement revoke function for provider: \(provider)")
+      fatalError("Do not implement revoke function for provider: \(user.provider)")
     }
     
     authUserManager.clear()
