@@ -92,4 +92,24 @@ struct FolderRepositoryImpl: FolderRepository {
     /// 2. Folder 삭제
     try await folderDocRef.delete()
   }
+  
+  func deleteAll(userID: String) async throws {
+    /// 1. Folders 컬렉션 참조 생성
+    let path = FirebaseEndpoint.FirestoreDB.folders(userID: userID).path
+    let folderColRef = db.collection(path)
+    
+    /// 2. 컬렉션의 모든 문서 가져오기
+    let snapshot = try await folderColRef.getDocuments()
+    
+    /// 3. 모든 데이터 병렬 작업으로 삭제
+    try await withThrowingTaskGroup(of: Void.self) { group in
+      snapshot.documents.forEach { document in
+        group.addTask {
+          try await document.reference.delete()
+        }
+      }
+      
+      try await group.waitForAll()
+    }
+  }
 }
