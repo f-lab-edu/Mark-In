@@ -20,27 +20,24 @@ struct FolderRepositoryImpl: FolderRepository {
     let path = FirebaseEndpoint.FirestoreDB.folders(userID: userID).path
     let folderDocRef = db.collection(path).document()
     
-    /// 2. Firestore에 저장할 DTO 객체 생성
-    let folderDTO = FolderDTO(
+    /// 2. 필드 값 생성
+    let createdBy = Date()
+    
+    /// 3. Firestore에 추가
+    try await folderDocRef.setData([
+      "id": folderDocRef.documentID,
+      "name": folder.name,
+      "createdBy": createdBy
+    ])
+    
+    /// 4. 생성된 데이터 반환
+    let folderEntity = Folder(
       id: folderDocRef.documentID,
       name: folder.name,
       createdBy: .now
     )
     
-    /// 3. Firestore에 추가
-    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
-      do {
-        try folderDocRef.setData(from: folderDTO) { error in
-          if let error { continuation.resume(throwing: error) }
-          else { continuation.resume(returning: ()) }
-        }
-      } catch {
-        continuation.resume(throwing: error)
-      }
-    }
-    
-    /// 4. DocumentID가 업데이트 된 Folder Entity로 리턴
-    return folderDTO.toEntity()
+    return folderEntity
   }
   
   func fetchAll(userID: String) async throws -> [Folder] {

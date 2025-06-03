@@ -40,33 +40,37 @@ struct LinkRepositoryImpl: LinkRepository {
       metadata: metadata
     )
     
-    /// 4. Firestore에 저장할 DTO 객체 생성
-    let linkDTO = WebLinkDTO(
+    /// 4. 필드 값 설정
+    let title = link.title ?? metadata.title
+    let createdBy = Date()
+    
+    /// 5. Firestore에 추가
+    try await linkDocRef.setData([
+      "id": linkDocRef.documentID,
+      "url": link.url,
+      "title": title ?? NSNull(),
+      "thumbnailUrl": imageUrls.thumbnail ?? NSNull(),
+      "faviconUrl": imageUrls.favicon ?? NSNull(),
+      "isPinned": false,
+      "createdBy": createdBy,
+      "lastAccessedAt": NSNull(),
+      "folderID": link.folderID ?? NSNull()
+    ])
+    
+    /// 6. 생성된 데이터 반환
+    let linkEntity = WebLink(
       id: linkDocRef.documentID,
       url: link.url,
-      title: link.title ?? metadata.title,
+      title: title,
       thumbnailUrl: imageUrls.thumbnail,
       faviconUrl: imageUrls.favicon,
       isPinned: false,
-      createdBy: .now,
+      createdBy: createdBy,
       lastAccessedAt: nil,
       folderID: link.folderID
     )
     
-    /// 5. Firestore에 추가
-    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
-      do {
-        try linkDocRef.setData(from: linkDTO) { error in
-          if let error { continuation.resume(throwing: error) }
-          else { continuation.resume(returning: ()) }
-        }
-      } catch {
-        continuation.resume(throwing: error)
-      }
-    }
-    
-    /// 6. 저장된 DTO 객체를 Entity로 변환 후 리턴
-    return linkDTO.toEntity()
+    return linkEntity
   }
   
   func fetchAll(userID: String) async throws -> [WebLink] {
