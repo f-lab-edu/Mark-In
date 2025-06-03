@@ -103,6 +103,8 @@
 		57B7E0242DC3D44100D9225A /* Exceptions for "Mark-In" folder in "Mark-In" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Configuration/Debug.xcconfig,
+				Configuration/Release.xcconfig,
 				Resources/Info.plist,
 			);
 			target = 57BFD8C22DA4E19600648AD4 /* Mark-In */;
@@ -269,7 +271,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					57BFD8C22DA4E19600648AD4 = {
 						CreatedOnToolsVersion = 16.3;
@@ -423,6 +425,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -487,6 +490,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -515,6 +519,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Mark-In/Resources/Mark_In.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -556,6 +561,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Mark-In/Resources/Mark_In.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
