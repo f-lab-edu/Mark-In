@@ -75,7 +75,9 @@ private extension DIContainer {
     )
     let withdrawalUseCase: WithdrawalUseCase = WithdrawalUseCaseImpl(
       keychainStore: resolve(),
-      authUserManager: resolve()
+      authUserManager: resolve(),
+      linkRepository: resolve(),
+      folderRepsoitory: resolve()
     )
     
     register(fetchLinkListUseCase)
