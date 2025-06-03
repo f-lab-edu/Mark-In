@@ -13,7 +13,7 @@ import ReducerKit
 import Util
 
 struct LoginView: View {
-  @State private var store: StoreOf<LoginReducer> = .init(
+  @State private var store: Store<LoginReducer> = .init(
     initialState: LoginReducer.State(),
     reducer: LoginReducer()
   )
@@ -50,9 +50,9 @@ struct LoginView: View {
 }
 
 private struct BodyView: View {
-  private let store: StoreOf<LoginReducer>
+  private let store: Store<LoginReducer>
   
-  init(store: StoreOf<LoginReducer>) {
+  init(store: Store<LoginReducer>) {
     self.store = store
   }
   
@@ -100,9 +100,9 @@ private struct BodyView: View {
 
 private struct SignInButtonList: View {
   @Environment(\.authorizationController) private var authorizationController
-  private let store: StoreOf<LoginReducer>
+  private let store: Store<LoginReducer>
   
-  init(store: StoreOf<LoginReducer>) {
+  init(store: Store<LoginReducer>) {
     self.store = store
   }
   

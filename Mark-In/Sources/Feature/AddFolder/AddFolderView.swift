@@ -12,7 +12,7 @@ import ReducerKit
 
 struct AddFolderView: View {
   @Environment(\.dismiss) private var dismiss
-  @State private var store: StoreOf<AddFolderReducer> = .init(
+  @State private var store: Store<AddFolderReducer> = .init(
     initialState: AddFolderReducer.State(),
     reducer: AddFolderReducer()
   )

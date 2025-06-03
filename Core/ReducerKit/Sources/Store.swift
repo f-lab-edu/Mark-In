@@ -7,21 +7,17 @@
 
 import Foundation
 
-/// Store 타입을 좀 더 간편하게 정의(표현).
-public typealias StoreOf<R: Reducer> = Store<R.State, R.Action>
-
 /// Reducer를 실행하고 UI를 업데이트하는 상태 관리자
 @MainActor @Observable
-public final class Store<State, Action> {
+public final class Store<R: Reducer> {
+  
+  public typealias State = R.State
+  public typealias Action = R.Action
   
   private(set) public var state: State
   private let reduce: (inout State, Action) -> Effect<Action>
   
-  // Store.State == Reducer.State, Store.Action == Reducer.Action
-  public init<R: Reducer<State, Action>>(
-    initialState: State,
-    reducer: R
-  ) {
+  public init(initialState: State, reducer: R) {
     self.state = initialState
     self.reduce = reducer.reduce(into:action:)
   }

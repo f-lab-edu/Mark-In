@@ -11,7 +11,7 @@ import DesignSystem
 import ReducerKit
 
 struct SideBar: View {
-  let store: StoreOf<MainReducer>
+  let store: Store<MainReducer>
   
   var body: some View {
     VStack(alignment: .leading) {

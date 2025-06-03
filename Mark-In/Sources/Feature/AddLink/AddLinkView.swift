@@ -12,7 +12,7 @@ import ReducerKit
 
 struct AddLinkView: View {
   @Environment(\.dismiss) var dismiss
-  @State private var store: StoreOf<AddLinkReducer> = .init(
+  @State private var store: Store<AddLinkReducer> = .init(
     initialState: AddLinkReducer.State(),
     reducer: AddLinkReducer()
   )
