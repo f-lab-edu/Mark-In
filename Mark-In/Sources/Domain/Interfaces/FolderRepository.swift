@@ -11,6 +11,6 @@ protocol FolderRepository {
   func create(userID: String, folder: WriteFolder) async throws -> Folder
   func fetchAll(userID: String) async throws -> [Folder]
   func update(userID: String, folder: Folder) async throws
-  func delete(userID: String, folder: Folder) async throws
+  func delete(userID: String, folderID: String) async throws
   func deleteAll(userID: String) async throws
 }

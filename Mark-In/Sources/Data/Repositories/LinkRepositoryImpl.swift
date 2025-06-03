@@ -114,9 +114,9 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func delete(userID: String, link: WebLink) async throws {
+  func delete(userID: String, linkID: String) async throws {
     /// 1. Link 문서 참조 생성
-    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: link.id).path
+    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: linkID).path
     let linkDocRef = db.document(path)
     
     /// 2. 이미지 데이터 삭제

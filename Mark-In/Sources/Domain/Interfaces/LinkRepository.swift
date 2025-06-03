@@ -11,6 +11,6 @@ protocol LinkRepository {
   func create(userID: String, link: WriteLink) async throws -> WebLink
   func fetchAll(userID: String) async throws -> [WebLink]
   func update(userID: String, link: WebLink) async throws
-  func delete(userID: String, link: WebLink) async throws
+  func delete(userID: String, linkID: String) async throws
   func deleteAll(userID: String) async throws
 }

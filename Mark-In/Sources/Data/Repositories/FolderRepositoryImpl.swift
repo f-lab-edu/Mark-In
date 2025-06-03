@@ -83,9 +83,8 @@ struct FolderRepositoryImpl: FolderRepository {
     }
   }
   
-  func delete(userID: String, folder: Folder) async throws {
+  func delete(userID: String, folderID: String) async throws {
     /// 1. Folder 문서 참조 생성
-    guard let folderID = folder.id else { return }
     let path = FirebaseEndpoint.FirestoreDB.folder(userID: userID, folderID: folderID).path
     let folderDocRef = db.document(path)
     
