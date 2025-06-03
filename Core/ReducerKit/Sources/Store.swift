@@ -32,10 +32,10 @@ public final class Store<R: Reducer> {
   private func handleEffect(_ effect: Effect<Action>) {
     switch effect {
     case .none:
-      return
+      break
     case let .run(action):
       Task.detached { [weak self] in
-        guard let newAction = await action() else { return }
+        let newAction = await action()
         await self?.send(newAction)
       }
     }

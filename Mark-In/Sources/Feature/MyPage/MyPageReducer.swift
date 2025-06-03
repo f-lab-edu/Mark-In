@@ -23,6 +23,8 @@ struct MyPageReducer: Reducer {
     case withdrawalButtonTapped
     
     case didFailWithdrawal
+    
+    case empty
   }
   
   @Dependency private var signOutUseCase: SignOutUseCase
@@ -39,7 +41,7 @@ struct MyPageReducer: Reducer {
         // TODO: 이후 Auth 모듈로 분리하면서 코드 리팩토링 예정
         do {
           try await self.withdrawalUseCase.execute()
-          return nil
+          return .empty
         } catch {
           return .didFailWithdrawal
         }
@@ -47,6 +49,9 @@ struct MyPageReducer: Reducer {
       
       // TODO: 회원탈퇴 실패에 대한 처리 필요
     case .didFailWithdrawal:
+      return .none
+      
+    case .empty:
       return .none
     }
   }

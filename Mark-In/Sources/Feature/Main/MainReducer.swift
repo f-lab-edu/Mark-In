@@ -34,6 +34,8 @@ struct MainReducer: Reducer {
     case didCreateFolder(Folder)
     
     case occuredError
+    
+    case empty
   }
   
   @Dependency private var fetchLinkListUseCase: FetchLinkListUseCase
@@ -85,6 +87,9 @@ struct MainReducer: Reducer {
       
       // TODO: 에러 처리 로직 추가
     case .occuredError:
+      return .none
+      
+    case .empty:
       return .none
     }
   }

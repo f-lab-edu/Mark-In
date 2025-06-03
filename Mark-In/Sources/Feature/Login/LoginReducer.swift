@@ -26,6 +26,8 @@ struct LoginReducer: Reducer {
     case googleLoginButtonTapped
     
     case signInError
+    
+    case empty
   }
   
   @Dependency private var signInUseCase: SignInUseCase
@@ -43,13 +45,13 @@ struct LoginReducer: Reducer {
         /// 중간에 로그인을 취소하거나, 애플 로그인 인증 방식이 아닌 경우는 빈 액션 반환
         /// (에러 상황은 아니기 때문에 어떠한 액션을 던질 필요가 없음)
         guard let result = try? await authController.performRequest(request),
-              case let .appleID(idCredential) = result else { return nil }
+              case let .appleID(idCredential) = result else { return .empty }
         
         let appleSignInInfo = AppleSignInInfo(nonce: nonce, idCredential: idCredential)
         
         do {
           try await self.signInUseCase.execute(using: appleSignInInfo)
-          return nil
+          return .empty
         } catch {
           return .signInError
         }
@@ -69,7 +71,7 @@ struct LoginReducer: Reducer {
           let googleSignInInfo = GoogleSignInInfo(user: result.user)
           try await self.signInUseCase.execute(using: googleSignInInfo)
           
-          return nil
+          return .empty
         } catch {
           return .signInError
         }
@@ -77,6 +79,9 @@ struct LoginReducer: Reducer {
       
       // TODO: 에러 처리 필요
     case .signInError:
+      return .none
+      
+    case .empty:
       return .none
     }
   }
