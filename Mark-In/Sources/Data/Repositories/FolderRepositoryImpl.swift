@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 struct FolderRepositoryImpl: FolderRepository {
   
-  typealias VoidCheckedContinuation = CheckedContinuation<Void, any Error>
+  typealias FolderFieldKey = FirestoreFieldKey.Folder
   
   private let db = Firestore.firestore()
   
@@ -25,9 +25,9 @@ struct FolderRepositoryImpl: FolderRepository {
     
     /// 3. Firestore에 추가
     try await folderDocRef.setData([
-      "id": folderDocRef.documentID,
-      "name": folder.name,
-      "createdAt": createdAt
+      FolderFieldKey.id: folderDocRef.documentID,
+      FolderFieldKey.name: folder.name,
+      FolderFieldKey.createdAt: createdAt
     ])
     
     /// 4. 생성된 데이터 반환

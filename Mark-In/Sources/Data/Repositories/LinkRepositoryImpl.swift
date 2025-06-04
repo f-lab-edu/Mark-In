@@ -14,7 +14,7 @@ import LinkMetadataKitInterface
 
 struct LinkRepositoryImpl: LinkRepository {
   
-  typealias VoidCheckedContinuation = CheckedContinuation<Void, any Error>
+  typealias LinkFieldKey = FirestoreFieldKey.Link
   
   private let db = Firestore.firestore()
   private let storage = Storage.storage().reference()
@@ -46,15 +46,15 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 5. Firestore에 추가
     try await linkDocRef.setData([
-      "id": linkDocRef.documentID,
-      "url": link.url,
-      "title": title ?? NSNull(),
-      "thumbnailUrl": imageUrls.thumbnail ?? NSNull(),
-      "faviconUrl": imageUrls.favicon ?? NSNull(),
-      "isPinned": false,
-      "createdAt": createdAt,
-      "lastAccessedAt": NSNull(),
-      "folderID": link.folderID ?? NSNull()
+      LinkFieldKey.id: linkDocRef.documentID,
+      LinkFieldKey.url: link.url,
+      LinkFieldKey.title: title ?? NSNull(),
+      LinkFieldKey.thumbnailUrl: imageUrls.thumbnail ?? NSNull(),
+      LinkFieldKey.faviconUrl: imageUrls.favicon ?? NSNull(),
+      LinkFieldKey.isPinned: false,
+      LinkFieldKey.createdAt: createdAt,
+      LinkFieldKey.lastAccessedAt: NSNull(),
+      LinkFieldKey.folderID: link.folderID ?? NSNull()
     ])
     
     /// 6. 생성된 데이터 반환
@@ -99,7 +99,7 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 2. 문서 업데이트
     try await linkDocRef.updateData([
-      "folderID": folderID ?? NSNull()
+      LinkFieldKey.folderID: folderID ?? NSNull()
     ])
   }
   
@@ -114,7 +114,7 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 2. 조건에 해당하는 모든 문서 가져오기
     let querySnapshot = try await linkColRef
-      .whereField("folderID", isEqualTo: fromFolderID ?? NSNull())
+      .whereField(LinkFieldKey.folderID, isEqualTo: fromFolderID ?? NSNull())
       .getDocuments()
     
     /// 3. 병렬 작업으로 문서 업데이트
@@ -122,7 +122,7 @@ struct LinkRepositoryImpl: LinkRepository {
       querySnapshot.documents.forEach { document in
         group.addTask {
           try await document.reference.updateData([
-            "folderID": toFolderID ?? NSNull()
+            LinkFieldKey.folderID: toFolderID ?? NSNull()
           ])
         }
       }
@@ -146,7 +146,7 @@ struct LinkRepositoryImpl: LinkRepository {
   func deleteAllInFolder(userID: String, folderID: String?) async throws {
     let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
     let querySnapshot = try await db.collection(path)
-      .whereField("folderID", isEqualTo: folderID ?? NSNull())
+      .whereField(LinkFieldKey.folderID, isEqualTo: folderID ?? NSNull())
       .getDocuments()
     
     /// 3. 병렬 작업으로 데이터 삭제
