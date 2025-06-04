@@ -42,7 +42,7 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 4. 필드 값 설정
     let title = link.title ?? metadata.title
-    let createdBy = Date()
+    let createdAt = Date()
     
     /// 5. Firestore에 추가
     try await linkDocRef.setData([
@@ -52,7 +52,7 @@ struct LinkRepositoryImpl: LinkRepository {
       "thumbnailUrl": imageUrls.thumbnail ?? NSNull(),
       "faviconUrl": imageUrls.favicon ?? NSNull(),
       "isPinned": false,
-      "createdBy": createdBy,
+      "createdAt": createdAt,
       "lastAccessedAt": NSNull(),
       "folderID": link.folderID ?? NSNull()
     ])
@@ -65,7 +65,7 @@ struct LinkRepositoryImpl: LinkRepository {
       thumbnailUrl: imageUrls.thumbnail,
       faviconUrl: imageUrls.favicon,
       isPinned: false,
-      createdBy: createdBy,
+      createdAt: createdAt,
       lastAccessedAt: nil,
       folderID: link.folderID
     )

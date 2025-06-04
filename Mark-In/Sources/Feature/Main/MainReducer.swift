@@ -64,10 +64,10 @@ struct MainReducer: Reducer {
       
       state.links = links
       
-      state.folderTabs = [.folder(.init(id: nil, name: "기본폴더", createdBy: .now))]
+      state.folderTabs = [.folder(.init(id: nil, name: "기본폴더", createdAt: .now))]
       folders.forEach {
         state.folderTabs.append(
-          .folder(.init(id: $0.id, name: $0.name, createdBy: $0.createdBy))
+          .folder(.init(id: $0.id, name: $0.name, createdAt: $0.createdAt))
         )
       }
       

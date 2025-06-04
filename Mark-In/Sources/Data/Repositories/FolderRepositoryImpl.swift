@@ -21,20 +21,20 @@ struct FolderRepositoryImpl: FolderRepository {
     let folderDocRef = db.collection(path).document()
     
     /// 2. 필드 값 생성
-    let createdBy = Date()
+    let createdAt = Date()
     
     /// 3. Firestore에 추가
     try await folderDocRef.setData([
       "id": folderDocRef.documentID,
       "name": folder.name,
-      "createdBy": createdBy
+      "createdAt": createdAt
     ])
     
     /// 4. 생성된 데이터 반환
     let folderEntity = Folder(
       id: folderDocRef.documentID,
       name: folder.name,
-      createdBy: .now
+      createdAt: .now
     )
     
     return folderEntity
@@ -64,7 +64,7 @@ struct FolderRepositoryImpl: FolderRepository {
     let folderDTO = FolderDTO(
       id: folderDocRef.documentID,
       name: folder.name,
-      createdBy: folder.createdBy
+      createdAt: folder.createdAt
     )
     
     /// 3. 업데이트

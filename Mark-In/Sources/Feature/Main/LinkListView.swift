@@ -159,7 +159,7 @@ private struct LinkCell: View {
           .frame(width: 5, height: 5)
       }
       
-      Text(link.createdBy.description)
+      Text(link.createdAt.description)
         .font(.pretendard(size: 10, weight: .regular))
         .foregroundStyle(.markBlack40)
         .lineLimit(1)
@@ -178,7 +178,7 @@ private struct LinkCell: View {
       id: "",
       url: "www.naver.com",
       isPinned: true,
-      createdBy: .now
+      createdAt: .now
     )
   )
     .frame(width: 210, height: 160)
