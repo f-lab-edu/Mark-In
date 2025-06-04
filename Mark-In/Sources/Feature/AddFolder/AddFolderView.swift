@@ -16,7 +16,7 @@ struct AddFolderView: View {
     initialState: AddFolderReducer.State(),
     reducer: AddFolderReducer()
   )
-  @State private var title: String = ""
+  @State private var name: String = ""
   
   private var isSaving: Bool {
     store.state.isLoading
@@ -29,7 +29,7 @@ struct AddFolderView: View {
       Text("폴더를 추가:")
         .frame(maxWidth: .infinity, alignment: .leading)
       
-      TextField("", text: $title, prompt: Text("제목"))
+      TextField("", text: $name, prompt: Text("제목"))
         .textFieldStyle(.roundedBorder)
         .padding(.top, 14)
         .disabled(isSaving)
@@ -58,7 +58,8 @@ struct AddFolderView: View {
         .disabled(isSaving)
         
         Button {
-          store.send(.didTapAddFolderButton(name: title))
+          let writeFolder = WriteFolder(name: name)
+          store.send(.didTapAddFolderButton(writeFolder))
         } label: {
           Text("추가")
             .padding(.vertical, 4)
@@ -67,7 +68,7 @@ struct AddFolderView: View {
             .background(.markPoint)
             .clipShape(RoundedRectangle(cornerRadius: 6))
         }
-        .disabled(title.isEmpty || isSaving)
+        .disabled(name.isEmpty || isSaving)
       }
       .frame(maxWidth: .infinity, alignment: .trailing)
       .padding(.top, 18)
