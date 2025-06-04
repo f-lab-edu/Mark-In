@@ -79,6 +79,15 @@ private extension DIContainer {
       linkRepository: resolve(),
       folderRepsoitory: resolve()
     )
+    let deleteLinkUseCase: DeleteLinkUseCase = DeleteLinkUseCaseImpl(
+      authUserManager: resolve(),
+      linkRepository: resolve()
+    )
+    let deleteFolderUseCase: DeleteFolderUseCase = DeleteFolderUseCaseImpl(
+      authUserManager: resolve(),
+      linkRepository: resolve(),
+      folderRepository: resolve()
+    )
     
     register(fetchLinkListUseCase)
     register(fetchFolderListUseCase)
@@ -87,5 +96,7 @@ private extension DIContainer {
     register(signInUseCase)
     register(signOutUseCase)
     register(withdrawalUseCase)
+    register(deleteLinkUseCase)
+    register(deleteFolderUseCase)
   }
 }

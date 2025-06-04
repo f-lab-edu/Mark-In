@@ -14,6 +14,16 @@ struct DeleteFolderUseCaseImpl: DeleteFolderUseCase {
   private let linkRepository: LinkRepository
   private let folderRepository: FolderRepository
   
+  init(
+    authUserManager: AuthUserManager,
+    linkRepository: LinkRepository,
+    folderRepository: FolderRepository
+  ) {
+    self.authUserManager = authUserManager
+    self.linkRepository = linkRepository
+    self.folderRepository = folderRepository
+  }
+  
   func execute(folderID: String?, includingChildren: Bool) async throws {
     guard let userID = authUserManager.user?.id else {
       throw AuthError.unauthenticated
