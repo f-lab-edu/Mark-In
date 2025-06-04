@@ -33,6 +33,9 @@ struct MainReducer: Reducer {
     case didCreateLink(WebLink)
     case didCreateFolder(Folder)
     
+    case deleteLinkButtonTapped(link: WebLink)
+    case deleteFolderButtonTapped(folder: Folder, includingChildren: Bool)
+    
     case occuredError
     
     case empty
@@ -40,6 +43,8 @@ struct MainReducer: Reducer {
   
   @Dependency private var fetchLinkListUseCase: FetchLinkListUseCase
   @Dependency private var fetchFolderListUseCase: FetchFolderListUseCase
+  @Dependency private var deleteLinkUseCase: DeleteLinkUseCase
+  @Dependency private var deleteFolderUseCase: DeleteFolderUseCase
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
@@ -59,7 +64,7 @@ struct MainReducer: Reducer {
       
       state.links = links
       
-      state.folderTabs.append(.folder(.init(id: nil, name: "기본폴더", createdBy: .now)))
+      state.folderTabs = [.folder(.init(id: nil, name: "기본폴더", createdBy: .now))]
       folders.forEach {
         state.folderTabs.append(
           .folder(.init(id: $0.id, name: $0.name, createdBy: $0.createdBy))
@@ -84,6 +89,28 @@ struct MainReducer: Reducer {
     case .didCreateFolder(let folder):
       state.folderTabs.append(.folder(folder))
       return .none
+      
+    case .deleteLinkButtonTapped(let link):
+      state.isLoading = true
+      return .run {
+        do {
+          try await self.deleteLinkUseCase.execute(linkID: link.id)
+          return .onAppear
+        } catch {
+          return .occuredError
+        }
+      }
+      
+    case let .deleteFolderButtonTapped(folder, includingChildren):
+      state.isLoading = true
+      return .run {
+        do {
+          try await self.deleteFolderUseCase.execute(folderID: folder.id, includingChildren: includingChildren)
+          return .onAppear
+        } catch {
+          return .occuredError
+        }
+      }
       
       // TODO: 에러 처리 로직 추가
     case .occuredError:
