@@ -55,7 +55,7 @@ struct AddFolderView: View {
                 .stroke(.markBlack10, lineWidth: 0.5)
             }
         }
-        .disabled(title.isEmpty || isSaving)
+        .disabled(isSaving)
         
         Button {
           store.send(.didTapAddFolderButton(name: title))

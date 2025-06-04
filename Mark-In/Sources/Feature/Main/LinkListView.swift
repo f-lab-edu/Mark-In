@@ -47,7 +47,10 @@ struct LinkListView: View {
           spacing: ViewConstants.spacing
         ) {
           ForEach(links, id: \.self) { link in
-            LinkCell(link: link)
+            LinkCell(
+              store: store,
+              link: link
+            )
           }
         }
         .padding(20)
@@ -76,6 +79,7 @@ struct LinkListView: View {
 
 private struct LinkCell: View {
   
+  let store: Store<MainReducer>
   let link: WebLink
   
   var body: some View {
@@ -115,7 +119,13 @@ private struct LinkCell: View {
       RoundedRectangle(cornerRadius: 6)
         .stroke(.markBlack20, lineWidth: 0.5)
     })
-    
+    .contextMenu {
+      Button {
+        store.send(.deleteLinkButtonTapped(link: link))
+      } label: {
+        Text("삭제")
+      }
+    }
   }
   
   private var headerTitle: some View {
@@ -158,7 +168,19 @@ private struct LinkCell: View {
 }
 
 #Preview {
-  LinkCell(link: .init(id: "", url: "www.naver.com", isPinned: true, createdBy: .now))
+  let store: Store<MainReducer> = .init(
+    initialState: MainReducer.State(),
+    reducer: MainReducer()
+  )
+  LinkCell(
+    store: store,
+    link: .init(
+      id: "",
+      url: "www.naver.com",
+      isPinned: true,
+      createdBy: .now
+    )
+  )
     .frame(width: 210, height: 160)
 //  LinkListView(viewModel: MainViewModel())
 //    .frame(width: 600, height: 600)
