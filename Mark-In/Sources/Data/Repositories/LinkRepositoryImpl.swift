@@ -87,34 +87,47 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func update(userID: String, link: WebLink) async throws {
+  
+  func moveLinkInFolder(
+    userID: String,
+    target linkID: String,
+    to folderID: String?
+  ) async throws {
     /// 1. Link 문서 참조 생성
-    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: link.id).path
+    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: linkID).path
     let linkDocRef = db.document(path)
     
-    /// 2. Entity를 DTO로 변환
-    let linkDTO = WebLinkDTO(
-      id: link.id,
-      url: link.url,
-      title: link.title,
-      thumbnailUrl: link.thumbnailUrl,
-      faviconUrl: link.faviconUrl,
-      isPinned: link.isPinned,
-      createdBy: link.createdBy,
-      lastAccessedAt: link.lastAccessedAt,
-      folderID: link.folderID
-    )
+    /// 2. 문서 업데이트
+    try await linkDocRef.updateData([
+      "folderID": folderID ?? NSNull()
+    ])
+  }
+  
+  func moveLinksInFolder(
+    userID: String,
+    fromFolderID: String?,
+    toFolderID: String?
+  ) async throws {
+    /// 1. Link 컬렉션 참조 생성
+    let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
+    let linkColRef = db.collection(path)
     
-    /// 3. 업데이트
-    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
-      do {
-        try linkDocRef.setData(from: linkDTO) { error in
-          if let error { continuation.resume(throwing: error) }
-          else { continuation.resume(returning: ()) }
+    /// 2. 조건에 해당하는 모든 문서 가져오기
+    let querySnapshot = try await linkColRef
+      .whereField("folderID", isEqualTo: fromFolderID ?? NSNull())
+      .getDocuments()
+    
+    /// 3. 병렬 작업으로 문서 업데이트
+    try await withThrowingTaskGroup(of: Void.self) { group in
+      querySnapshot.documents.forEach { document in
+        group.addTask {
+          try await document.reference.updateData([
+            "folderID": toFolderID ?? NSNull()
+          ])
         }
-      } catch {
-        continuation.resume(throwing: error)
       }
+      
+      try await group.waitForAll()
     }
   }
   
@@ -128,6 +141,31 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 3. Link 삭제
     try await linkDocRef.delete()
+  }
+  
+  func deleteAllInFolder(userID: String, folderID: String?) async throws {
+    let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
+    let querySnapshot = try await db.collection(path)
+      .whereField("folderID", isEqualTo: folderID ?? NSNull())
+      .getDocuments()
+    
+    /// 3. 병렬 작업으로 데이터 삭제
+    try await withThrowingTaskGroup(of: Void.self) { group in
+      /// 모둔 문서에 순차 접근
+      querySnapshot.documents.forEach { document in
+        /// Link 데이터 삭제
+        group.addTask {
+          try await document.reference.delete()
+        }
+        
+        /// 이미지 데이터 삭제
+        group.addTask {
+          try await deleteImageData(userID: userID, fileID: document.documentID)
+        }
+      }
+      
+      try await group.waitForAll()
+    }
   }
   
   func deleteAll(userID: String) async throws {
