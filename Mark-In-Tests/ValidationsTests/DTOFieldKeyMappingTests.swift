@@ -12,13 +12,26 @@ struct DTOFieldKeyMappingTests {
   
   @Test
   func test_FolderDTO의_CodingKey와_FirestoreFieldKey가_일치해야_한다() async throws {
+    // Given: 준비
+    
+    // When: 실행
+    
+    // Then: 검증
     #expect(FolderDTO.CodingKeys.id.rawValue == FirestoreFieldKey.Folder.id)
     #expect(FolderDTO.CodingKeys.name.rawValue == FirestoreFieldKey.Folder.name)
     #expect(FolderDTO.CodingKeys.createdAt.rawValue == FirestoreFieldKey.Folder.createdAt)
+    
+    // TearDown: 해제
+    
   }
   
   @Test
   func test_WebLinkDTO의_CodingKey와_FirestoreFieldKey가_일치해야_한다() async throws {
+    // Given: 준비
+    
+    // When: 실행
+    
+    // Then: 검증
     #expect(WebLinkDTO.CodingKeys.id.rawValue == FirestoreFieldKey.Link.id)
     #expect(WebLinkDTO.CodingKeys.url.rawValue == FirestoreFieldKey.Link.url)
     #expect(WebLinkDTO.CodingKeys.title.rawValue == FirestoreFieldKey.Link.title)
@@ -28,5 +41,8 @@ struct DTOFieldKeyMappingTests {
     #expect(WebLinkDTO.CodingKeys.createdAt.rawValue == FirestoreFieldKey.Link.createdAt)
     #expect(WebLinkDTO.CodingKeys.lastAccessedAt.rawValue == FirestoreFieldKey.Link.lastAccessedAt)
     #expect(WebLinkDTO.CodingKeys.folderID.rawValue == FirestoreFieldKey.Link.folderID)
+    
+    // TearDown: 해제
+    
   }
 }
