@@ -49,11 +49,11 @@ struct AddFolderView: View {
             .padding(.horizontal, 14)
             .foregroundStyle(.markBlack)
             .background(.markWhite)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
-            .overlay {
-              RoundedRectangle(cornerRadius: 6)
-                .stroke(.markBlack10, lineWidth: 0.5)
-            }
+            .markRoundedOutline(
+              cornerRadius: 6,
+              lineWidth: 0.5,
+              lineColor: .markBlack10
+            )
         }
         .disabled(title.isEmpty || isSaving)
         
@@ -65,7 +65,7 @@ struct AddFolderView: View {
             .padding(.horizontal, 14)
             .foregroundStyle(.markWhite)
             .background(.markPoint)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .markRoundedOutline(cornerRadius: 6)
         }
         .disabled(title.isEmpty || isSaving)
       }

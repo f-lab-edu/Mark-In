@@ -158,14 +158,11 @@ private struct SignInButton: View {
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)
-    .clipShape(
-      RoundedRectangle(cornerRadius: 10)
+    .markRoundedOutline(
+      cornerRadius: 10,
+      lineWidth: 0.5,
+      lineColor: .markBlack30
     )
-    .overlay(content: {
-      RoundedRectangle(cornerRadius: 10)
-        .stroke(lineWidth: 0.5)
-        .fill(.markBlack30)
-    })
   }
 }
 
