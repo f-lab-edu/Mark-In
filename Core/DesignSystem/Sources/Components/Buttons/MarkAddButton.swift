@@ -24,7 +24,7 @@ public struct MarkAddButton: View {
         .padding(.vertical, 4)
         .padding(.horizontal, 14)
         .foregroundStyle(.markWhite)
-        .background(.markPoint)
+        .background(LinearGradient.button)
         .font(.pretendard(size: 14, weight: .medium))
         .markRoundedOutline(cornerRadius: 6)
     }
