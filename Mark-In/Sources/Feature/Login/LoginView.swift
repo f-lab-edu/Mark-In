@@ -23,6 +23,10 @@ struct LoginView: View {
       LinearGradient.background
         .ignoresSafeArea()
       
+      Image(.backgroundLogo)
+        .resizable()
+        .aspectRatio(contentMode: .fill)
+      
       VStack(spacing: 28) {
         headerView
         
