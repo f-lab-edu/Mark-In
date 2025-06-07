@@ -73,43 +73,23 @@ struct AddLinkView: View {
             .scaleEffect(0.4, anchor: .center)
         }
         
-        Button {
+        MarkCancelButton {
           dismiss()
-        } label: {
-          Text("취소")
-            .padding(.vertical, 4)
-            .padding(.horizontal, 14)
-            .foregroundStyle(.markBlack)
-            .background(.markWhite)
-            .markRoundedOutline(
-              cornerRadius: 6,
-              lineWidth: 0.5,
-              lineColor: .markBlack10
-            )
         }
         .disabled(isSaving)
 
-        Button {
+        MarkAddButton {
           let link = WriteLink(
             url: url,
             title: title.isEmpty ? nil : title,
             folderID: currentFolder.id
           )
           store.send(.addLinkButtonTapped(link: link))
-        } label: {
-          Text("추가")
-            .padding(.vertical, 4)
-            .padding(.horizontal, 14)
-            .foregroundStyle(.markWhite)
-            .background(.markPoint)
-            .markRoundedOutline(cornerRadius: 6)
         }
         .disabled(url.isEmpty || isSaving)
       }
       .frame(maxWidth: .infinity, alignment: .trailing)
       .padding(.top, 18)
-      .font(.pretendard(size: 14, weight: .medium))
-      .buttonStyle(.plain)
     }
     .padding(20)
     .frame(width: 400)
