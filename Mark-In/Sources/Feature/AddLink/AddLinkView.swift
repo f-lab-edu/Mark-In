@@ -56,11 +56,9 @@ struct AddLinkView: View {
         .pickerStyle(.menu)
         .labelsHidden()
         
-        TextField("", text: $url, prompt: Text("주소"))
-          .textFieldStyle(.roundedBorder)
+        MarkTextField(text: $url, placeholder: "주소")
         
-        TextField("", text: $title, prompt: Text("제목(선택)"))
-          .textFieldStyle(.roundedBorder)
+        MarkTextField(text: $title, placeholder: "제목(선택)")
       }
       .padding(.top, 14)
       .disabled(isSaving)
