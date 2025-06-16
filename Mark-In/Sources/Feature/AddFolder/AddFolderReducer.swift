@@ -18,7 +18,7 @@ struct AddFolderReducer: Reducer {
   }
   
   enum Action {
-    case didTapAddFolderButton(name: String)
+    case didTapAddFolderButton(WriteFolder)
     case didCompleteSave(Folder)
     case updateErrorState(Bool)
   }
@@ -27,12 +27,11 @@ struct AddFolderReducer: Reducer {
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .didTapAddFolderButton(let name):
+    case .didTapAddFolderButton(let writeFolder):
       state.isLoading = true
       
       return .run {
         do {
-          let writeFolder = WriteFolder(name: name)
           let result = try await self.generateFolderUseCase.execute(writeFolder: writeFolder)
           return .didCompleteSave(result)
         } catch {

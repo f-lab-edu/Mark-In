@@ -16,7 +16,7 @@ struct AddFolderView: View {
     initialState: AddFolderReducer.State(),
     reducer: AddFolderReducer()
   )
-  @State private var title: String = ""
+  @State private var name: String = ""
   
   private var isSaving: Bool {
     store.state.isLoading
@@ -43,12 +43,13 @@ struct AddFolderView: View {
         MarkCancelButton {
           dismiss()
         }
-        .disabled(title.isEmpty || isSaving)
+        .disabled(isSaving)
         
         MarkAddButton {
-          store.send(.didTapAddFolderButton(name: title))
+          let writeFolder = WriteFolder(name: name)
+          store.send(.didTapAddFolderButton(writeFolder))
         }
-        .disabled(title.isEmpty || isSaving)
+        .disabled(name.isEmpty || isSaving)
       }
       .frame(maxWidth: .infinity, alignment: .trailing)
       .padding(.top, 18)

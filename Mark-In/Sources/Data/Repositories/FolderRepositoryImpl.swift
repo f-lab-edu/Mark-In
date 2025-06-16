@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 struct FolderRepositoryImpl: FolderRepository {
   
-  typealias VoidCheckedContinuation = CheckedContinuation<Void, any Error>
+  typealias FolderFieldKey = FirestoreFieldKey.Folder
   
   private let db = Firestore.firestore()
   
@@ -20,27 +20,24 @@ struct FolderRepositoryImpl: FolderRepository {
     let path = FirebaseEndpoint.FirestoreDB.folders(userID: userID).path
     let folderDocRef = db.collection(path).document()
     
-    /// 2. Firestore에 저장할 DTO 객체 생성
-    let folderDTO = FolderDTO(
-      id: folderDocRef.documentID,
-      name: folder.name,
-      createdBy: .now
-    )
+    /// 2. 필드 값 생성
+    let createdAt = Date()
     
     /// 3. Firestore에 추가
-    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
-      do {
-        try folderDocRef.setData(from: folderDTO) { error in
-          if let error { continuation.resume(throwing: error) }
-          else { continuation.resume(returning: ()) }
-        }
-      } catch {
-        continuation.resume(throwing: error)
-      }
-    }
+    try await folderDocRef.setData([
+      FolderFieldKey.id: folderDocRef.documentID,
+      FolderFieldKey.name: folder.name,
+      FolderFieldKey.createdAt: createdAt
+    ])
     
-    /// 4. DocumentID가 업데이트 된 Folder Entity로 리턴
-    return folderDTO.toEntity()
+    /// 4. 생성된 데이터 반환
+    let folderEntity = Folder(
+      id: folderDocRef.documentID,
+      name: folder.name,
+      createdAt: .now
+    )
+    
+    return folderEntity
   }
   
   func fetchAll(userID: String) async throws -> [Folder] {
@@ -57,35 +54,8 @@ struct FolderRepositoryImpl: FolderRepository {
     }
   }
   
-  func update(userID: String, folder: Folder) async throws {
+  func delete(userID: String, folderID: String) async throws {
     /// 1. Folder 문서 참조 생성
-    guard let folderID = folder.id else { return }
-    let path = FirebaseEndpoint.FirestoreDB.folder(userID: userID, folderID: folderID).path
-    let folderDocRef = db.document(path)
-    
-    /// 2. Entity를 DTO로 변환
-    let folderDTO = FolderDTO(
-      id: folderDocRef.documentID,
-      name: folder.name,
-      createdBy: folder.createdBy
-    )
-    
-    /// 3. 업데이트
-    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
-      do {
-        try folderDocRef.setData(from: folderDTO) { error in
-          if let error { continuation.resume(throwing: error) }
-          else { continuation.resume(returning: ()) }
-        }
-      } catch {
-        continuation.resume(throwing: error)
-      }
-    }
-  }
-  
-  func delete(userID: String, folder: Folder) async throws {
-    /// 1. Folder 문서 참조 생성
-    guard let folderID = folder.id else { return }
     let path = FirebaseEndpoint.FirestoreDB.folder(userID: userID, folderID: folderID).path
     let folderDocRef = db.document(path)
     

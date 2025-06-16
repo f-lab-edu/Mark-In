@@ -10,5 +10,5 @@ import Foundation
 struct Folder: Equatable, Hashable {
   var id: String?
   var name: String
-  var createdBy: Date
+  var createdAt: Date
 }

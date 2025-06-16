@@ -11,6 +11,10 @@ import Foundation
 
 import Util
 
+enum AuthError: Error {
+  case unauthenticated
+}
+
 struct AuthUser: Codable {
   let id: String
   let name: String
@@ -54,6 +58,19 @@ final class AuthUserManagerImpl: AuthUserManager {
   }
 }
 
-enum AuthError: Error {
-  case unauthenticated
+final class StubAuthUserManager: AuthUserManager {
+  var user: AuthUser?
+  
+  init(userID: String) {
+    self.user = .init(
+      id: userID,
+      name: userID,
+      email: "\(userID)@test.com",
+      provider: .apple
+    )
+  }
+  
+  func save(_ user: AuthUser) { }
+  func load() { }
+  func clear() { }
 }
