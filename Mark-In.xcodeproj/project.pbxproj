@@ -62,6 +62,13 @@
 			remoteGlobalIDString = 57AC54A62DA503DE00BA84BD;
 			remoteInfo = LinkMetadataKitInterface;
 		};
+		57664F6C2DF03A9000CA8D68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57BFD8BB2DA4E19600648AD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 57BFD8C22DA4E19600648AD4;
+			remoteInfo = "Mark-In";
+		};
 		57AC56722DA511E900BA84BD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 57AC53092DA4FC1800BA84BD /* Util.xcodeproj */;
@@ -93,6 +100,7 @@
 /* Begin PBXFileReference section */
 		57588CE42DD9B4D500DBD9A7 /* AppDI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AppDI.xcodeproj; path = AppDI/AppDI.xcodeproj; sourceTree = "<group>"; };
 		57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReducerKit.xcodeproj; path = ReducerKit/ReducerKit.xcodeproj; sourceTree = "<group>"; };
+		57664F682DF03A9000CA8D68 /* Mark-In-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mark-In-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DesignSystem.xcodeproj; path = DesignSystem/DesignSystem.xcodeproj; sourceTree = "<group>"; };
 		57AC53092DA4FC1800BA84BD /* Util.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Util.xcodeproj; path = Util/Util.xcodeproj; sourceTree = "<group>"; };
 		57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkMetadataKit.xcodeproj; path = LinkMetadataKit/LinkMetadataKit.xcodeproj; sourceTree = "<group>"; };
@@ -112,6 +120,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		57664F692DF03A9000CA8D68 /* Mark-In-Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Mark-In-Tests";
+			sourceTree = "<group>";
+		};
 		57BFD8C52DA4E19600648AD4 /* Mark-In */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -123,6 +136,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		57664F652DF03A9000CA8D68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		57BFD8C02DA4E19600648AD4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -217,6 +237,7 @@
 				57AC56602DA511AF00BA84BD /* Shared */,
 				57AC565F2DA511A900BA84BD /* Core */,
 				57BFD8C52DA4E19600648AD4 /* Mark-In */,
+				57664F692DF03A9000CA8D68 /* Mark-In-Tests */,
 				57AC55422DA507EC00BA84BD /* Frameworks */,
 				57BFD8C42DA4E19600648AD4 /* Products */,
 			);
@@ -228,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				57BFD8C32DA4E19600648AD4 /* Mark-In.app */,
+				57664F682DF03A9000CA8D68 /* Mark-In-Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -235,6 +257,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		57664F672DF03A9000CA8D68 /* Mark-In-Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57664F6E2DF03A9000CA8D68 /* Build configuration list for PBXNativeTarget "Mark-In-Tests" */;
+			buildPhases = (
+				57664F642DF03A9000CA8D68 /* Sources */,
+				57664F652DF03A9000CA8D68 /* Frameworks */,
+				57664F662DF03A9000CA8D68 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				57664F6D2DF03A9000CA8D68 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				57664F692DF03A9000CA8D68 /* Mark-In-Tests */,
+			);
+			name = "Mark-In-Tests";
+			packageProductDependencies = (
+			);
+			productName = "Mark-In-Tests";
+			productReference = 57664F682DF03A9000CA8D68 /* Mark-In-Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		57BFD8C22DA4E19600648AD4 /* Mark-In */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 57BFD8CF2DA4E19700648AD4 /* Build configuration list for PBXNativeTarget "Mark-In" */;
@@ -270,9 +315,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1630;
+				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					57664F672DF03A9000CA8D68 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 57BFD8C22DA4E19600648AD4;
+					};
 					57BFD8C22DA4E19600648AD4 = {
 						CreatedOnToolsVersion = 16.3;
 					};
@@ -319,6 +368,7 @@
 			projectRoot = "";
 			targets = (
 				57BFD8C22DA4E19600648AD4 /* Mark-In */,
+				57664F672DF03A9000CA8D68 /* Mark-In-Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -369,6 +419,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		57664F662DF03A9000CA8D68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		57BFD8C12DA4E19600648AD4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -379,6 +436,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		57664F642DF03A9000CA8D68 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		57BFD8BF2DA4E19600648AD4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -388,7 +452,61 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		57664F6D2DF03A9000CA8D68 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 57BFD8C22DA4E19600648AD4 /* Mark-In */;
+			targetProxy = 57664F6C2DF03A9000CA8D68 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		57664F6F2DF03A9000CA8D68 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5DFZR8RCQR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.ios.swift.apple.Mark-In-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mark-In.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mark-In";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Debug;
+		};
+		57664F702DF03A9000CA8D68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5DFZR8RCQR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.ios.swift.apple.Mark-In-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mark-In.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mark-In";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Release;
+		};
 		57BFD8CD2DA4E19700648AD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 57BFD8C52DA4E19600648AD4 /* Mark-In */;
@@ -598,6 +716,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		57664F6E2DF03A9000CA8D68 /* Build configuration list for PBXNativeTarget "Mark-In-Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57664F6F2DF03A9000CA8D68 /* Debug */,
+				57664F702DF03A9000CA8D68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		57BFD8BE2DA4E19600648AD4 /* Build configuration list for PBXProject "Mark-In" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
