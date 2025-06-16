@@ -112,13 +112,11 @@ private struct LinkCell: View {
       .padding([.top, .bottom], 12)
       .background(.markWhite)
     }
-    .clipShape(
-      RoundedRectangle(cornerRadius: 6)
+    .markRoundedOutline(
+      cornerRadius: 6,
+      lineWidth: 0.5,
+      lineColor: .markBlack20
     )
-    .overlay(content: {
-      RoundedRectangle(cornerRadius: 6)
-        .stroke(.markBlack20, lineWidth: 0.5)
-    })
     .contextMenu {
       Button {
         store.send(.deleteLinkButtonTapped(link: link))

@@ -11,4 +11,5 @@ public extension ImageResource {
   static let sampleImage: ImageResource = .test
   static let apple: ImageResource = .appleLogo
   static let google: ImageResource = .googleLogo
+  static let backgroundLogo: ImageResource = .loginBackground
 }

@@ -56,11 +56,9 @@ struct AddLinkView: View {
         .pickerStyle(.menu)
         .labelsHidden()
         
-        TextField("", text: $url, prompt: Text("주소"))
-          .textFieldStyle(.roundedBorder)
+        MarkTextField(text: $url, placeholder: "주소")
         
-        TextField("", text: $title, prompt: Text("제목(선택)"))
-          .textFieldStyle(.roundedBorder)
+        MarkTextField(text: $title, placeholder: "제목(선택)")
       }
       .padding(.top, 14)
       .disabled(isSaving)
@@ -73,43 +71,23 @@ struct AddLinkView: View {
             .scaleEffect(0.4, anchor: .center)
         }
         
-        Button {
+        MarkCancelButton {
           dismiss()
-        } label: {
-          Text("취소")
-            .padding(.vertical, 4)
-            .padding(.horizontal, 14)
-            .foregroundStyle(.markBlack)
-            .background(.markWhite)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
-            .overlay {
-              RoundedRectangle(cornerRadius: 6)
-                .stroke(.markBlack10, lineWidth: 0.5)
-            }
         }
         .disabled(isSaving)
 
-        Button {
+        MarkAddButton {
           let link = WriteLink(
             url: url,
             title: title.isEmpty ? nil : title,
             folderID: currentFolder.id
           )
           store.send(.addLinkButtonTapped(link: link))
-        } label: {
-          Text("추가")
-            .padding(.vertical, 4)
-            .padding(.horizontal, 14)
-            .foregroundStyle(.markWhite)
-            .background(.markPoint)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
         }
         .disabled(url.isEmpty || isSaving)
       }
       .frame(maxWidth: .infinity, alignment: .trailing)
       .padding(.top, 18)
-      .font(.pretendard(size: 14, weight: .medium))
-      .buttonStyle(.plain)
     }
     .padding(20)
     .frame(width: 400)

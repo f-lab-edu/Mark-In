@@ -29,8 +29,7 @@ struct AddFolderView: View {
       Text("폴더를 추가:")
         .frame(maxWidth: .infinity, alignment: .leading)
       
-      TextField("", text: $name, prompt: Text("제목"))
-        .textFieldStyle(.roundedBorder)
+      MarkTextField(text: $title, placeholder: "제목")
         .padding(.top, 14)
         .disabled(isSaving)
       
@@ -41,39 +40,19 @@ struct AddFolderView: View {
             .scaleEffect(0.4, anchor: .center)
         }
         
-        Button {
+        MarkCancelButton {
           dismiss()
-        } label: {
-          Text("취소")
-            .padding(.vertical, 4)
-            .padding(.horizontal, 14)
-            .foregroundStyle(.markBlack)
-            .background(.markWhite)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
-            .overlay {
-              RoundedRectangle(cornerRadius: 6)
-                .stroke(.markBlack10, lineWidth: 0.5)
-            }
         }
         .disabled(isSaving)
         
-        Button {
+        MarkAddButton {
           let writeFolder = WriteFolder(name: name)
           store.send(.didTapAddFolderButton(writeFolder))
-        } label: {
-          Text("추가")
-            .padding(.vertical, 4)
-            .padding(.horizontal, 14)
-            .foregroundStyle(.markWhite)
-            .background(.markPoint)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
         }
         .disabled(name.isEmpty || isSaving)
       }
       .frame(maxWidth: .infinity, alignment: .trailing)
       .padding(.top, 18)
-      .font(.pretendard(size: 14, weight: .medium))
-      .buttonStyle(.plain)
     }
     .padding(20)
     .frame(width: 400)

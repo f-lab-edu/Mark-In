@@ -20,12 +20,12 @@ struct LoginView: View {
   
   var body: some View {
     ZStack {
-      LinearGradient(
-        colors: [.markPoint, .markWhite],
-        startPoint: .top,
-        endPoint: .bottom
-      )
-      .ignoresSafeArea()
+      LinearGradient.background
+        .ignoresSafeArea()
+      
+      Image(.backgroundLogo)
+        .resizable()
+        .aspectRatio(contentMode: .fill)
       
       VStack(spacing: 28) {
         headerView
@@ -158,14 +158,11 @@ private struct SignInButton: View {
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)
-    .clipShape(
-      RoundedRectangle(cornerRadius: 10)
+    .markRoundedOutline(
+      cornerRadius: 10,
+      lineWidth: 0.5,
+      lineColor: .markBlack30
     )
-    .overlay(content: {
-      RoundedRectangle(cornerRadius: 10)
-        .stroke(lineWidth: 0.5)
-        .fill(.markBlack30)
-    })
   }
 }
 

@@ -54,3 +54,17 @@ public extension ShapeStyle where Self == Color {
   
   static var markBackground: Self { .background }
 }
+
+public extension LinearGradient {
+  static let background = Self(
+    colors: [.backgroundLinearTop, .background],
+    startPoint: .top,
+    endPoint: .bottom
+  )
+  
+  static let button = Self(
+    colors: [.buttonLinearTop, .buttonLinearBottom],
+    startPoint: .top,
+    endPoint: .bottom
+  )
+}
