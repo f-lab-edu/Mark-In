@@ -14,8 +14,6 @@ import LinkMetadataKitInterface
 
 struct LinkRepositoryImpl: LinkRepository {
   
-  typealias LinkFieldKey = FirestoreFieldKey.Link
-  
   private let db = Firestore.firestore()
   private let storage = Storage.storage().reference()
   
@@ -40,37 +38,24 @@ struct LinkRepositoryImpl: LinkRepository {
       metadata: metadata
     )
     
-    /// 4. 필드 값 설정
-    let title = link.title ?? metadata.title
-    let createdAt = Date()
-    
-    /// 5. Firestore에 추가
-    try await linkDocRef.setData([
-      LinkFieldKey.id: linkDocRef.documentID,
-      LinkFieldKey.url: link.url,
-      LinkFieldKey.title: title ?? NSNull(),
-      LinkFieldKey.thumbnailUrl: imageUrls.thumbnail ?? NSNull(),
-      LinkFieldKey.faviconUrl: imageUrls.favicon ?? NSNull(),
-      LinkFieldKey.isPinned: false,
-      LinkFieldKey.createdAt: createdAt,
-      LinkFieldKey.lastAccessedAt: NSNull(),
-      LinkFieldKey.folderID: link.folderID ?? NSNull()
-    ])
-    
-    /// 6. 생성된 데이터 반환
-    let linkEntity = WebLink(
+    /// 4. DTO 객체 생성
+    let linkDTO = WebLinkDTO(
       id: linkDocRef.documentID,
       url: link.url,
-      title: title,
+      title: link.title ?? metadata.title,
       thumbnailUrl: imageUrls.thumbnail,
       faviconUrl: imageUrls.favicon,
       isPinned: false,
-      createdAt: createdAt,
+      createdAt: Date(),
       lastAccessedAt: nil,
       folderID: link.folderID
     )
     
-    return linkEntity
+    /// 5. Firestore에 추가
+    try await linkDocRef.setData(linkDTO.documentData)
+    
+    /// 6. 생성된 데이터 반환
+    return linkDTO.toEntity()
   }
   
   func fetchAll(userID: String) async throws -> [WebLink] {
@@ -99,7 +84,7 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 2. 문서 업데이트
     try await linkDocRef.updateData([
-      LinkFieldKey.folderID: folderID ?? NSNull()
+      "folderID": folderID as Any
     ])
   }
   
@@ -114,7 +99,7 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 2. 조건에 해당하는 모든 문서 가져오기
     let querySnapshot = try await linkColRef
-      .whereField(LinkFieldKey.folderID, isEqualTo: fromFolderID ?? NSNull())
+      .whereField("folderID", isEqualTo: fromFolderID as Any)
       .getDocuments()
     
     /// 3. 병렬 작업으로 문서 업데이트
@@ -122,7 +107,7 @@ struct LinkRepositoryImpl: LinkRepository {
       querySnapshot.documents.forEach { document in
         group.addTask {
           try await document.reference.updateData([
-            LinkFieldKey.folderID: toFolderID ?? NSNull()
+            "folderID": toFolderID as Any
           ])
         }
       }
@@ -146,7 +131,7 @@ struct LinkRepositoryImpl: LinkRepository {
   func deleteAllInFolder(userID: String, folderID: String?) async throws {
     let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
     let querySnapshot = try await db.collection(path)
-      .whereField(LinkFieldKey.folderID, isEqualTo: folderID ?? NSNull())
+      .whereField("folderID", isEqualTo: folderID as Any)
       .getDocuments()
     
     /// 3. 병렬 작업으로 데이터 삭제

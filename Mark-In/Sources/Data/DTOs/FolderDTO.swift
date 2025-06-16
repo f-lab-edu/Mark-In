@@ -12,10 +12,12 @@ struct FolderDTO: Codable {
   var name: String
   var createdAt: Date
   
-  enum CodingKeys: String, CodingKey {
-    case id = "id"
-    case name = "name"
-    case createdAt = "createdAt"
+  var documentData: [String: Any] {
+    [
+      "id": self.id,
+      "name": self.name,
+      "createdAt": self.createdAt
+    ]
   }
   
   func toEntity() -> Folder {
