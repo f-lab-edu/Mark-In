@@ -14,7 +14,7 @@ import LinkMetadataKitInterface
 
 struct LinkRepositoryImpl: LinkRepository {
   
-  typealias VoidCheckedContinuation = CheckedContinuation<Void, any Error>
+  typealias LinkFieldKey = FirestoreFieldKey.Link
   
   private let db = Firestore.firestore()
   private let storage = Storage.storage().reference()
@@ -40,33 +40,37 @@ struct LinkRepositoryImpl: LinkRepository {
       metadata: metadata
     )
     
-    /// 4. Firestore에 저장할 DTO 객체 생성
-    let linkDTO = WebLinkDTO(
+    /// 4. 필드 값 설정
+    let title = link.title ?? metadata.title
+    let createdAt = Date()
+    
+    /// 5. Firestore에 추가
+    try await linkDocRef.setData([
+      LinkFieldKey.id: linkDocRef.documentID,
+      LinkFieldKey.url: link.url,
+      LinkFieldKey.title: title ?? NSNull(),
+      LinkFieldKey.thumbnailUrl: imageUrls.thumbnail ?? NSNull(),
+      LinkFieldKey.faviconUrl: imageUrls.favicon ?? NSNull(),
+      LinkFieldKey.isPinned: false,
+      LinkFieldKey.createdAt: createdAt,
+      LinkFieldKey.lastAccessedAt: NSNull(),
+      LinkFieldKey.folderID: link.folderID ?? NSNull()
+    ])
+    
+    /// 6. 생성된 데이터 반환
+    let linkEntity = WebLink(
       id: linkDocRef.documentID,
       url: link.url,
-      title: link.title ?? metadata.title,
+      title: title,
       thumbnailUrl: imageUrls.thumbnail,
       faviconUrl: imageUrls.favicon,
       isPinned: false,
-      createdBy: .now,
+      createdAt: createdAt,
       lastAccessedAt: nil,
       folderID: link.folderID
     )
     
-    /// 5. Firestore에 추가
-    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
-      do {
-        try linkDocRef.setData(from: linkDTO) { error in
-          if let error { continuation.resume(throwing: error) }
-          else { continuation.resume(returning: ()) }
-        }
-      } catch {
-        continuation.resume(throwing: error)
-      }
-    }
-    
-    /// 6. 저장된 DTO 객체를 Entity로 변환 후 리턴
-    return linkDTO.toEntity()
+    return linkEntity
   }
   
   func fetchAll(userID: String) async throws -> [WebLink] {
@@ -83,40 +87,53 @@ struct LinkRepositoryImpl: LinkRepository {
     }
   }
   
-  func update(userID: String, link: WebLink) async throws {
+  
+  func moveLinkInFolder(
+    userID: String,
+    target linkID: String,
+    to folderID: String?
+  ) async throws {
     /// 1. Link 문서 참조 생성
-    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: link.id).path
+    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: linkID).path
     let linkDocRef = db.document(path)
     
-    /// 2. Entity를 DTO로 변환
-    let linkDTO = WebLinkDTO(
-      id: link.id,
-      url: link.url,
-      title: link.title,
-      thumbnailUrl: link.thumbnailUrl,
-      faviconUrl: link.faviconUrl,
-      isPinned: link.isPinned,
-      createdBy: link.createdBy,
-      lastAccessedAt: link.lastAccessedAt,
-      folderID: link.folderID
-    )
+    /// 2. 문서 업데이트
+    try await linkDocRef.updateData([
+      LinkFieldKey.folderID: folderID ?? NSNull()
+    ])
+  }
+  
+  func moveLinksInFolder(
+    userID: String,
+    fromFolderID: String?,
+    toFolderID: String?
+  ) async throws {
+    /// 1. Link 컬렉션 참조 생성
+    let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
+    let linkColRef = db.collection(path)
     
-    /// 3. 업데이트
-    try await withCheckedThrowingContinuation { (continuation: VoidCheckedContinuation) in
-      do {
-        try linkDocRef.setData(from: linkDTO) { error in
-          if let error { continuation.resume(throwing: error) }
-          else { continuation.resume(returning: ()) }
+    /// 2. 조건에 해당하는 모든 문서 가져오기
+    let querySnapshot = try await linkColRef
+      .whereField(LinkFieldKey.folderID, isEqualTo: fromFolderID ?? NSNull())
+      .getDocuments()
+    
+    /// 3. 병렬 작업으로 문서 업데이트
+    try await withThrowingTaskGroup(of: Void.self) { group in
+      querySnapshot.documents.forEach { document in
+        group.addTask {
+          try await document.reference.updateData([
+            LinkFieldKey.folderID: toFolderID ?? NSNull()
+          ])
         }
-      } catch {
-        continuation.resume(throwing: error)
       }
+      
+      try await group.waitForAll()
     }
   }
   
-  func delete(userID: String, link: WebLink) async throws {
+  func delete(userID: String, linkID: String) async throws {
     /// 1. Link 문서 참조 생성
-    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: link.id).path
+    let path = FirebaseEndpoint.FirestoreDB.link(userID: userID, linkID: linkID).path
     let linkDocRef = db.document(path)
     
     /// 2. 이미지 데이터 삭제
@@ -124,6 +141,31 @@ struct LinkRepositoryImpl: LinkRepository {
     
     /// 3. Link 삭제
     try await linkDocRef.delete()
+  }
+  
+  func deleteAllInFolder(userID: String, folderID: String?) async throws {
+    let path = FirebaseEndpoint.FirestoreDB.links(userID: userID).path
+    let querySnapshot = try await db.collection(path)
+      .whereField(LinkFieldKey.folderID, isEqualTo: folderID ?? NSNull())
+      .getDocuments()
+    
+    /// 3. 병렬 작업으로 데이터 삭제
+    try await withThrowingTaskGroup(of: Void.self) { group in
+      /// 모둔 문서에 순차 접근
+      querySnapshot.documents.forEach { document in
+        /// Link 데이터 삭제
+        group.addTask {
+          try await document.reference.delete()
+        }
+        
+        /// 이미지 데이터 삭제
+        group.addTask {
+          try await deleteImageData(userID: userID, fileID: document.documentID)
+        }
+      }
+      
+      try await group.waitForAll()
+    }
   }
   
   func deleteAll(userID: String) async throws {

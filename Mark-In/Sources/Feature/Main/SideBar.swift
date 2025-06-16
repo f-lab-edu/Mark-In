@@ -13,6 +13,9 @@ import ReducerKit
 struct SideBar: View {
   let store: Store<MainReducer>
   
+  @State private var isPresentedDialog: Bool = false
+  @State private var deleteFolder: Folder?
+  
   var body: some View {
     VStack(alignment: .leading) {
       
@@ -39,6 +42,17 @@ struct SideBar: View {
             NavigationLink(value: tab) {
               Label(tab.title, systemImage: tab.icon)
             }
+            .contextMenu {
+              if case .folder(let folder) = tab {
+                Button {
+                  isPresentedDialog = true
+                  deleteFolder = folder
+                } label: {
+                  Text("삭제")
+                }
+                .disabled(folder.id == nil)
+              }
+            }
           }
         }
       }
@@ -60,6 +74,36 @@ struct SideBar: View {
       .padding([.bottom, .leading], 10)
     }
     .buttonStyle(.plain)
+    .confirmationDialog(
+      "이 폴더를 삭제하시겠습니까?",
+      isPresented: $isPresentedDialog
+    ) {
+      Button(role: .destructive) {
+        store.send(.deleteFolderButtonTapped(
+          folder: deleteFolder!,
+          includingChildren: false
+        ))
+      } label: {
+        Text("폴더만 삭제")
+      }
+      
+      Button(role: .destructive) {
+        store.send(.deleteFolderButtonTapped(
+          folder: deleteFolder!,
+          includingChildren: true
+        ))
+      } label: {
+        Text("폴더와 링크 삭제")
+      }
+
+      Button(role: .cancel) {
+        deleteFolder = nil
+      } label: {
+        Text("취소")
+      }
+    } message: {
+      Text("이 폴더를 삭제하면 하위 링크도 함께 삭제하거나, 그대로 유지할 수 있습니다.")
+    }
   }
 }
 

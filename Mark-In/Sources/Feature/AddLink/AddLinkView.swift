@@ -136,8 +136,8 @@ struct AddLinkView: View {
 #Preview {
   AddLinkView(
     folders: [
-      .init(id: "", name: "기본폴더", createdBy: .now),
-      .init(id: "1", name: "폴더1", createdBy: .now),
+      .init(id: "", name: "기본폴더", createdAt: .now),
+      .init(id: "1", name: "폴더1", createdAt: .now),
     ]
   ) {
     print($0)

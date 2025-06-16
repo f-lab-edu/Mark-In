@@ -10,13 +10,19 @@ import Foundation
 struct FolderDTO: Codable {
   var id: String
   var name: String
-  var createdBy: Date
+  var createdAt: Date
+  
+  enum CodingKeys: String, CodingKey {
+    case id = "id"
+    case name = "name"
+    case createdAt = "createdAt"
+  }
   
   func toEntity() -> Folder {
     return Folder(
       id: self.id,
       name: self.name,
-      createdBy: self.createdBy
+      createdAt: self.createdAt
     )
   }
 }

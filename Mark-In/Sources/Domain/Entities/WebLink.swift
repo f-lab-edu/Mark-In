@@ -14,7 +14,7 @@ struct WebLink: Hashable {
   var thumbnailUrl: String?
   var faviconUrl: String?
   var isPinned: Bool
-  var createdBy: Date
+  var createdAt: Date
   var lastAccessedAt: Date?
   var folderID: String?
 }
