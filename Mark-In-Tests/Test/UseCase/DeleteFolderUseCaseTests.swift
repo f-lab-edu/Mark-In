@@ -10,6 +10,159 @@ import Testing
 @testable import Mark_In
 
 struct DeleteFolderUseCaseTests {
+  
+  @Test
+  func test_인증된_유저_정보가_없을_때_unauthenticated_에러를_반환한다() async throws {
+    // Given: 준비
+    let stubAuthUserManager = StubAuthUserManager(userID: nil)
+    let mockLinkRepository = MockLinkRepository()
+    let mockFolderRepository = MockFolderRepository()
+    
+    let sut = DeleteFolderUseCaseImpl(
+      authUserManager: stubAuthUserManager,
+      linkRepository: mockLinkRepository,
+      folderRepository: mockFolderRepository
+    )
+    
+    // When: 실행
+    var thrownError: Error?
+    do {
+      try await sut.execute(folderID: "", includingChildren: false)
+    } catch {
+      thrownError = error
+    }
+
+    // Then: 검증
+    #expect(thrownError as? AuthError == AuthError.unauthenticated)
+    
+    // TearDown: 해제
+    
+  }
+  
+  @Test
+  func test_인증된_유저_정보가_있다면_에러를_반환하지_않는다() async throws {
+    // Given: 준비
+    let stubAuthUserManager = StubAuthUserManager(userID: "testUser")
+    let mockLinkRepository = MockLinkRepository()
+    let mockFolderRepository = MockFolderRepository()
+    
+    let sut = DeleteFolderUseCaseImpl(
+      authUserManager: stubAuthUserManager,
+      linkRepository: mockLinkRepository,
+      folderRepository: mockFolderRepository
+    )
+    
+    // When: 실행
+    var thrownError: Error?
+    do {
+      try await sut.execute(folderID: "", includingChildren: false)
+    } catch {
+      thrownError = error
+    }
+
+    // Then: 검증
+    #expect(thrownError as? AuthError == nil)
+    
+    // TearDown: 해제
+    
+  }
+  
+  @Test
+  func test_includeChildren이_true이면_linkRepository의_deleteAllInFolder를_호출한다() async throws {
+    // Given: 준비
+    let stubAuthUserManager = StubAuthUserManager(userID: "testUser")
+    let mockLinkRepository = MockLinkRepository()
+    let mockFolderRepository = MockFolderRepository()
+    
+    let sut = DeleteFolderUseCaseImpl(
+      authUserManager: stubAuthUserManager,
+      linkRepository: mockLinkRepository,
+      folderRepository: mockFolderRepository
+    )
+    
+    // When: 실행
+    try await sut.execute(folderID: "", includingChildren: true)
+    
+    // Then: 검증
+    let deleteAllInFolderCallCount = mockLinkRepository.deleteAllInFolderCallCount
+    #expect(deleteAllInFolderCallCount == 1)
+    
+    // TearDown: 해제
+    
+  }
+  
+  @Test
+  func test_includeChildren이_false이면_linkRepository의_moveLinksInFolder를_호출한다() async throws {
+    // Given: 준비
+    let stubAuthUserManager = StubAuthUserManager(userID: "testUser")
+    let mockLinkRepository = MockLinkRepository()
+    let mockFolderRepository = MockFolderRepository()
+    
+    let sut = DeleteFolderUseCaseImpl(
+      authUserManager: stubAuthUserManager,
+      linkRepository: mockLinkRepository,
+      folderRepository: mockFolderRepository
+    )
+    
+    // When: 실행
+    try await sut.execute(folderID: "", includingChildren: false)
+    
+    // Then: 검증
+    let moveLinksInFolderCallCount = mockLinkRepository.moveLinksInFolderCallCount
+    #expect(moveLinksInFolderCallCount == 1)
+    
+    // TearDown: 해제
+    
+  }
+  
+  @Test
+  func test_폴더ID가_존재할_경우_folderRepository의_delete를_호출한다() async throws {
+    // Given: 준비
+    let stubAuthUserManager = StubAuthUserManager(userID: "testUser")
+    let mockLinkRepository = MockLinkRepository()
+    let mockFolderRepository = MockFolderRepository()
+    
+    let sut = DeleteFolderUseCaseImpl(
+      authUserManager: stubAuthUserManager,
+      linkRepository: mockLinkRepository,
+      folderRepository: mockFolderRepository
+    )
+    
+    // When: 실행
+    try await sut.execute(folderID: "testFolder", includingChildren: false)
+    
+    // Then: 검증
+    let deleteCallCount = mockFolderRepository.deleteCallCount
+    #expect(deleteCallCount == 1)
+    
+    // TearDown: 해제
+    
+  }
+  
+  @Test
+  func test_폴더ID가_존재하지_않을_경우_folderRepository의_delete를_호출하지_않는다() async throws {
+    // Given: 준비
+    let stubAuthUserManager = StubAuthUserManager(userID: "testUser")
+    let mockLinkRepository = MockLinkRepository()
+    let mockFolderRepository = MockFolderRepository()
+    
+    let sut = DeleteFolderUseCaseImpl(
+      authUserManager: stubAuthUserManager,
+      linkRepository: mockLinkRepository,
+      folderRepository: mockFolderRepository
+    )
+    
+    // When: 실행
+    try await sut.execute(folderID: nil, includingChildren: false)
+    
+    // Then: 검증
+    let deleteCallCount = mockFolderRepository.deleteCallCount
+    #expect(deleteCallCount == 0)
+    
+    // TearDown: 해제
+    
+  }
+  
 
   @Test
   func test_includingChildren이_true면_링크들을_삭제한다() async throws {
