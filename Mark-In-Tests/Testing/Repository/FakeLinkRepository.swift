@@ -5,6 +5,7 @@
 //  Created by 이정동 on 6/6/25.
 //
 
+@testable import Mark_In
 import Foundation
 
 final class FakeLinkRepository: LinkRepository {

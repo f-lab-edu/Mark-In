@@ -108,24 +108,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		576EF9382E00393F00CA1D3F /* Exceptions for "Mark-In-Tests" folder in "Mark-In" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Testing/Repository/FakeFolderRepository.swift,
-				Testing/Repository/FakeLinkRepository.swift,
-				Testing/Repository/MockFolderRepository.swift,
-				Testing/Repository/MockLinkRepository.swift,
-			);
-			target = 57BFD8C22DA4E19600648AD4 /* Mark-In */;
-		};
-		576EF9392E00393F00CA1D3F /* Exceptions for "Mark-In-Tests" folder in "Mark-In-Tests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Testing/Repository/FakeFolderRepository.swift,
-				Testing/Repository/FakeLinkRepository.swift,
-			);
-			target = 57664F672DF03A9000CA8D68 /* Mark-In-Tests */;
-		};
 		57B7E0242DC3D44100D9225A /* Exceptions for "Mark-In" folder in "Mark-In" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -140,10 +122,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		57664F692DF03A9000CA8D68 /* Mark-In-Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				576EF9382E00393F00CA1D3F /* Exceptions for "Mark-In-Tests" folder in "Mark-In" target */,
-				576EF9392E00393F00CA1D3F /* Exceptions for "Mark-In-Tests" folder in "Mark-In-Tests" target */,
-			);
 			path = "Mark-In-Tests";
 			sourceTree = "<group>";
 		};
