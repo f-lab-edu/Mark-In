@@ -113,6 +113,8 @@
 			membershipExceptions = (
 				Testing/Repository/FakeFolderRepository.swift,
 				Testing/Repository/FakeLinkRepository.swift,
+				Testing/Repository/MockFolderRepository.swift,
+				Testing/Repository/MockLinkRepository.swift,
 			);
 			target = 57BFD8C22DA4E19600648AD4 /* Mark-In */;
 		};
