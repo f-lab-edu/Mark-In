@@ -61,13 +61,17 @@ final class AuthUserManagerImpl: AuthUserManager {
 final class StubAuthUserManager: AuthUserManager {
   var user: AuthUser?
   
-  init(userID: String) {
-    self.user = .init(
-      id: userID,
-      name: userID,
-      email: "\(userID)@test.com",
-      provider: .apple
-    )
+  init(userID: String?) {
+    if let userID {
+      self.user = .init(
+        id: userID,
+        name: userID,
+        email: "\(userID)@test.com",
+        provider: .apple
+      )
+    } else {
+      self.user = nil
+    }
   }
   
   func save(_ user: AuthUser) { }

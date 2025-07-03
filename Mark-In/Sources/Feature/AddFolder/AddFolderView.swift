@@ -29,7 +29,7 @@ struct AddFolderView: View {
       Text("폴더를 추가:")
         .frame(maxWidth: .infinity, alignment: .leading)
       
-      MarkTextField(text: $title, placeholder: "제목")
+      MarkTextField(text: $name, placeholder: "제목")
         .padding(.top, 14)
         .disabled(isSaving)
       

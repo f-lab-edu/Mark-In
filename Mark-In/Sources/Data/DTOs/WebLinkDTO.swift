@@ -18,18 +18,20 @@ struct WebLinkDTO: Codable {
   var lastAccessedAt: Date?
   var folderID: String?
   
-  enum CodingKeys: String, CodingKey {
-    case id = "id"
-    case url = "url"
-    case title = "title"
-    case thumbnailUrl = "thumbnailUrl"
-    case faviconUrl = "faviconUrl"
-    case isPinned = "isPinned"
-    case createdAt = "createdAt"
-    case lastAccessedAt = "lastAccessedAt"
-    case folderID = "folderID"
+  var documentData: [String: Any] {
+    [
+      "id": self.id,
+      "url": self.url,
+      "title": self.title ?? NSNull(),
+      "thumbnailUrl": self.thumbnailUrl ?? NSNull(),
+      "faviconUrl": self.faviconUrl ?? NSNull(),
+      "isPinned": self.isPinned,
+      "createdAt": self.createdAt,
+      "lastAccessedAt": self.lastAccessedAt ?? NSNull(),
+      "folderID": self.folderID ?? NSNull(),
+    ]
   }
-  
+
   func toEntity() -> WebLink {
     WebLink(
       id: self.id,
@@ -42,5 +44,5 @@ struct WebLinkDTO: Codable {
       lastAccessedAt: self.lastAccessedAt,
       folderID: self.folderID
     )
-  }
+  }  
 }

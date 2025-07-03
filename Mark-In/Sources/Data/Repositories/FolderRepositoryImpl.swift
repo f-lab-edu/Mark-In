@@ -11,8 +11,6 @@ import FirebaseFirestore
 
 struct FolderRepositoryImpl: FolderRepository {
   
-  typealias FolderFieldKey = FirestoreFieldKey.Folder
-  
   private let db = Firestore.firestore()
   
   func create(userID: String, folder: WriteFolder) async throws -> Folder {
@@ -20,24 +18,18 @@ struct FolderRepositoryImpl: FolderRepository {
     let path = FirebaseEndpoint.FirestoreDB.folders(userID: userID).path
     let folderDocRef = db.collection(path).document()
     
-    /// 2. 필드 값 생성
-    let createdAt = Date()
-    
-    /// 3. Firestore에 추가
-    try await folderDocRef.setData([
-      FolderFieldKey.id: folderDocRef.documentID,
-      FolderFieldKey.name: folder.name,
-      FolderFieldKey.createdAt: createdAt
-    ])
-    
-    /// 4. 생성된 데이터 반환
-    let folderEntity = Folder(
+    /// 2. DTO 객체 생성
+    let folderDTO = FolderDTO(
       id: folderDocRef.documentID,
       name: folder.name,
-      createdAt: .now
+      createdAt: Date()
     )
     
-    return folderEntity
+    /// 3. Firestore에 추가
+    try await folderDocRef.setData(folderDTO.documentData)
+    
+    /// 4. 생성된 데이터 반환
+    return folderDTO.toEntity()
   }
   
   func fetchAll(userID: String) async throws -> [Folder] {
