@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		574FFE6B2E168CD200997207 /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 574FFE6A2E168CB700997207 /* DesignSystem.framework */; };
+		574FFE6C2E168CD200997207 /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 574FFE6A2E168CB700997207 /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57588B452DD640C100DBD9A7 /* ReducerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57588B412DD63D9700DBD9A7 /* ReducerKit.framework */; };
 		57588B462DD640C100DBD9A7 /* ReducerKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57588B412DD63D9700DBD9A7 /* ReducerKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57588CEC2DD9B66C00DBD9A7 /* AppDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57588CE92DD9B4D600DBD9A7 /* AppDI.framework */; };
 		57588CED2DD9B66C00DBD9A7 /* AppDI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57588CE92DD9B4D600DBD9A7 /* AppDI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		57664F212DEEB2A100CA8D68 /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57664F182DEDCDCB00CA8D68 /* DesignSystem.framework */; };
-		57664F222DEEB2A100CA8D68 /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57664F182DEDCDCB00CA8D68 /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57664F232DEEB2A100CA8D68 /* LinkMetadataKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57664F1C2DEDCDCB00CA8D68 /* LinkMetadataKit.framework */; };
 		57664F242DEEB2A100CA8D68 /* LinkMetadataKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57664F1C2DEDCDCB00CA8D68 /* LinkMetadataKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57664F252DEEB2A100CA8D68 /* LinkMetadataKitInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57664F1E2DEDCDCB00CA8D68 /* LinkMetadataKitInterface.framework */; };
@@ -27,6 +27,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		574FFE692E168CB700997207 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57AC52E52DA4FBC800BA84BD;
+			remoteInfo = DesignSystem;
+		};
 		57588B402DD63D9700DBD9A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */;
@@ -40,13 +47,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 57588CDA2DD9B4D500DBD9A7;
 			remoteInfo = AppDI;
-		};
-		57664F172DEDCDCB00CA8D68 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 57AC52E52DA4FBC800BA84BD;
-			remoteInfo = DesignSystem;
 		};
 		57664F1B2DEDCDCB00CA8D68 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -87,8 +87,8 @@
 			files = (
 				57664F262DEEB2A100CA8D68 /* LinkMetadataKitInterface.framework in Embed Frameworks */,
 				57AC56A92DA5120600BA84BD /* Util.framework in Embed Frameworks */,
-				57664F222DEEB2A100CA8D68 /* DesignSystem.framework in Embed Frameworks */,
 				57664F242DEEB2A100CA8D68 /* LinkMetadataKit.framework in Embed Frameworks */,
+				574FFE6C2E168CD200997207 /* DesignSystem.framework in Embed Frameworks */,
 				57588CED2DD9B66C00DBD9A7 /* AppDI.framework in Embed Frameworks */,
 				57588B462DD640C100DBD9A7 /* ReducerKit.framework in Embed Frameworks */,
 			);
@@ -151,9 +151,9 @@
 				57588CEC2DD9B66C00DBD9A7 /* AppDI.framework in Frameworks */,
 				57664F232DEEB2A100CA8D68 /* LinkMetadataKit.framework in Frameworks */,
 				57944D0C2DC52AEF00EF3D9A /* GoogleSignIn in Frameworks */,
-				57664F212DEEB2A100CA8D68 /* DesignSystem.framework in Frameworks */,
 				57E1F9852DA8F9B40033F30C /* FirebaseAuth in Frameworks */,
 				57664F252DEEB2A100CA8D68 /* LinkMetadataKitInterface.framework in Frameworks */,
+				574FFE6B2E168CD200997207 /* DesignSystem.framework in Frameworks */,
 				57E1F9872DA8F9B40033F30C /* FirebaseCore in Frameworks */,
 				57588B452DD640C100DBD9A7 /* ReducerKit.framework in Frameworks */,
 				57B5F82E2DC08B400061F0DE /* FirebaseStorage in Frameworks */,
@@ -164,6 +164,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		574FFE662E168CB700997207 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				574FFE6A2E168CB700997207 /* DesignSystem.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		57588A542DD63B5900DBD9A7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,14 +197,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		57985FAD2DDDC2CD00A383F2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				57664F182DEDCDCB00CA8D68 /* DesignSystem.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		57AC55422DA507EC00BA84BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				57588CE42DD9B4D500DBD9A7 /* AppDI.xcodeproj */,
-				57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */,
 				57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */,
 				57606D652DD63B14005EBE3D /* ReducerKit.xcodeproj */,
 			);
@@ -218,6 +217,7 @@
 		57AC56602DA511AF00BA84BD /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */,
 				57AC53092DA4FC1800BA84BD /* Util.xcodeproj */,
 			);
 			path = Shared;
@@ -349,7 +349,7 @@
 					ProjectRef = 57588CE42DD9B4D500DBD9A7 /* AppDI.xcodeproj */;
 				},
 				{
-					ProductGroup = 57985FAD2DDDC2CD00A383F2 /* Products */;
+					ProductGroup = 574FFE662E168CB700997207 /* Products */;
 					ProjectRef = 57AC52EF2DA4FBC900BA84BD /* DesignSystem.xcodeproj */;
 				},
 				{
@@ -374,6 +374,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		574FFE6A2E168CB700997207 /* DesignSystem.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DesignSystem.framework;
+			remoteRef = 574FFE692E168CB700997207 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		57588B412DD63D9700DBD9A7 /* ReducerKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -386,13 +393,6 @@
 			fileType = wrapper.framework;
 			path = AppDI.framework;
 			remoteRef = 57588CE82DD9B4D600DBD9A7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		57664F182DEDCDCB00CA8D68 /* DesignSystem.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = DesignSystem.framework;
-			remoteRef = 57664F172DEDCDCB00CA8D68 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		57664F1C2DEDCDCB00CA8D68 /* LinkMetadataKit.framework */ = {
