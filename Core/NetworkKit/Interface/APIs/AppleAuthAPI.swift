@@ -8,17 +8,17 @@
 import Foundation
 
 public enum AppleAuthAPI {
-  case refreshToken
-  case revokeToken
+  case refreshToken(code: String)
+  case revokeToken(token: String)
 }
 
 extension AppleAuthAPI: APIEndpoint {
   public var baseURL: URL {
     switch self {
     case .refreshToken:
-      URL(string: "https://www.naver.com")!
+      URL(string: "")!
     case .revokeToken:
-      URL(string: "https://www.google.com")!
+      URL(string: "")!
     }
   }
   
@@ -35,13 +35,13 @@ extension AppleAuthAPI: APIEndpoint {
   
   public var task: HTTPTask {
     switch self {
-    case .refreshToken:
+    case .refreshToken(let code):
         .requestQueryParameters(parameters: [
-          "code": "apikey"
+          "code": code
         ])
-    case .revokeToken:
+    case .revokeToken(let token):
         .requestQueryParameters(parameters: [
-          "refresh_token": "key"
+          "refresh_token": token
         ])
     }
   }
