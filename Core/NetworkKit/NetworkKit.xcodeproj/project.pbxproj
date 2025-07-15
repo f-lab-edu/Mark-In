@@ -41,14 +41,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		574F04BA2E1BB15800997207 /* NetworkKit */ = {
+		574F04BA2E1BB15800997207 /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = NetworkKit;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		574F04CE2E1BB17600997207 /* NetworkKitInterface */ = {
+		574F04CE2E1BB17600997207 /* Interface */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = NetworkKitInterface;
+			path = Interface;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,12 +75,14 @@
 		574F04AE2E1BB15800997207 = {
 			isa = PBXGroup;
 			children = (
-				574F04BA2E1BB15800997207 /* NetworkKit */,
-				574F04CE2E1BB17600997207 /* NetworkKitInterface */,
+				574F04BA2E1BB15800997207 /* Sources */,
+				574F04CE2E1BB17600997207 /* Interface */,
 				574F04D42E1BB18000997207 /* Frameworks */,
 				574F04B92E1BB15800997207 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		574F04B92E1BB15800997207 /* Products */ = {
 			isa = PBXGroup;
@@ -134,7 +136,7 @@
 				574F04DD2E1BB19900997207 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				574F04BA2E1BB15800997207 /* NetworkKit */,
+				574F04BA2E1BB15800997207 /* Sources */,
 			);
 			name = NetworkKit;
 			packageProductDependencies = (
@@ -157,7 +159,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				574F04CE2E1BB17600997207 /* NetworkKitInterface */,
+				574F04CE2E1BB17600997207 /* Interface */,
 			);
 			name = NetworkKitInterface;
 			packageProductDependencies = (
@@ -178,6 +180,7 @@
 				TargetAttributes = {
 					574F04B72E1BB15800997207 = {
 						CreatedOnToolsVersion = 16.4;
+						LastSwiftMigration = 1640;
 					};
 					574F04CC2E1BB17600997207 = {
 						CreatedOnToolsVersion = 16.4;
@@ -374,8 +377,10 @@
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -405,6 +410,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_MODULE = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 2.0;
@@ -416,8 +422,10 @@
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = 5DFZR8RCQR;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
