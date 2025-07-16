@@ -40,6 +40,17 @@
 		574F04CD2E1BB17600997207 /* NetworkKitInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkKitInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		57E222172E2794170095BD84 /* Exceptions for "Resources" folder in "NetworkKit" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Config.xcconfig,
+				Info.plist,
+			);
+			target = 574F04B72E1BB15800997207 /* NetworkKit */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		574F04BA2E1BB15800997207 /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -49,6 +60,14 @@
 		574F04CE2E1BB17600997207 /* Interface */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Interface;
+			sourceTree = "<group>";
+		};
+		57E2220C2E278EB70095BD84 /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				57E222172E2794170095BD84 /* Exceptions for "Resources" folder in "NetworkKit" target */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +94,7 @@
 		574F04AE2E1BB15800997207 = {
 			isa = PBXGroup;
 			children = (
+				57E2220C2E278EB70095BD84 /* Resources */,
 				574F04BA2E1BB15800997207 /* Sources */,
 				574F04CE2E1BB17600997207 /* Interface */,
 				574F04D42E1BB18000997207 /* Frameworks */,
@@ -137,6 +157,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				574F04BA2E1BB15800997207 /* Sources */,
+				57E2220C2E278EB70095BD84 /* Resources */,
 			);
 			name = NetworkKit;
 			packageProductDependencies = (
@@ -304,6 +325,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -363,6 +385,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -463,6 +486,8 @@
 		};
 		574F04D22E1BB17600997207 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 57E2220C2E278EB70095BD84 /* Resources */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
@@ -474,6 +499,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -505,6 +531,8 @@
 		};
 		574F04D32E1BB17600997207 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 57E2220C2E278EB70095BD84 /* Resources */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
@@ -516,6 +544,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Resources/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

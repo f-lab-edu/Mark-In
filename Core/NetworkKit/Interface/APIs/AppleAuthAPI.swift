@@ -16,9 +16,9 @@ extension AppleAuthAPI: APIEndpoint {
   public var baseURL: URL {
     switch self {
     case .refreshToken:
-      URL(string: "")!
+      URL(string: NetworkConfig.refreshTokenBaseURL)!
     case .revokeToken:
-      URL(string: "")!
+      URL(string: NetworkConfig.revokeTokenBaseURL)!
     }
   }
   
