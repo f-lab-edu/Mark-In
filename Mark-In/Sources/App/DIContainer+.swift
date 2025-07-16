@@ -10,6 +10,8 @@ import Foundation
 import AppDI
 import LinkMetadataKit
 import LinkMetadataKitInterface
+import NetworkKit
+import NetworkKitInterface
 
 
 extension DIContainer {
@@ -31,10 +33,12 @@ private extension DIContainer {
     let authUserManager: AuthUserManager = AuthUserManagerImpl(
       keychainStore: keychainStore
     )
+    let networkProvider: NetworkProvider = NetworkProviderImpl()
     
     register(keychainStore)
     register(linkMetadataProvider)
     register(authUserManager)
+    register(networkProvider)
   }
   
   // MARK: - Domain - Repository
@@ -68,7 +72,8 @@ private extension DIContainer {
     )
     let signInUseCase: SignInUseCase = SignInUseCaseImpl(
       keychainStore: resolve(),
-      authUserManager: resolve()
+      authUserManager: resolve(),
+      networkProvider: resolve()
     )
     let signOutUseCase: SignOutUseCase = SignOutUseCaseImpl(
       authUserManager: resolve()
@@ -76,6 +81,7 @@ private extension DIContainer {
     let withdrawalUseCase: WithdrawalUseCase = WithdrawalUseCaseImpl(
       keychainStore: resolve(),
       authUserManager: resolve(),
+      networkProvider: resolve(),
       linkRepository: resolve(),
       folderRepsoitory: resolve()
     )
