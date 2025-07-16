@@ -12,14 +12,9 @@ import NetworkKitInterface
 public struct NetworkProviderImpl: NetworkProvider {
   
   private let session: URLSession
-  private let urlConfigurable: URLConfigurable
   
-  public init(
-    session: URLSession = .shared,
-    urlConfigurable: URLConfigurable
-  ) {
+  public init(session: URLSession = .shared) {
     self.session = session
-    self.urlConfigurable = urlConfigurable
   }
   
   public func request<T: Decodable>(endpoint: APIEndpoint, type: T.Type) async throws -> T {
