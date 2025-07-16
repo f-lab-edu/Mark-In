@@ -22,7 +22,7 @@ public struct NetworkProviderImpl: NetworkProvider {
     self.urlConfigurable = urlConfigurable
   }
   
-  public func request<T: Decodable>(endpoint: APIEndpoint, type: T) async throws -> T {
+  public func request<T: Decodable>(endpoint: APIEndpoint, type: T.Type) async throws -> T {
     let data = try await requestData(endpoint: endpoint)
     do {
       let decodedData = try JSONDecoder().decode(T.self, from: data)

@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol NetworkProvider {
-  func request<T: Decodable>(endpoint: APIEndpoint, type: T) async throws -> T
+  func request<T: Decodable>(endpoint: APIEndpoint, type: T.Type) async throws -> T
 }
