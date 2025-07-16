@@ -38,18 +38,11 @@ struct SignInUseCaseImpl: SignInUseCase {
       throw SignInError.missingData
     }
     
-    // TODO: 아래 코드들을 Core(Auth) 모듈에서 처리하도록 리팩토링
-    /// 애플 서버에 Refresh Token 요청
-//    let urlString = "https://\(Config.value(forKey: .getRefreshTokenURL))/getRefreshToken?code=\(codeString)"
-//    let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-//    
-//    let (data, _) = try await URLSession.shared.data(from: url)
-//    let refreshToken = String(data: data, encoding: .utf8) ?? ""
+    
     let refreshToken = try await networkProvider.requestString(
       endpoint: AppleAuthAPI.refreshToken(code: codeString),
       encoding: .utf8
     )
-    print(refreshToken)
     
     /// Refresh Token 저장
     try keychainStore.save(refreshToken, forKey: .refreshToken)

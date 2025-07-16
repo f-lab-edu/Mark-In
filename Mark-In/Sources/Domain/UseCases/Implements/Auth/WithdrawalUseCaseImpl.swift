@@ -83,13 +83,7 @@ private extension WithdrawalUseCaseImpl {
       endpoint: AppleAuthAPI.revokeToken(token: token),
       encoding: .utf8
     )
-    print("Success")
-//
-//    let url = URL(string: "https://\(Config.value(forKey: .revokeTokenURL))/revokeToken?refresh_token=\(token)"
-//      .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-//    
-//    _ = try await URLSession.shared.data(from: url)
-    
+  
     try keychainStore.delete(forKey: .refreshToken)
   }
   

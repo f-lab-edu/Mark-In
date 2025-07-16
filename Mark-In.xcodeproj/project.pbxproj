@@ -132,8 +132,6 @@
 		57B7E0242DC3D44100D9225A /* Exceptions for "Mark-In" folder in "Mark-In" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Configuration/Debug.xcconfig,
-				Configuration/Release.xcconfig,
 				Resources/Info.plist,
 			);
 			target = 57BFD8C22DA4E19600648AD4 /* Mark-In */;
@@ -514,6 +512,8 @@
 /* Begin XCBuildConfiguration section */
 		57664F6F2DF03A9000CA8D68 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 57BFD8C52DA4E19600648AD4 /* Mark-In */;
+			baseConfigurationReferenceRelativePath = Configuration/Debug.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -537,6 +537,8 @@
 		};
 		57664F702DF03A9000CA8D68 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 57BFD8C52DA4E19600648AD4 /* Mark-In */;
+			baseConfigurationReferenceRelativePath = Configuration/Release.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -682,6 +684,8 @@
 		};
 		57BFD8D02DA4E19700648AD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 57BFD8C52DA4E19600648AD4 /* Mark-In */;
+			baseConfigurationReferenceRelativePath = Configuration/Debug.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -724,6 +728,8 @@
 		};
 		57BFD8D12DA4E19700648AD4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 57BFD8C52DA4E19600648AD4 /* Mark-In */;
+			baseConfigurationReferenceRelativePath = Configuration/Release.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
