@@ -10,10 +10,13 @@ import Foundation
 import FirebaseAuth
 import GoogleSignIn
 
+import NetworkKitInterface
+
 struct WithdrawalUseCaseImpl: WithdrawalUseCase {
   
   private let keychainStore: KeychainStore
   private let authUserManager: AuthUserManager
+  private let networkProvider: NetworkProvider
   
   private let linkRepository: LinkRepository
   private let folderRepsoitory: FolderRepository
@@ -21,11 +24,13 @@ struct WithdrawalUseCaseImpl: WithdrawalUseCase {
   init(
     keychainStore: KeychainStore,
     authUserManager: AuthUserManager,
+    networkProvider: NetworkProvider,
     linkRepository: LinkRepository,
     folderRepsoitory: FolderRepository
   ) {
     self.keychainStore = keychainStore
     self.authUserManager = authUserManager
+    self.networkProvider = networkProvider
     self.linkRepository = linkRepository
     self.folderRepsoitory = folderRepsoitory
   }
@@ -74,11 +79,11 @@ private extension WithdrawalUseCaseImpl {
     let token: String? = try? keychainStore.load(forKey: .refreshToken)
     guard let token else { return }
     
-    let url = URL(string: "https://\(Config.value(forKey: .revokeTokenURL))/revokeToken?refresh_token=\(token)"
-      .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-    
-    _ = try await URLSession.shared.data(from: url)
-    
+    _ = try await networkProvider.requestString(
+      endpoint: AppleAuthAPI.revokeToken(token: token),
+      encoding: .utf8
+    )
+  
     try keychainStore.delete(forKey: .refreshToken)
   }
   
