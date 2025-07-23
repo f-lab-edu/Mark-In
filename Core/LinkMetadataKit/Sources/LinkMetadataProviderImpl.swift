@@ -1,6 +1,6 @@
 //
-//  LinkMetadataProvider.swift
-//  LinkMetadataProvider
+//  LinkMetadataProviderImpl.swift
+//  LinkMetadataProviderImpl
 //
 //  Created by 이정동 on 4/8/25.
 //

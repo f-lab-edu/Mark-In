@@ -197,6 +197,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		577182E72E2E556B00EAA0FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		57985FAB2DDDC2CD00A383F2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +374,10 @@
 				{
 					ProductGroup = 57985FAB2DDDC2CD00A383F2 /* Products */;
 					ProjectRef = 57AC53232DA4FC4900BA84BD /* LinkMetadataKit.xcodeproj */;
+				},
+				{
+					ProductGroup = 577182E72E2E556B00EAA0FD /* Products */;
+					ProjectRef = 574F04C22E1BB15800997207 /* NetworkKit.xcodeproj */;
 				},
 				{
 					ProductGroup = 57588A542DD63B5900DBD9A7 /* Products */;
